@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.BoardMapper">
+ 	<resultMap type="board" id="b">
+ 		<id column="bno" property="bno"/>
+ 		<result column="title" property="title"/>
+ 		<result column="content" property="content"/>
+ 		<result column="regdate" property="regdate"/>
+ 		<result column="moddate" property="moddate"/>
+ 		<result column="mno" property="mno"/>
+ 		<result column="cno" property="cno"/>
+ 		<result column="cnt" property="cnt"/>
+ 		<result column="status" property="status"/>
+ 	</resultMap> 	
+
+
+
+ 	<insert id="insert">
+	 	insert into tbl_board(title, content, mno, cno, status) values (#{title}, #{content}, #{mno}, #{cno}, #{status})
+ 	</insert>
+ 	<update id="update">
+ 		update tbl_board
+ 		set title = #{title},
+ 			content = #{content},
+ 			moddate = now(),
+ 			cno = #{cno},
+ 			status = #{status}
+ 		where bno = #{bno}
+ 	</update>
+ 	
+ 	<delete id="delete">
+ 		delete from tbl_board where bno = #{bno}
+ 	</delete>
+ 	
+ 	
+ 	<select id="list" resultType="board">
+ 		select * from tbl_board
+ 	</select>
+ 	
+ 	<select id="selectOne" resultType="board">
+ 		select * from tbl_board where bno = #{bno}
+ 	</select>
+ 	
+ 	
+ </mapper>
