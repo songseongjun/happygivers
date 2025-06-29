@@ -68,5 +68,12 @@ nav a:hover {color: var(--col-main);}
         .swiper-pagination-bullet {background-color: var(--col-mainbg);}
         .swiper-pagination-bullet-active {background-color: var(--col-main);}
         
-        
+/* 분류 */
+
+.img-zoom {
+  transition: transform 0.3s ease;
+}
+a:hover .img-zoom {
+  transform: scale(1.05);
+}   
         

@@ -4,10 +4,13 @@ package mapper;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import domain.Board;
+import domain.dto.Criteria;
 import domain.en.Status;
 import lombok.extern.slf4j.Slf4j;
 import util.MybatisUtil;
@@ -48,10 +51,12 @@ public class BoardMapperTest {
 	}
 
 	@Test
-	@DisplayName("게시글 전체 리스트")
+	@DisplayName("목록 조회 1페이지 10개씩 4번 카테고리 활성화된 게시글")
 	public void testList() {
+		//given
+		Criteria cri = new Criteria(1, 10, 4, Status.ACTIVE);
 		// when
-		List<Board> boards = boardMapper.list();
+		List<Board> boards = boardMapper.list(cri);
 		
 		// then ~ actual, expect
 		log.info("{}", boards);		
@@ -61,7 +66,7 @@ public class BoardMapperTest {
 	@DisplayName("게시글 상태변경")
 	public void testModifyStatus() {
 		// when
-		Long Bno = 1L;
+		Long Bno = 7L;
 		Board board = boardMapper.selectOne(Bno);
 		Status status = Status.ACTIVE;
 		board.setStatus(status);
@@ -75,7 +80,7 @@ public class BoardMapperTest {
 	@DisplayName("게시글 삭제")
 	public void testRemove() {
 		// when
-		Long bno = 1L;
+		Long bno = 4L;
 		
 		boardMapper.delete(bno);		
 	}
