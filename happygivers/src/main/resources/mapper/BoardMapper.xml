@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.BoardMapper">
+ 	<resultMap type="board" id="b">
+ 		<id column="bno" property="bno"/>
+ 		<result column="title" property="title"/>
+ 		<result column="content" property="content"/>
+ 		<result column="regdate" property="regdate"/>
+ 		<result column="moddate" property="moddate"/>
+ 		<result column="mno" property="mno"/>
+ 		<result column="cno" property="cno"/>
+ 		<result column="cnt" property="cnt"/>
+ 		<result column="status" property="status"/>
+ 	</resultMap> 	
+
+<sql id="criteria">
+ 		<where>
+ 			<trim prefixOverrides="AND | OR">
+ 			<choose>
+		        <when test="cno != null">
+		          AND cno = #{cno}
+		        </when>
+		        <otherwise>
+		          AND cno BETWEEN 3 AND 9
+		        </otherwise>
+		      </choose>
+ 			<if test="status != null">
+		 		and status = #{status}
+ 			</if>
+ 			<if test="types != null">
+ 				<foreach collection="types" item="t" open="and(" close=")" separator="or">
+ 					<choose>
+ 						<when test="t eq 'T'.toString">
+ 							title like concat('%', #{keyword}, '%')
+ 						</when>
+ 						<when test="t eq 'C'.toString">
+ 							content like concat('%', #{keyword}, '%')
+ 						</when>
+ 						<when test="t eq 'I'.toString">
+ 							id like concat('%', #{keyword}, '%')
+ 						</when>
+ 					</choose>
+ 				</foreach>
+ 			</if>
+ 			</trim>
+ 		</where>
+	</sql>
+
+
+
+
+	<!-- 게시글 작성 -->
+ 	<insert id="insert">
+	 	insert into tbl_board(title, content, mno, cno, status) values (#{title}, #{content}, #{mno}, #{cno}, #{status})
+	 	<selectKey keyProperty="bno" resultType="long" order="AFTER">
+ 		select max(bno) from tbl_board
+ 		</selectKey>
+ 	</insert>
+ 	
+ 	<!-- 게시글 수정 -->
+ 	<update id="update">
+ 		update tbl_board
+ 		set title = #{title},
+ 			content = #{content},
+ 			moddate = now(),
+ 			cno = #{cno},
+ 			status = #{status}
+ 		where bno = #{bno}
+ 	</update>
+ 	
+ 	<!--  게시글 삭제 -->
+ 	<delete id="delete">
+ 		delete from tbl_board where bno = #{bno}
+ 	</delete>
+ 	
+ 	<!-- 활성화 게시글 리스트 -->
+ 	<select id="list" resultMap="b">
+ 		select * 
+ 		from tbl_board
+ 		<include refid="criteria"/>
+ 		order by bno DESC
+ 	</select>
+ 	
+ 	<!-- 게시글 하나 선택 -->
+ 	<select id="selectOne" resultMap="b">
+ 		select * from tbl_board where bno = #{bno}
+ 	</select>
+ 	
+ 	<!-- 게시글 갯수 -->
+ 	<select id="getCount" resultType="long">
+ 		select count(*) from tbl_board
+		<include refid="criteria"></include>
+ 	</select>
+ </mapper>

@@ -1,14 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<c:set var="uri" value="${pageContext.request.requestURI}" />
 <header>
         <div class="container d-flex justify-content-between py-3 align-items-center px-0" >
-            <a href="#"><img src="${cp }/img/logo.svg" alt="Happy  Givers"></a>
+            <a href="${cp }/index"><img src="${cp }/img/logo.svg" alt="Happy  Givers"></a>
             <nav>
                 <ul class="d-flex list-unstyled align-items-center gap-4 m-0">
-                    <li><a href="#" class="p-4 text-decoration-none fw-semibold" style="color: var(--col-main);">홈</a></li>
-                    <li><a href="#" class="p-4 text-decoration-none fw-semibold" >기부</a></li>
-                    <li><a href="#" class="p-4 text-decoration-none fw-semibold" >피드</a></li>
-                    <li><a href="#" class="p-4 text-decoration-none fw-semibold" >고객센터</a></li>
+                    <li><a href="${cp }/board/list" class="p-4 text-decoration-none fw-semibold ${fn:contains(uri, '/board') ? 'text-primary' : ''}">기부</a></li>
+                    <li><a href="${cp }/feed/list" class="p-4 text-decoration-none fw-semibold ${fn:contains(uri, '/feed') ? 'text-primary' : ''}" >피드</a></li>
+                    <li><a href="${cp }/notice/list" class="p-4 text-decoration-none fw-semibold ${fn:contains(uri, '/notice') ? 'text-primary' : ''}" >공지사항</a></li>
+                    <li><a href="${cp }/qna/list" class="p-4 text-decoration-none fw-semibold ${fn:contains(uri, '/qna') ? 'text-primary' : ''}">Q&A</a></li>
                 </ul>
             </nav>
             <div class="d-flex align-items-center gap-4">

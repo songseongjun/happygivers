@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="mapper.DonateMapper">
+	
+	<!-- 모금함 생성 -->
+	<insert id="insert">
+	 	insert into tbl_donate(bno, goalamount, mno, voiddate) values (#{bno}, #{goalamount}, #{mno}, #{voiddate})
+ 	</insert>
+ 	
+ 	<!-- 모금함 수정 -->
+ 	<update id="update">
+ 		update tbl_donate
+ 		set goalamount = #{goalamount},
+ 		set voiddate = #{voiddate}
+ 		where dno = #{dno}
+ 	</update>
+ 	
+ 	<!--  모금함 삭제 -->
+ 	<delete id="delete">
+ 		delete from tbl_donate where dno = #{dno}
+ 	</delete>
+ 
+ 	<!-- 모금함 하나 선택 -->
+ 	<select id="selectOne" resultType="donate">
+ 		select * from tbl_donate where dno = #{dno}
+ 	</select>
+</mapper>
