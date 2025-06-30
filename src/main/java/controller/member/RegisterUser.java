@@ -15,13 +15,13 @@ import service.MemberService;
 import util.ParamUtil;
 
 
-@WebServlet("/member/register")
+@WebServlet("/member/register/user")
 @Slf4j
-public class Register extends HttpServlet{
+public class RegisterUser extends HttpServlet{
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.getRequestDispatcher("/WEB-INF/views/member/register.jsp").forward(req, resp);
+		req.getRequestDispatcher("/WEB-INF/views/member/registeruser.jsp").forward(req, resp);
 	}
 
 	@Override

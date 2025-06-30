@@ -3,14 +3,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<%@ include file="../common/head.jsp" %>
 </head>
 <body>
-<form method="post" action="/member/login">
-<input name="id">
-<input type="password" name="pw">
-<button>로그인</button>
-</form>
+<%@ include file="../common/header.jsp" %>
+	<div class="container px-0">
+        <main class="row justify-content-between mx-0">
+
+        </main>
+    </div>
+<%@ include file="../common/footer.jsp" %>
+
 </body>
 </html>
