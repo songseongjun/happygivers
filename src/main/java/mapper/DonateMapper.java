@@ -14,12 +14,12 @@ public interface DonateMapper {
 	void insertRound(DonateRound round);
 	void deleteRound(Long drno);
 	void updateRound(DonateRound round);
-	void selectOneRound(Long drno);
+	DonateRound selectOneRound(Long drno);
 	int findByMaxRound(Long dno);
 	
 	
 	void insertAction(DonateAction action);
 	void deleteAction(Long dano);
 	void updateAction(DonateAction action);
-	void selectOneAction(Long dano);
+	DonateAction selectOneAction(Long dano);
 }

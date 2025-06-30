@@ -19,3 +19,4 @@
 	  <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ko.js"></script>
 	  <!-- Flatpickr CSS (airbnb 테마) -->
 	  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/airbnb.css">
+      <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>

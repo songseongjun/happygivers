@@ -27,7 +27,7 @@
             </nav>
             <div class="d-flex align-items-center gap-4">
                 <a href="#" class="p-3"><i class="fa-solid fa-magnifying-glass" style="color: var(--col-5);"></i></a>
-                <a href="#" class="p-3"><i class="fa-solid fa-bars" style="color: var(--col-5);"></i></a>
+                <a href="#" class="p-3" data-bs-toggle="offcanvas" data-bs-target="#sidebar" ><i class="fa-solid fa-bars" style="color: var(--col-5);"></i></a>
             </div>
         </div>
     </header>
@@ -316,6 +316,23 @@
             <p class="small" style="color: var(--col-5);">&copy;Copyright Happy Givers All rights reserved.</p>
         </div>
     </footer>
+
+    <!-- Offcanvas Sidebar -->
+<div class="offcanvas offcanvas-end" id="sidebar">
+  <div class="offcanvas-header">
+    <h1 class="offcanvas-title">Heading</h1>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+  </div>
+  <div class="offcanvas-body">
+    <p>Some text lorem ipsum.</p>
+    <p>Some text lorem ipsum.</p>
+    <p>Some text lorem ipsum.</p>
+    <button class="btn btn-secondary" type="button">A Button</button>
+  </div>
+</div>
+
+
+
     <script>
         const swiper = new Swiper('.swiper', {
         // Optional parameters

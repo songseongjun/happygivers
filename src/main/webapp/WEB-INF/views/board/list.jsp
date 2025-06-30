@@ -19,6 +19,7 @@
 }
 </style>
 </head>
+
 <body>
 <%@ include file="../common/header.jsp" %>
 	<div class="container">
@@ -61,7 +62,7 @@
                      <!-- 포스트 -->
 					<c:forEach items="${boards }" var="b">
                      <div class="col">
-		                <a href="#" class="card post-card h-100 border-0 text-decoration-none">
+		                <a href="${cp}/board/view?bno=${b.bno}&drno=${b.drno}" class="card post-card h-100 border-0 text-decoration-none">
 		                	<div class="overflow-hidden rounded-3">
 		                    	<img src="${cp }/img/img1.png" class="card-img-top img-zoom" alt="Post Image">
 		                	</div>
