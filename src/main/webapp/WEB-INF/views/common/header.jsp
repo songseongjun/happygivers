@@ -16,7 +16,8 @@
             </nav>
             <div class="d-flex align-items-center gap-4">
                 <a href="#" class="p-3"><i class="fa-solid fa-magnifying-glass" style="color: var(--col-5);"></i></a>
-                <a href="#" class="p-3"><i class="fa-solid fa-bars" style="color: var(--col-5);"></i></a>
+                <a href="#" class="p-3" data-bs-toggle="offcanvas" data-bs-target="#sidebar" ><i class="fa-solid fa-bars" style="color: var(--col-5);"></i></a>
             </div>
         </div>
     </header>
+    <%@ include file="sidebar.jsp" %>

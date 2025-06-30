@@ -11,19 +11,7 @@
 <%@ include file="common/header.jsp" %>
 	<main class="body flex-grow-1">
         <div class="container-lg px-4">
-          <div class="mb-4">
-              <div class="card text-white bg-info">
-                <div class="card-body pb-0 d-flex justify-content-between align-items-start">
-                  <div>
-                    <div class="fs-4 fw-semibold">234</div>
-                    <div>최근 1주일 가입 유저</div>
-                  </div>
-                </div>
-                <div class="c-chart-wrapper mt-3 mx-3" style="height:70px;">
-                  <canvas class="chart" id="card-chart1" height="70"></canvas>
-                </div>
-              </div>
-          </div>
+
           <div class="mb-5 table-responsive rounded-2 overflow-hidden border">
             <table class="table m-0 text-center table-borderless">
               <thead>
@@ -45,19 +33,6 @@
             </table>
           </div>
           
-          <div class="mb-4">
-              <div class="card text-white bg-dark">
-                <div class="card-body pb-0 d-flex justify-content-between align-items-start">
-                  <div>
-                    <div class="fs-4 fw-semibold">234</div>
-                    <div>최근 1주일 게시글 수</div>
-                  </div>
-                </div>
-                <div class="c-chart-wrapper mt-3 mx-3" style="height:70px;">
-                  <canvas class="chart" id="card-chart2" height="70"></canvas>
-                </div>
-              </div>
-          </div>
 
           <div class="mb-5 table-responsive rounded-2 overflow-hidden border" >
             <table class="table table-borderless m-0 text-center">
@@ -80,19 +55,6 @@
           </table>
           </div>
           
-          <div class="mb-4">
-              <div class="card text-white bg-success">
-                <div class="card-body pb-0 d-flex justify-content-between align-items-start">
-                  <div>
-                    <div class="fs-4 fw-semibold">234</div>
-                    <div>최근 1주일 결제 수</div>
-                  </div>
-                </div>
-                <div class="c-chart-wrapper mt-3 mx-3" style="height:70px;">
-                  <canvas class="chart" id="card-chart3" height="70"></canvas>
-                </div>
-              </div>
-          </div>
 
           <div class="mb-5 table-responsive rounded-2 overflow-hidden border" >
             <table class="table table-borderless m-0 text-center">
