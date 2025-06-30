@@ -174,8 +174,13 @@
                         <li><a href="#" class="text-decoration-none" style="color: var(--col-5);">아이디 찾기</a></li>
                         <li><a href="#" class="text-decoration-none" style="color: var(--col-5);">비밀번호 찾기</a></li>
                         <li><a href="#" class="text-decoration-none" style="color: var(--col-5);">회원가입</a></li>
+
                     </ul>
                 </div>
+                       
+             
+
+
 
                 <!-- 로그인 후-->
                 <!-- <div class="border rounded-3">
