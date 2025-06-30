@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>로그인</title>
+
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="css/style.css">
+  <!-- FontAwesome -->
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    rel="stylesheet"
+  >
+  <style>
+    @font-face {
+  font-family: 'SUIT Variable';
+  font-weight: 100 900;
+  src: url('./SUIT-Variable.woff2') format('woff2-variations');
+}
+* {
+  font-family: 'SUIT Variable', sans-serif;
+  margin: 0; padding: 0; box-sizing: border-box;
+}
+
+/* 컬러 유틸 */
+.text-main   { color: var(--col-main); }
+.text-gray3  { color: var(--col-3); }
+.text-gray6  { color: var(--col-6); }
+
+/* 로그인 전체 래퍼 */
+.login-container {
+  width: 360px;
+}
+
+/* 폼 카드 */
+.form-card {
+  background: var(--col-0);
+  border: 1px solid var(--border-5);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* 탭 */
+.tabs {
+  display: flex;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tabs a {
+  flex: 1;
+  text-align: center;
+  padding: 12px 0;
+  text-decoration: none;
+  font-weight: 500;
+  background: var(--col-1); /* 기본 회색 */
+  color: var(--col-4);
+  border: none;
+  display: block;
+}
+
+.tabs a.active {
+  background: var(--col-main); /* 파란색 */
+  color: var(--col-0);         /* 흰색 */
+}
+
+/* 폼 바디 */
+.form-body {
+  padding: 16px;
+}
+.form-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border-5);
+  border-radius: 8px;
+}
+.form-input:focus {
+  outline: none;
+  border-color: var(--col-main);
+  box-shadow: 0 0 0 4px var(--col-mainbg);
+}
+
+/* 스위치 */
+.switch {
+  display: flex;
+  align-items: center;
+}
+.switch input {
+  width: 40px; height: 20px;
+  -webkit-appearance: none;
+  background: var(--border-5);
+  border-radius: 10px;
+  position: relative;
+  margin-right: 8px;
+  cursor: pointer;
+  transition: background .3s;
+}
+.switch input:checked {
+  background: var(--col-main);
+}
+.switch input::before {
+  content: '';
+  position: absolute;
+  top: 2px; left: 2px;
+  width: 16px; height: 16px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform .3s;
+}
+.switch input:checked::before {
+  transform: translateX(20px);
+}
+
+/* 로그인 버튼 */
+.login-btn {
+  background: var(--col-main);
+  color: var(--col-0);
+  border: none;
+  border-radius: 8px;
+  padding: 12px 0;
+}
+
+/* 링크 구분선 */
+.link-divider {
+  border-top: 1px dotted var(--border-5);
+  padding-top: 8px;
+}
+.link-divider a {
+  text-decoration: none;
+  color: var(--col-4);
+  margin: 0 4px;
+}
+.link-divider span {
+  color: var(--col-5);
+}
+
+/* 소셜 카드 */
+.social-card {
+  background: var(--col-0);
+  border: 1px solid var(--border-5);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.social-btn {
+  border: none;
+  padding: 12px;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.social-btn + .social-btn {
+  border-left: 1px solid var(--border-5);
+}
+
+  </style>
+</head>
+<body>
+  <header style="background-color: #fffb;">
+          <div class="container d-flex justify-content-between py-3 align-items-center px-0" >
+              <a href="#"><img src="img/logo.svg" alt="Happy  Givers"></a>
+              <ul class="d-flex list-unstyled align-items-center gap-4 m-0">
+                  <li><a href="#" class="p-4 text-decoration-none fw-semibold" style="color: var(--col-main);">홈</a></li>
+                  <li><a href="#" class="p-4 text-decoration-none fw-semibold" style="color: var(--col-3);">기부</a></li>
+                  <li><a href="#" class="p-4 text-decoration-none fw-semibold" style="color: var(--col-3);">피드</a></li>
+                  <li><a href="#" class="p-4 text-decoration-none fw-semibold" style="color: var(--col-3);">캠페인</a></li>
+              </ul>
+              <div class="d-flex align-items-center gap-4">
+                  <a href="#" class="p-3"><i class="fa-solid fa-magnifying-glass" style="color: var(--col-5);"></i></a>
+                  <a href="#" class="p-3"><i class="fa-solid fa-bars" style="color: var(--col-5);"></i></a>
+              </div>
+          </div>
+      </header>
+
+   <!-- 로그인 섹션 -->
+  <main id="login-section" class="container d-flex justify-content-center py-5">
+    <div id="login-wrapper" class="login-container">
+      <!-- 제목 -->
+      <h2 id="login-title" class="text-center fw-semibold mb-4">로그인</h2>
+
+      <!-- 로그인 카드 -->
+      <div id="login-card" class="form-card mb-3">
+        <!-- 탭 -->
+        <div id="signup-tabs" class="tabs mb-4">
+            <a href="signup-user.html" class="tab-regular">일반회원</a>
+            <a href="signup-org.html" class="tab-organization active">기관회원</a>
+          </div>
+
+        <!-- 폼 바디 -->
+        <div id="login-form" class="form-body">
+          <input id="login-id" type="text" class="form-input mb-3" placeholder="아이디">
+          <input id="login-password" type="password" class="form-input mb-3" placeholder="비밀번호">
+
+          <div id="auto-login-switch" class="switch mb-3">
+            <input id="auto-login-checkbox" type="checkbox" />
+            <label for="auto-login-checkbox" class="text-regular">자동로그인</label>
+            <span id="auto-login-status" class="text-semibold ms-2"></span>
+          </div>
+
+          <button id="btn-login" class="btn login-btn text-semibold w-100">로그인</button>
+        </div>
+      </div>
+
+      <!-- 링크 구분선 -->
+      <div id="login-links" class="link-divider mb-3 text-center small">
+        <a id="link-find-id" href="#" class="text-regular text-gray3">아이디 찾기</a>
+        <span id="divider-1">|</span>
+        <a id="link-find-password" href="#" class="text-regular text-gray3">비밀번호 찾기</a>
+        <span id="divider-2">|</span>
+        <a id="link-signup" href="#" class="text-regular text-gray3">회원가입</a>
+      </div>
+
+      <!-- 소셜 로그인 카드 -->
+      <div id="social-login-card" class="social-card d-flex">
+        <button id="btn-kakao" class="social-btn text-regular flex-fill">
+          <i class="fa-brands fa-kakao text-gray6"></i> 카카오 로그인
+        </button>
+        <button id="btn-google" class="social-btn text-regular flex-fill">
+          <i class="fa-brands fa-google text-gray6"></i> 구글 로그인
+        </button>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

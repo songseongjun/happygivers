@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>아이디 찾기</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css">
+  <!-- SUIT 폰트 + CSS 변수 -->
+  <style>
+    @font-face {
+      font-family: 'SUIT Variable';
+      font-weight: 100 900;
+      src: url('./SUIT-Variable.woff2') format('woff2-variations');
+    }
+
+    
+
+    * {
+      font-family: 'SUIT Variable', sans-serif;
+      list-style: none;
+      text-decoration: none;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--col-0); /* 완전 흰색 */
+      margin: 0;
+    }
+
+    main {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .form-box {
+      background: var(--col-0);
+      border: 1px solid var(--border-5);
+      border-radius: 10px;
+      padding: 23px;
+      width: 100%;
+      max-width: 502px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+    }
+
+    .form-control:focus {
+      border: 2px solid var(--col-main);
+      box-shadow: none;
+    }
+
+    .btn-main {
+      background: var(--col-main);
+      color: var(--col-0);
+      font-weight: 600;
+      border-radius: 6px;
+      padding: 12px;
+    }
+
+    h2 {
+      color: var(--col-6);
+      font-weight: 600;
+      margin-bottom: 32px;
+    }
+  </style>
+</head>
+
+<body>
+<header style="background-color: #fffb;">
+            <div class="container d-flex justify-content-between py-3 align-items-center px-0" >
+                <a href="#"><img src="img/logo.svg" alt="Happy  Givers"></a>
+                <ul class="d-flex list-unstyled align-items-center gap-4 m-0">
+                    <li><a href="#" class="p-4 text-decoration-none fw-semibold" style="color: var(--col-main);">홈</a></li>
+                    <li><a href="#" class="p-4 text-decoration-none fw-semibold" style="color: var(--col-3);">기부</a></li>
+                    <li><a href="#" class="p-4 text-decoration-none fw-semibold" style="color: var(--col-3);">피드</a></li>
+                    <li><a href="#" class="p-4 text-decoration-none fw-semibold" style="color: var(--col-3);">캠페인</a></li>
+                </ul>
+                <div class="d-flex align-items-center gap-4">
+                    <a href="#" class="p-3"><i class="fa-solid fa-magnifying-glass" style="color: var(--col-5);"></i></a>
+                    <a href="#" class="p-3"><i class="fa-solid fa-bars" style="color: var(--col-5);"></i></a>
+                </div>
+            </div>
+        </header>
+
+  <main>
+    <!-- 제목은 카드 밖에 있어야 함 -->
+    <h2 class="text-center">아이디 찾기</h2>
+
+    <!-- 카드 형태 박스 -->
+    <div class="form-box">
+      <form>
+        <!-- 이메일 입력 -->
+        <div class="form-floating mb-3">
+          <input type="email" class="form-control" id="floatingEmail" placeholder="이메일">
+          <label for="floatingEmail">이메일</label>
+        </div>
+
+        <!-- 이름 입력 -->
+        <div class="form-floating mb-4">
+          <input type="text" class="form-control" id="floatingName" placeholder="이름">
+          <label for="floatingName">이름</label>
+        </div>
+
+        <!-- 버튼 -->
+        <button type="submit" class="btn btn-main w-100">아이디 찾기</button>
+      </form>
+    </div>
+  </main>
+
+  <!-- Bootstrap JS (선택) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

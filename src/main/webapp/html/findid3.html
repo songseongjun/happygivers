@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>아이디 찾기 결과</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css">
+  <!-- SUIT Font + Custom Styles -->
+  <style>
+    @font-face {
+      font-family: 'SUIT Variable';
+      font-weight: 100 900;
+      src: url('./SUIT-Variable.woff2') format('woff2-variations');
+    }
+
+    
+
+    * {
+      font-family: 'SUIT Variable';
+      list-style: none;
+      text-decoration: none;
+    }
+
+    body {
+      background-color: #fff;
+    }
+
+    .custom-radio {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 1px solid var(--col-2);
+      position: relative;
+      display: inline-block;
+      background-color: #fff;
+      cursor: pointer;
+    }
+
+    input[type="radio"] {
+      display: none;
+    }
+
+    input[type="radio"]:checked + .custom-radio::before {
+      content: "✓";
+      color: var(--col-main);
+      font-weight: 700;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <!-- 전체 중앙 정렬 -->
+  <div class="d-flex flex-column justify-content-center align-items-center min-vh-100">
+    
+    <!-- 제목은 박스 밖으로 -->
+    <h3 class="fw-bold mb-4">아이디 찾기 결과</h3>
+
+    <!-- 본문 박스 -->
+    <div class="bg-white border rounded-3 p-4 shadow-sm" style="max-width: 500px; width: 100%;">
+      
+      <!-- 설명 -->
+      <p class="text-center text-secondary mb-4">해당 정보로 검색된 아이디</p>
+
+      <!-- 일반 -->
+      <div class="d-flex align-items-center justify-content-between mb-2">
+        <div class="d-flex align-items-center">
+          <input type="radio" name="idChoice" id="id1" />
+          <label for="id1" class="custom-radio me-2"></label>
+          <span class="text-primary fw-semibold me-1">[일반]</span>
+          <span class="text-dark">abcd</span>
+        </div>
+        <div class="text-secondary small">25.06.22 가입</div>
+      </div>
+
+      <!-- 기관 -->
+      <div class="d-flex align-items-center justify-content-between mb-4">
+        <div class="d-flex align-items-center">
+          <input type="radio" name="idChoice" id="id2" />
+          <label for="id2" class="custom-radio me-2"></label>
+          <span class="text-primary fw-semibold me-1">[기관]</span>
+          <span class="text-dark">abcd</span>
+        </div>
+        <div class="text-secondary small">25.06.18 가입</div>
+      </div>
+
+      <!-- 버튼들 -->
+      <button class="btn btn-outline-primary w-100 mb-2">비밀번호 찾기</button>
+      <button class="btn btn-primary w-100">로그인</button>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

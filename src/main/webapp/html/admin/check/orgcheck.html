@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <base href="./">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Happy Givers Admin</title>
+    <!-- Vendors styles-->
+    <link rel="stylesheet" href="css/simplebar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Main styles for this application-->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/chartjs.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.7/css/bootstrap.min.css" integrity="sha512-fw7f+TcMjTb7bpbLJZlP8g2Y4XcCyFZW8uy8HsRZsH/SwbMw0plKHFHr99DN3l04VsYNwvzicUX/6qurvIxbxw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  </head>
+  <body>
+    <!-- 사이드바 -->
+    <div class="sidebar sidebar-fixed border-end" id="sidebar">
+      <!-- 사이드바 헤더 -->
+      <div class="sidebar-header border-bottom ps-4">
+        <div class="sidebar-brand">
+          <a href="#"><img src="img/logo.svg" alt="Happy Givers"></a>
+        </div>
+      </div>
+      <!-- 위젯 메인 영역 -->
+      <ul class="sidebar-nav" data-coreui="navigation" data-simplebar="">
+        <li class="nav-item"><a class="nav-link" href="index.html">
+            <svg class="nav-icon">
+              <use xlink:href="img/free.svg#cil-speedometer"></use>
+            </svg>홈</a></li>
+        
+        <li class="nav-title">회원관리</li>
+        <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
+            <svg class="nav-icon">
+              <use xlink:href="img/free.svg#cil-description"></use>
+            </svg> 회원</a>
+          <ul class="nav-group-items compact">
+            <li class="nav-item"><a class="nav-link" href="#"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 회원목록 조회</a></li>
+            <li class="nav-item"><a class="nav-link" href="#"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 기관회원 승인<span class="badge badge-sm bg-info ms-auto">NEW</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="#"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 서브관리자 생성</a></li>
+          </ul>
+        </li>
+        <li class="nav-title">결제/기부관리</li>
+        <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
+            <svg class="nav-icon">
+              <use xlink:href="img/free.svg#cil-star"></use>
+            </svg> 결제</a>
+          <ul class="nav-group-items compact">
+            <li class="nav-item"><a class="nav-link" href="#"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 결제내역 조회</a></li>
+            <li class="nav-item"><a class="nav-link" href="#"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 기부내역 조회</a></li>
+            <li class="nav-item"><a class="nav-link" href="#"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 환불 관리</a></li>
+          </ul>
+        </li>
+        <li class="nav-title">게시글 관리</li>
+        <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
+            <svg class="nav-icon">
+              <use xlink:href="img/free.svg#cil-notes"></use>
+            </svg> 게시판</a>
+          <ul class="nav-group-items compact">
+            <li class="nav-item"><a class="nav-link" href="#"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 관리자 글 목록 / 작성</a></li>
+            <li class="nav-item"><a class="nav-link" href="#"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 기부 게시글 승인</a></li>
+            <li class="nav-item"><a class="nav-link" href="#"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 게시글 관리</a></li>
+            <li class="nav-item"><a class="nav-link" href="#"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 댓글 관리</a></li>
+          </ul>
+        </li>
+        <li class="nav-title">기타 관리</li>
+        <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
+            <svg class="nav-icon">
+              <use xlink:href="img/free.svg#cil-bell"></use>
+            </svg> 로그 / 배지 등 </a>
+          <ul class="nav-group-items compact">
+            <li class="nav-item"><a class="nav-link" href="#"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 로그인 로그</a></li>
+            <li class="nav-item"><a class="nav-link" href="#"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 탈퇴회원 로그</a></li>
+            <li class="nav-item"><a class="nav-link" href="#"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 이메일 인증 로그</a></li>
+            <li class="nav-item"><a class="nav-link" href="#"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 결제 로그</a></li>
+            
+          </ul>
+        </li>
+        
+        <li class="nav-title">Extras</li>
+        <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
+            <svg class="nav-icon">
+              <use xlink:href="img/free.svg#cil-star"></use>
+            </svg> Pages</a>
+          <ul class="nav-group-items compact">
+            <li class="nav-item"><a class="nav-link" href="login.html" target="_top">
+                <svg class="nav-icon">
+                  <use xlink:href="img/free.svg#cil-account-logout"></use>
+                </svg> Login</a></li>
+            <li class="nav-item"><a class="nav-link" href="register.html" target="_top">
+                <svg class="nav-icon">
+                  <use xlink:href="img/free.svg#cil-account-logout"></use>
+                </svg> Register</a></li>
+            <li class="nav-item"><a class="nav-link" href="404.html" target="_top">
+                <svg class="nav-icon">
+                  <use xlink:href="img/free.svg#cil-bug"></use>
+                </svg> Error 404</a></li>
+            <li class="nav-item"><a class="nav-link" href="500.html" target="_top">
+                <svg class="nav-icon">
+                  <use xlink:href="img/free.svg#cil-bug"></use>
+                </svg> Error 500</a></li>
+          </ul>
+        </li>
+      </ul>
+      <!-- 사이드바 푸터 -->
+      <div class="sidebar-footer border-top d-none d-md-flex">
+        <button class="sidebar-toggler" type="button" data-coreui-toggle="unfoldable"></button>
+      </div>
+    </div>
+
+    <div class="wrapper d-flex flex-column min-vh-100">
+      <!-- 헤더 -->
+      <header class="header header-sticky p-0 mb-4">
+        <div class="container-fluid border-bottom px-4">
+          <button class="header-toggler" type="button" onclick="coreui.Sidebar.getInstance(document.querySelector('#sidebar')).toggle()" style="margin-inline-start: -14px;">
+            <svg class="icon icon-lg">
+              <use xlink:href="img/free.svg#cil-menu"></use>
+            </svg>
+          </button>
+          <ul class="header-nav d-none d-lg-flex gap-5">
+            <li class="nav-item"><a class="nav-link" href="#">홈</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">유저 목록</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">게시글 관리</a></li>
+          </ul>
+          
+          <ul class="header-nav">
+            <li class="nav-item dropdown"><a class="nav-link py-0 pe-0" data-coreui-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                <div class="avatar avatar-md"><img class="avatar-img" src="img/1.jpg" alt="user@email.com"></div>
+              </a>
+              <div class="dropdown-menu dropdown-menu-end pt-0">
+                <div class="dropdown-header bg-body-tertiary text-body-secondary fw-semibold rounded-top mb-2">
+                  <div class="fw-semibold">Settings</div>
+                </div><a class="dropdown-item" href="#">
+                  <svg class="icon me-2">
+                    <use xlink:href="img/free.svg#cil-user"></use>
+                  </svg> Profile</a>
+                <div class="dropdown-divider"></div>
+                <!-- <a class="dropdown-item" href="#">
+                  <svg class="icon me-2">
+                    <use xlink:href="img/free.svg#cil-account-logout"></use>
+                  </svg> Login</a> -->
+                <a class="dropdown-item" href="#">
+                  <svg class="icon me-2">
+                    <use xlink:href="img/free.svg#cil-account-logout"></use>
+                  </svg> Logout</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- 서브 네비게이션 바 -->
+        <div class="container-fluid px-4">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb my-0">
+              <li class="breadcrumb-item"><a href="#">홈</a></li>
+              <li class="breadcrumb-item active"><span>2뎁스</span></li>
+            </ol>
+          </nav>
+        </div>
+      </header>
+
+
+      
+      <div class="body flex-grow-1">
+        <div class="container-lg px-4">
+          <div>
+            <ul class="list-group small">
+              <li class="list-group-item ">
+                <div class="row my-0 align-items-center">
+                  <input class="form-check-input col-1 mx-2 my-0 p-0" type="checkbox" id="checkAll" name="checkAll" value="something" style="width: 20px; height: 20px;">
+                  <span class="col-1 text-center fw-bold">유저번호</span>
+                  <span class="col-2 text-center fw-bold">기관명</span>
+                  <span class="col-2 text-center fw-bold">닉네임</span>
+                  <span class="col-2 text-center fw-bold">이메일</span>
+                  <span class="col-2 text-center fw-bold">전화번호</span>
+                  <span class="col text-center fw-bold">관리</span>
+                </div>
+              </li>
+              
+              <li class="list-group-item">
+                <div class="row my-0 align-items-center">
+                  <input class="form-check-input col-1 mx-2 my-0 p-0" type="checkbox" name="check1" value="something" style="width: 20px; height: 20px;">
+                  <span class="col-1 text-center">3</span>
+                  <span class="col-2 text-center">노인복지재단</span>
+                  <span class="col-2 text-center"></span>
+                  <span class="col-2 text-center">noinbockji@gamil.com</span>
+                  <span class="col-2 text-center">02-234-5678</span>
+                  <div class="btn-group btn-group-sm col">
+                    <button type="button" class="btn btn-outline-secondary">승인</button>
+                    <button type="button" class="btn btn-outline-secondary">반려</button>
+                  </div>
+                </div>
+              </li>
+            </ul>
+            <div class="mt-4">
+              <button class="btn btn-primary me-2">선택 승인</button>
+              <button class="btn btn-outline-secondary">선택 반려</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+     
+     
+     
+     
+     
+      <footer class="footer px-4">
+        <div>&copy; Copyright Happy Givers All rights reserved. </div>
+        <a class="ms-auto" href="#"><i class="fa-brands fa-github fs-4" style="color: var(--col-5);"></i></a>
+      </footer>
+    </div>
+    
+
+    <!-- CoreUI and necessary plugins-->
+    <script src="js/sub.js"></script>
+    <script src="js/simplebar.js"></script>
+    <script>
+      const header = document.querySelector('header.header');
+
+      document.addEventListener('scroll', () => {
+        if (header) {
+          header.classList.toggle('shadow-sm', document.documentElement.scrollTop > 0);
+        }
+      });
+    </script>
+
+    <!-- Plugins and scripts required by this view-->
+    <script src="js/chart.umd.js"></script>
+    <script src="js/chartjs.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+      // 카드 차트 1: 유저
+  new Chart(document.getElementById('card-chart1'), {
+    type: 'bar',
+    data: {
+      labels: ['7일 전', '6일 전', '5일 전', '4일 전', '3일 전', '2일 전', '오늘'],
+      datasets: [{
+        data: [5, 7, 4, 8, 6, 9, 10],
+        backgroundColor: 'rgba(255,255,255,0.4)',
+        borderColor: '#fff',
+        borderWidth: 0
+      }]
+    },
+    options: {
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: { x: { display: false }, y: { display: false } }
+    }
+  });
+
+  // 카드 차트 2: 결제
+  new Chart(document.getElementById('card-chart2'), {
+    type: 'bar',
+    data: {
+      labels: ['7일 전', '6일 전', '5일 전', '4일 전', '3일 전', '2일 전', '오늘'],
+      datasets: [{
+        data: [5, 7, 4, 8, 6, 9, 10],
+        backgroundColor: 'rgba(255,255,255,0.4)',
+        borderColor: '#fff',
+        borderWidth: 0
+      }]
+    },
+    options: {
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: { x: { display: false }, y: { display: false } }
+    }
+  });
+    </script>
+  </body>
+</html>
