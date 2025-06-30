@@ -15,13 +15,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Alias("board")
 public class Board {
-	private Long bno;
-	private String title;
-	private String content;
-	private String regdate;
-	private String moddate;
-	private Long mno;
-	private int cno;
-	private int cnt;
-	private Status status;
+	private Long bno; //게시글 번호
+	private String title; // 제목
+	private String content; // 내용
+	private String regdate; // 생성일
+	private String moddate; // 수정일
+	private Long mno; // 작성자
+	private int cno; // 카테고리 번호
+	private int cnt; // 조회수
+	private Status status; // 게시글 상태
+	private Long drno; // 연결된 모금회차 고유번호
 }

@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import domain.Board;
 import domain.Donate;
+import domain.DonateRound;
 import domain.dto.Criteria;
 import domain.en.Status;
 import mapper.BoardMapper;
@@ -24,14 +25,28 @@ public class BoardService {
 		}
 	}
 	
-	public void write(Board board, Donate donate) {
+	// 기부 게시글
+	public void write(Board board, Donate donate, DonateRound round) {
 		SqlSession session = MybatisUtil.getSqlSession(false);
 		try {
-			BoardMapper mapper = session.getMapper(BoardMapper.class);
-			mapper.insert(board);
 			DonateMapper donateMapper = session.getMapper(DonateMapper.class);
-			donate.setBno(board.getBno());
-			donateMapper.insert(donate);
+			BoardMapper boardmapper = session.getMapper(BoardMapper.class);
+			if(donate.getDno() == null) {
+				// 1. 모금함 생성 - 첫회차일때
+				donateMapper.insert(donate);
+			}
+			else { // 첫회차가 아닐 때
+				round.setRound(donateMapper.findByMaxRound(donate.getDno()) + 1);
+			}
+			
+			// 2-1. 모금함 번호를 회차에 넣고, 회차 생성
+			round.setDno(donate.getDno());
+			donateMapper.insertRound(round);
+			
+			
+			// 3. 생성된 회차번호를 게시글에 넣고 게시글 생성
+			board.setDrno(round.getDrno());
+			boardmapper.insert(board);
 			session.commit();
 		}
 		catch (Exception e){
