@@ -1,6 +1,8 @@
 package mapper;
 
 import domain.Donate;
+import domain.DonateAction;
+import domain.DonateRound;
 
 
 public interface DonateMapper {
@@ -8,4 +10,16 @@ public interface DonateMapper {
 	void delete(Long dno);
 	void update(Donate donate);
 	Donate selectOne(Long dno);
+	
+	void insertRound(DonateRound round);
+	void deleteRound(Long drno);
+	void updateRound(DonateRound round);
+	void selectOneRound(Long drno);
+	int findByMaxRound(Long dno);
+	
+	
+	void insertAction(DonateAction action);
+	void deleteAction(Long dano);
+	void updateAction(DonateAction action);
+	void selectOneAction(Long dano);
 }

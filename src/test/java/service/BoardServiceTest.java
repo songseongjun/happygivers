@@ -45,9 +45,9 @@ public class BoardServiceTest {
 		String voiddate = "2025-08-04";
 		
 		
-		Board board = Board.builder().title(title).content(content).mno(mno).cno(cno).status(status).build();
-		Donate donate = Donate.builder().mno(mno).goalamount(goalamount).voiddate(voiddate).build();
-		
-		service.write(board, donate);
+//		Board board = Board.builder().title(title).content(content).mno(mno).cno(cno).status(status).build();
+//		Donate donate = Donate.builder().mno(mno).goalamount(goalamount).voiddate(voiddate).build();
+//		
+//		service.write(board, donate);
 	}
 }

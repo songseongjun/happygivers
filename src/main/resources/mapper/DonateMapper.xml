@@ -6,14 +6,17 @@
 	
 	<!-- 모금함 생성 -->
 	<insert id="insert">
-	 	insert into tbl_donate(bno, goalamount, mno, voiddate) values (#{bno}, #{goalamount}, #{mno}, #{voiddate})
+	 	insert into tbl_donate(title, content, mno) values (#{title}, #{content}, #{mno})
+	 	<selectKey keyProperty="dno" resultType="long" order="AFTER">
+ 		select max(dno) from tbl_donate
+ 		</selectKey>
  	</insert>
  	
  	<!-- 모금함 수정 -->
  	<update id="update">
  		update tbl_donate
- 		set goalamount = #{goalamount},
- 		set voiddate = #{voiddate}
+ 		set title = #{title},
+ 			content = #{content}
  		where dno = #{dno}
  	</update>
  	
@@ -26,4 +29,43 @@
  	<select id="selectOne" resultType="donate">
  		select * from tbl_donate where dno = #{dno}
  	</select>
+ 	
+ 	
+
+
+ 	
+ 	<!-- 모금 회차 정보 생성 -->
+ 	<insert id="insertRound">
+	 	insert into tbl_donate_round(dno, round, goalamount, voiddate) values (#{dno}, #{round}, #{goalamount}, #{voiddate})
+	 	<selectKey keyProperty="drno" resultType="long" order="AFTER">
+ 		select max(drno) from tbl_donate_round
+ 		</selectKey>
+ 	</insert>
+ 	
+ 	<!-- 모금 회차 정보 수정 -->
+ 	<update id="updateRound">
+ 		update tbl_donate_round
+ 		set goalamount = #{goalamount},
+ 			voiddate = #{voiddate},
+ 			status = #{status}
+ 		where drno = #{drno}
+ 	</update>
+ 	
+ 	<!--  모금회차 삭제 -->
+ 	<delete id="deleteRound">
+ 		delete from tbl_donate_round where drno = #{drno}
+ 	</delete>
+ 
+ 	<!-- 모금회차 하나 선택 -->
+ 	<select id="selectOneRound" resultType="donateRound">
+ 		select * from tbl_donate_round where drno = #{drno}
+ 	</select>
+ 	
+	<!-- 라운드 정보 가져오기 -->
+ 	<select id="findByMaxRound" resultType="int">
+ 		select max(round) from tbl_donate_round where dno = #{dno}
+ 	</select> 	
+ 	
+ 	
+ 	
 </mapper>

@@ -23,7 +23,7 @@
 		          AND cno = #{cno}
 		        </when>
 		        <otherwise>
-		          AND cno BETWEEN 3 AND 9
+		          AND drno is not null
 		        </otherwise>
 		      </choose>
  			<if test="status != null">
@@ -53,7 +53,7 @@
 
 	<!-- 게시글 작성 -->
  	<insert id="insert">
-	 	insert into tbl_board(title, content, mno, cno, status) values (#{title}, #{content}, #{mno}, #{cno}, #{status})
+	 	insert into tbl_board(title, content, mno, cno, status, drno) values (#{title}, #{content}, #{mno}, #{cno}, #{status}, #{drno})
 	 	<selectKey keyProperty="bno" resultType="long" order="AFTER">
  		select max(bno) from tbl_board
  		</selectKey>

@@ -16,11 +16,13 @@ import com.google.gson.reflect.TypeToken;
 
 import domain.Board;
 import domain.Donate;
+import domain.DonateRound;
 import domain.dto.Criteria;
 import domain.en.Status;
 import lombok.extern.slf4j.Slf4j;
 import service.BoardService;
 import util.AlertUtil;
+import util.ParamUtil;
 
 
 
@@ -47,31 +49,36 @@ public class Write extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		
-		// 파라미터 수집
-		Long mno = Long.valueOf(req.getParameter("mno"));
-		String title = req.getParameter("title");
-		String content = req.getParameter("content");
-		Integer cno = Integer.valueOf(req.getParameter("cno"));
-		Status status = Status.valueOf(req.getParameter("status"));
-		
-		Integer goalamount = Integer.valueOf(req.getParameter("goalamount"));
-		String voiddate = req.getParameter("voiddate");
-		
-		
+//		Criteria cri = Criteria.init(req);
+//		Member loginMember = req.getSession().getAttribute("member");
+//		if(loginMember == null) {
+//			AlertUtil.alert("로그인 후 글 작성해주세요", "/member/login?" + cri.getQs2(), req, resp, true);
+//			return;
+//		}
+//		if(loginMember.mtype != Mtype.ORG) {
+//			AlertUtil.alert("글 작성 권한이 없습니다.", "/index", req, resp);
+//			return;
+//		}
 		
 
+
 		// board 인스턴스 생성
-		BoardService boardService = new BoardService();
-		Board board = Board.builder().title(title).content(content).mno(mno).cno(cno).status(status).build();
+		// donate 인스턴스 생성
+		Donate donate = ParamUtil.get(req, Donate.class);
+		DonateRound round = ParamUtil.get(req, DonateRound.class);		
+		Board board = ParamUtil.get(req, Board.class); 
 		log.info("{}", board);
 		
-		// donate 인스턴스 생성
-		Donate donate = Donate.builder().mno(mno).goalamount(goalamount).voiddate(voiddate).build();
+
+		BoardService boardService = new BoardService();
+		
+			
+		boardService.write(board, donate, round);
+			
+	
 		
 		
-		boardService.write(board, donate);
-		AlertUtil.alert("글이 등록되었습니다.", "/board/list?cno=" + cno, req, resp);
+		
+		AlertUtil.alert("글이 등록되었습니다.", "/board/list?cno=" + board.getCno(), req, resp);
 	}
 }
