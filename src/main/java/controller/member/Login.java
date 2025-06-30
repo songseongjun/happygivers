@@ -26,6 +26,7 @@ public class Login extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+<<<<<<< HEAD
 		String id = req.getParameter("id");
 		String pw = req.getParameter("pw");
 		log.info("{} {}",id,pw);
@@ -50,6 +51,34 @@ public class Login extends HttpServlet {
 
 		}
 
+=======
+		Member member = ParamUtil.get(req, Member.class);
+		boolean ret =  new MemberService().login(member.getId(), member.getPw());
+		
+		
+		
+		if(ret) { //로그인 
+		HttpSession session =req.getSession();
+		session.setMaxInactiveInterval(60*10);//10분뒤에 로그아웃되는상황만든것
+			session.setAttribute("member",new MemberService().findById(member.getId()));
+			
+		
+			String url = req.getParameter("url");
+			if(url == null) {
+				resp.sendRedirect(req.getContextPath() + "/index");
+			}
+			else {
+				String decodedUrl = URLDecoder.decode(url,"utf-8");
+				Criteria cri = Criteria.init(req);
+				resp.sendRedirect(decodedUrl + "?" + cri.getQs2());
+			}
+			
+		}else { //로그인실패
+		resp.sendRedirect("login?msg=fail");
+			
+		}
+		
+>>>>>>> branch 'ssj' of https://github.com/manlubo/happygivers.git
 	}
 
 }
