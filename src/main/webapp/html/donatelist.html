@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js" integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header style="background-color: #fffb;">
+        <div class="container d-flex justify-content-between py-3 align-items-center px-0">
+            <a href="#"><img src="img/logo.svg" alt="Happy  Givers"></a>
+            <ul class="d-flex list-unstyled align-items-center gap-4 m-0">
+                <li><a href="#" class="p-4 text-decoration-none fw-semibold" style="color: var(--col-3);">홈</a>
+                </li>
+                <li><a href="#" class="p-4 text-decoration-none fw-semibold" style="color: var(--col-main);">기부</a>
+                </li>
+                <li><a href="#" class="p-4 text-decoration-none fw-semibold" style="color: var(--col-3);">피드</a>
+                </li>
+                <li><a href="#" class="p-4 text-decoration-none fw-semibold" style="color: var(--col-3);">캠페인</a>
+                </li>
+            </ul>
+            <div class="d-flex align-items-center gap-4">
+                <a href="#" class="p-3"><i class="fa-solid fa-magnifying-glass" style="color: var(--col-5);"></i></a>
+                <a href="#" class="p-3"><i class="fa-solid fa-bars" style="color: var(--col-5);"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <main>
+            <div class="search text-center">
+                <h3>Search</h3>
+                <p class="mb-5">'<span class="fw-semibold">CATEGORY</span>'으로 검색하신 결과입니다</p>
+            </div>
+            <!-- Category List Start -->
+            <div class="d-flex justify-content-around mx-5">
+                <div >
+                    <a href="Feed_Category_Main.html"><img src="img/menuicon/all.png" alt="all"><button class="btn btn-sm rounded-4" style="background-color: var(--col-main); color: #fff;">전체</button></a>                
+                </div>
+                <div >
+                    <a href="Feed_Category_Teen.html"><img src="img/menuicon/kid.png" alt="all"><button class="btn btn-sm rounded-4" style="background-color: var(--col-1);">청소년</button></a>                
+                </div>
+                <div >
+                    <a href="Feed_Category_Old.html"><img src="img/menuicon/old.png" alt="all"><button class="btn btn-sm rounded-4" style="background-color: var(--col-1);">어르신</button></a>                
+                </div>
+                <div>
+                    <a href="Feed_Category_Animal.html"><img src="img/menuicon/animal.png" alt="all"><button class="btn btn-sm rounded-4" style="background-color: var(--col-1);">동물</button></a>                
+                </div>
+                <div>
+                    <a href="Feed_Category_Earth.html"><img src="img/menuicon/earth.png" alt="all"><button class="btn btn-sm rounded-4" style="background-color: var(--col-1);">지구</button></a>                
+                </div>
+                <div>
+                    <a href="Feed_Category_Area.html"><img src="img/menuicon/area.png" alt="all"><button class="btn btn-sm rounded-4" style="background-color: var(--col-1);">환경</button></a>                
+                </div>
+                <div>
+                    <a href="Feed_Category_Needy.html"><img src="img/menuicon/needy.png" alt="all"><button class="btn btn-sm rounded-4" style="background-color: var(--col-1);">장애인</button></a>                
+                </div>
+                <div>
+                    <a href="Feed_Category_Social.html"><img src="img/menuicon/social.png" alt="all"><button class="btn btn-sm rounded-4" style="background-color: var(--col-1);">사회</button></a>                
+                </div>
+            </div>
+            <!-- Category List End -->
+             
+            <div class="container my-5">
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4" id="post-grid">
+                    <!-- Dynamic tiles will be injected here -->
+                </div>
+            </div>
+    
+            <!-- Pagination -->
+            <div id="pagination" class="d-flex justify-content-center my-3 pb-4"></div>
+    
+            <div class="search-bar">
+                <form class="col input-group search-form">
+                    <select class="form-select form-select-sm" name="type">
+                        <option value="T">제목</option>
+                        <option value="C">내용</option>
+                        <option value="I">작성자</option>
+                        <option value="TC">제목+내용</option>
+                        <option value="TI">제목+작성자</option>
+                        <option value="CI">내용+작성자</option>
+                        <option value="TCI">제목+내용+작성자</option>
+                    </select>
+                    <input type="text" class="form-control form-control-sm w-75" placeholder="Search" name="keyword">
+                    <input type="hidden" name="page" value="1">
+                    <input type="hidden" name="amount" value="${pageDto.cri.amount}">
+                    <input type="hidden" name="cno" value="${pageDto.cri.cno}">
+                    <button class="btn btn-dark btn-sm" type="submit">검색</button>
+                </form>
+            </div>
+        </main>
+
+    </div>
+    <!-- Footer -->
+    <footer style="background-color: var(--col-1);" class="py-4">
+        <div class="container px-0">
+            <div class="d-flex justify-content-between align-items-center">
+                <a href="#"><img src="img/logo_f.svg" alt="Happy Givers"></a>
+                <a href="#"><i class="fa-brands fa-github fs-4" style="color: var(--col-5);"></i></a>
+            </div>
+            <ul class="list-unstyled d-flex gap-3 small mt-5 mb-3">
+                <li><a href="#" class="text-decoration-none" style="color: var(--col-5);">공지사항</a></li>
+                <li><a href="#" class="text-decoration-none" style="color: var(--col-5);">회사소개</a></li>
+                <li><a href="#" class="text-decoration-none" style="color: var(--col-5);">이용약관</a></li>
+                <li><a href="#" class="text-decoration-none fw-bold" style="color: var(--col-5);">개인정보처리방침</a></li>
+                <li><a href="#" class="text-decoration-none" style="color: var(--col-5);">고객센터</a></li>
+            </ul>
+            <p class="small" style="color: var(--col-5);">&copy;Copyright Happy Givers All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const posts = Array.from({ length: 128 }).map((_, i) => ({
+            image: 'img/img2.png',
+            title: '입양 준비를 함께해 주세요!',
+            org: '한국고양이보호협회',
+            amount: '2,752,060원',
+            percent: 40,
+            participants: 245
+        }));
+        const pageSize = 16; // posts per page
+        let currentPage = 1;
+        function renderPosts(posts, page) {
+            const start = (page - 1) * pageSize;
+            const end = start + pageSize;
+            const currentPosts = posts.slice(start, end);
+            const grid = $('#post-grid');
+            grid.empty(); // clear existing posts
+            currentPosts.forEach(post => {
+                const postHtml = `
+            <div class="col">
+                <div class="card post-card h-100 shadow-sm">
+                    <img src="${post.image}" class="card-img-top" alt="Post Image">
+                    <div class="card-body d-flex flex-column">
+                        <div class="post-title mb-1">${post.title}</div>
+                        <div class="post-meta mb-2">${post.org}</div>
+                        <div class="progress mb-1">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: ${post.percent}%"
+                                 aria-valuenow="${post.percent}" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <div class="progress-wrapper">
+                            <span><strong>${post.amount}</strong></span>
+                            <span class="text-primary">${post.percent}%</span>
+                        </div>
+                        <small class="text-muted mt-auto">${post.participants}명 참여중</small>
+                    </div>
+                </div>
+            </div>
+        `;
+                grid.append(postHtml);
+            });
+        }
+        function renderPagination(total, size, current) {
+            const pageCount = Math.ceil(total / size);
+            const $pagination = $('#pagination').empty();
+            const btn = (iconClass, disabled, page) => {
+                const b = $(`<button class="btn btn-sm mx-1 rounded-3 ${disabled ? 'btn-secondary' : 'btn-outline-primary'}">
+                  <i class="${iconClass}"></i>
+                </button>`);
+                if (!disabled) {
+                    b.on('click', () => {
+                        currentPage = page;
+                        renderPosts(posts, currentPage);
+                        renderPagination(total, size, currentPage);
+                    });
+                } else {
+                    b.prop('disabled', true);
+                }
+                return b;
+            };
+            $pagination
+                .append(btn('fa-solid fa-angles-left', current === 1, 1))
+                .append(btn('fa-solid fa-angle-left', current === 1, current - 1));
+            const maxPages = 5;
+            let start = Math.max(1, current - 2);
+            let end = Math.min(pageCount, start + maxPages - 1);
+            start = Math.max(1, end - maxPages + 1);
+            for (let i = start; i <= end; i++) {
+                const pageBtn = $(`<button class="btn btn-sm mx-1 rounded-3 ${i === current ? 'btn-primary' : 'btn-outline-primary'}">${i}</button>`);
+                pageBtn.on('click', () => {
+                    currentPage = i;
+                    renderPosts(posts, currentPage);
+                    renderPagination(total, size, currentPage);
+                });
+                $pagination.append(pageBtn);
+            }
+            $pagination
+                .append(btn('fa-solid fa-angle-right', current === pageCount, current + 1))
+                .append(btn('fa-solid fa-angles-right', current === pageCount, pageCount));
+        }
+        // Initialize
+        $(document).ready(function () {
+            renderPosts(posts, currentPage);
+            renderPagination(posts.length, pageSize, currentPage);
+        });
+    </script>
+</body>
+</html>

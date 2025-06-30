@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>비밀번호 재설정</title>
+  <title>해피기버즈 - 세상을 바꾸는 순간</title>
 
   <!-- Bootstrap CSS -->
   <link
@@ -17,6 +17,7 @@
   />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 </head>
 <body>
   <header>
@@ -40,25 +41,14 @@
 
     <div class="container">
       <main>
-        <h2 class="text-center">비밀번호 재설정</h2>
+        <h2 class="text-center my-5">피드 글 작성</h2>
+        <form class="my-4">
+          <div id="editor"></div>
 
-        <form class="d-flex flex-column mx-auto my-5 gap-4" style="max-width: 460px;">
-
-            <div class="d-flex border rounded-3 list-group p-3 gap-3">
-              <div class="form-floating">
-                <input type="password" class="form-control" placeholder="비밀번호" name="pw" id="pw">
-                <label for="pw">비밀번호</label>
-              </div>
-              <div class="form-floating">
-                <input type="password" class="form-control" placeholder="비밀번호" name="pwck" id="pwck">
-                <label for="pw">비밀번호 재설정</label>
-              </div>
-  
-            </div>
-            
-
-            <button class="btn btn-primary btn-lg">비밀번호 재설정</button>
-          
+          <div class="float-end mt-4">
+            <button class="btn btn-outline-primary me-2">취소</button>
+            <button class="btn btn-primary me-2">글쓰기</button>
+          </div>
         </form>
       </main>
     </div>
@@ -80,17 +70,76 @@
             <p class="small" style="color: var(--col-5);">&copy;Copyright Happy Givers All rights reserved.</p>
         </div>
     </footer>
-<script>
-  $(_ => {
-    $("form").on("submit", function() {
-      if ($("#pw").val() !== $("#pwck").val()) {
-        event.preventDefault();
-        alert("비밀번호가 다릅니다.");
+
+  <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+  <script>
+    // const MAX_IMAGE_COUNT = 1;
+
+    // const editor = new toastui.Editor({
+    //   el: document.querySelector('#editor'),
+    //   height: '500px',
+    //   initialEditType: 'wysiwyg',
+    //   previewStyle: 'vertical',
+    //   hooks: {
+    //     addImageBlobHook: (blob, callback) => {
+    //       // DOM 기준 이미지 개수 확인 (삭제 시 반영됨)
+    //       const currentImageCount = document.querySelectorAll('#editor img').length;
+
+    //       if (currentImageCount >= MAX_IMAGE_COUNT) {
+    //         alert(`이미지는 1개만 등록할 수 있습니다.`);
+    //         return;
+    //       }
+
+    //       const formData = new FormData();
+    //       formData.append('uploadFile', blob); // 파일 파라미터명은 서버 기준에 맞게 수정
+
+    //       fetch('/uploadImage', {
+    //         method: 'POST',
+    //         body: formData
+    //       })
+    //         .then(response => {
+    //           if (!response.ok) throw new Error('업로드 실패');
+    //           return response.json();
+    //         })
+    //         .then(data => {
+    //           if (!data.url) throw new Error('서버에서 이미지 URL 누락');
+    //           callback(data.url, 'image'); // 서버가 JSON 형태로 { url: "..."} 반환해야 함
+    //         })
+    //         .catch(error => {
+    //           console.error('이미지 업로드 중 오류:', error);
+    //           alert('이미지 업로드에 실패했습니다. 다시 시도해주세요.');
+    //         });
+    //     }
+    //   }
+    // });
+
+
+    const MAX_IMAGE_COUNT = 1;
+
+    const editor = new toastui.Editor({
+      el: document.querySelector('#editor'),
+      height: '500px',
+      initialEditType: 'wysiwyg',
+      previewStyle: 'vertical',
+      hooks: {
+        addImageBlobHook: (blob, callback) => {
+          // 에디터 내부 실제 렌더된 이미지 개수 기준으로 검사 (삭제도 반영됨)
+          const currentImageCount = document.querySelectorAll('#editor img').length;
+
+          if (currentImageCount >= MAX_IMAGE_COUNT) {
+            alert(`이미지는 1개만 등록할 수 있습니다.`);
+            return;
+          }
+
+          const fakeUrl = URL.createObjectURL(blob);
+          callback(fakeUrl, 'image');
+        }
       }
     });
 
-  })
-</script>
 
+
+  </script>
 </body>
 </html>
