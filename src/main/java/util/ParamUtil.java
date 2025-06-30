@@ -22,8 +22,7 @@ public class ParamUtil {
 //			}
 			
 			Field[] fields = clazz.getDeclaredFields();
-			for(Field f : fields) {
-				log.info("{},{}",f.getType(),f.getName()); 
+			for(Field f : fields) { 
 				String param = req.getParameter(f.getName());
 				if(param != null) {
 					f.setAccessible(true);
