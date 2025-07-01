@@ -113,6 +113,20 @@ public class BoardService {
 		return null;
 	}
 	
+	// 후원 승인필요 리스트
+		public List<Board> listOrgCheck(Status status) {
+			try(SqlSession session = MybatisUtil.getSqlSession()) {
+				BoardMapper mapper = session.getMapper(BoardMapper.class); 
+				List<Board> list = mapper.listOrgCheck(status);
+				return list;
+			}
+			catch (Exception e){
+				e.printStackTrace();
+			}
+			return null;
+		}
+	
+	
 	// 게시글 개수 가져오기
 	public long getCount(Criteria cri) {
 		try(SqlSession session = MybatisUtil.getSqlSession()) {
@@ -149,19 +163,26 @@ public class BoardService {
 	    return null;
 	}
 	
-	// 마감일 가져오기
-		public String findVoidDate(Long brno) {
+	
+	
+	// 회차정보 가져오기
+		public DonateRound findRound(Long brno) {
 			try(SqlSession session = MybatisUtil.getSqlSession()){
 				if (brno == null) return null;
 			    
 				DonateMapper mapper = session.getMapper(DonateMapper.class);
 			    DonateRound round = mapper.selectOneRound(brno);
-				return round.getVoiddate();
+				return round;
 			}
 			catch (Exception e){
 				e.printStackTrace();
 			}
 			return null;
 		}
+		
+		
+		
+	
+	
 	
 }

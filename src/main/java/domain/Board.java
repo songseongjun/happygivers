@@ -29,6 +29,10 @@ public class Board {
 	private Status status; // 게시글 상태
 	private Long drno; // 연결된 모금회차 고유번호
 	
+	
+	
+	
 	private String thumbnail; // 썸네일
-	private String voiddate; // 마감일
+	private DonateRound round; // 라운드 개체
+	private String cname; // 카테고리명
 }

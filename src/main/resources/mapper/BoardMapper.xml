@@ -83,6 +83,16 @@
  		order by bno DESC
  	</select>
  	
+ 	<!-- 승인필요 게시글 -->
+ 	<select id="listOrgCheck" resultMap="b">
+ 		select * 
+ 		from tbl_board
+ 		where status = #{status} and drno is not null
+ 		order by bno
+ 	</select>
+ 	
+ 	
+ 	
  	<!-- 게시글 하나 선택 -->
  	<select id="selectOne" resultMap="b">
  		select * from tbl_board where bno = #{bno}

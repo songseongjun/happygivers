@@ -1,0 +1,54 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<div class="col-lg-4 px-0" style="max-width: 200px; width:100%;">
+
+                
+                <!-- 공지사항 -->
+                <div class="border rounded-3 p-4 d-flex flex-column gap-4">
+                    <div>
+                        <div class="d-flex">
+                            <p class="fs-5 fw-semibold m-0" style="color: var(--col-6);">회원</p>
+                        </div>
+                        <ul class="p-0 d-flex flex-column mt-2 mb-0">
+                            <li><a href="#" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">회원목록 조회</a></li>
+                            <li><a href="#" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">기관회원 승인</a></li>
+                            <li><a href="#" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">서브관리자 생성</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div class="d-flex">
+                            <p class="fs-5 fw-semibold m-0" style="color: var(--col-6);">기부/결제</p>
+                        </div>
+                        <ul class="p-0 d-flex flex-column mt-2 mb-0">
+                            <li><a href="#" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">모금함 조회</a></li>
+                            <li><a href="#" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">기부내역 조회</a></li>
+                            <li><a href="#" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">결제내역 조회</a></li>
+                            <li><a href="#" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">환불 관리</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div class="d-flex">
+                            <p class="fs-5 fw-semibold m-0" style="color: var(--col-6);">게시판</p>
+                        </div>
+                        <ul class="p-0 d-flex flex-column mt-2 mb-0">
+                            <li><a href="${cp }/admin/board/orgcheck?status=DISABLED" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">기부 게시글 승인</a></li>
+                            <li><a href="#" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">관리자 글 목록 / 작성</a></li>
+                            <li><a href="#" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">게시글 관리</a></li>
+                            <li><a href="#" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">댓글 관리</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div class="d-flex">
+                            <p class="fs-5 fw-semibold m-0" style="color: var(--col-6);">기타 관리</p>
+                        </div>
+                        <ul class="p-0 d-flex flex-column mt-2 mb-0">
+                            <li><a href="#" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">로그인 로그</a></li>
+                            <li><a href="#" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">탈퇴회원 로그</a></li>
+                            <li><a href="#" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">이메일 인증 로그</a></li>
+                            <li><a href="#" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">뱃지 관리</a></li>
+                        </ul>
+                    </div>
+                    
+                </div>
+                
+            </div>
