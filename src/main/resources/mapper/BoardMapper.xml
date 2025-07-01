@@ -28,9 +28,6 @@
 			<if test="status != null">
 		 		and status = #{status}
  			</if>
-			<if test="status == null">
-		 		and status = 'ACTIVE'
- 			</if>
  			<if test="types != null">
  				<foreach collection="types" item="t" open="and(" close=")" separator="or">
  					<choose>

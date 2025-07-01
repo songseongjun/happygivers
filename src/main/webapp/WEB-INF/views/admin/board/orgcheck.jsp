@@ -42,12 +42,12 @@
 	                  <span class="col-1 text-center">${b.bno}</span>
 	                  <span class="col-1 text-center">${b.cname }</span>
 	                  <span class="col text-center text-truncate"><a href="${cp}/board/view?bno=${b.bno}" class="text-black ">${b.title}</a></span>
-	                  <span class="col-1 text-center">노인복지재단</span>
+	                  <span class="col-1 text-center">${b.name }</span>
 	                  <span class="col-2 text-center"><fmt:formatNumber value="${b.round.goalamount}" />원</span>
 	                  <span class="col-1 text-center">${b.regdate}</span>
 	                  <span class="col-1 text-center">${b.round.voiddate}</span>
 	                  <div class="btn-group btn-group-sm col-2">
-	                    <button type="button" class="btn btn-outline-secondary">승인</button>
+	                    <a href="${cp }/admin/board/orgboardstatuschange?bno=${b.bno}&status=ACTIVE&name=${b.name}" class="btn btn-outline-secondary">승인</a>
 	                    <button type="button" class="btn btn-outline-secondary">반려</button>
 	                  </div>
 	                </div>

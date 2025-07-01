@@ -10,11 +10,13 @@ import domain.Board;
 import domain.Category;
 import domain.Donate;
 import domain.DonateRound;
+import domain.Member;
 import domain.dto.Criteria;
 import domain.en.Status;
 import mapper.BoardMapper;
 import mapper.CategoryMapper;
 import mapper.DonateMapper;
+import mapper.MemberMapper;
 import util.MybatisUtil;
 
 public class BoardService {
@@ -186,7 +188,19 @@ public class BoardService {
 			return null;
 		}
 		
-	
-	
+	// 작성자명 가져오기
+		public String findname(Long mno) {
+			try(SqlSession session = MybatisUtil.getSqlSession()){
+				if (mno == null) return null;
+			    
+				MemberMapper mapper = session.getMapper(MemberMapper.class);
+			    Member member = mapper.findByMno(mno);
+				return member.getName();
+			}
+			catch (Exception e){
+				e.printStackTrace();
+			}
+			return null;
+		}
 	
 }

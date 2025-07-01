@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>      
+    
 <div class="col-lg-4 px-0" style="max-width: 200px; width:100%;">
 
                 
@@ -10,7 +12,7 @@
                             <p class="fs-5 fw-semibold m-0" style="color: var(--col-6);">회원</p>
                         </div>
                         <ul class="p-0 d-flex flex-column mt-2 mb-0">
-                            <li><a href="#" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">회원목록 조회</a></li>
+                            <li><a href="#" class="text-decoration-none text-truncate py-2  d-block " style="color: var(--col-3);">회원목록 조회</a></li>
                             <li><a href="#" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">기관회원 승인</a></li>
                             <li><a href="#" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">서브관리자 생성</a></li>
                         </ul>
@@ -33,7 +35,7 @@
                         <ul class="p-0 d-flex flex-column mt-2 mb-0">
                             <li><a href="${cp }/admin/board/orgcheck?status=DISABLED" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">기부 게시글 승인</a></li>
                             <li><a href="#" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">관리자 글 목록 / 작성</a></li>
-                            <li><a href="#" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">게시글 관리</a></li>
+                            <li><a href="${cp }/admin/board/list" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">게시글 관리</a></li>
                             <li><a href="#" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">댓글 관리</a></li>
                         </ul>
                     </div>

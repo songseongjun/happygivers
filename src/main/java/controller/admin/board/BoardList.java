@@ -13,12 +13,11 @@ import domain.Board;
 import domain.dto.Criteria;
 import lombok.extern.slf4j.Slf4j;
 import service.BoardService;
-import util.AlertUtil;
 import util.ParamUtil;
 
 @Slf4j
-@WebServlet("/admin/board/orgcheck")
-public class OrgBoardCheck extends HttpServlet{
+@WebServlet("/admin/board/list")
+public class BoardList extends HttpServlet{
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -29,9 +28,6 @@ public class OrgBoardCheck extends HttpServlet{
 //		cri.setStatus(Status.valueOf(req.getParameter("status")));
 		
 		List<Board> boards = service.list(cri);
-		if(boards == null) {
-			AlertUtil.alert("승인할 글이 없습니다.", "/admin/board/list", req, resp);
-		}
 		for(Board b : boards) {
 			b.setRound(service.findRound(b.getDrno()));
 			b.setCname(service.findCname(b.getCno()));
@@ -39,6 +35,6 @@ public class OrgBoardCheck extends HttpServlet{
 		}
 		
 		req.setAttribute("boards", boards);
-		req.getRequestDispatcher("/WEB-INF/views/admin/board/orgcheck.jsp").forward(req, resp);
+		req.getRequestDispatcher("/WEB-INF/views/admin/board/boardlist.jsp").forward(req, resp);
 	}
 }
