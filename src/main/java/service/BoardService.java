@@ -1,6 +1,8 @@
 package service;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -136,5 +138,30 @@ public class BoardService {
 		}
 		return null;
 	}
+	
+	
+	// 썸네일 가져오기
+	public String findThumbnail(String content) {
+	    if (content == null) return null;
+	    String regex = "!\\[\\]\\((data:image\\/[^;]+;base64,[^)]+)\\)";
+	    Matcher matcher = Pattern.compile(regex).matcher(content);
+	    if (matcher.find()) return matcher.group(1);
+	    return null;
+	}
+	
+	// 마감일 가져오기
+		public String findVoidDate(Long brno) {
+			try(SqlSession session = MybatisUtil.getSqlSession()){
+				if (brno == null) return null;
+			    
+				DonateMapper mapper = session.getMapper(DonateMapper.class);
+			    DonateRound round = mapper.selectOneRound(brno);
+				return round.getVoiddate();
+			}
+			catch (Exception e){
+				e.printStackTrace();
+			}
+			return null;
+		}
 	
 }

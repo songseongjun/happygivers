@@ -1,6 +1,9 @@
 package domain;
 
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.apache.ibatis.type.Alias;
 
 import domain.en.Status;
@@ -25,4 +28,7 @@ public class Board {
 	private int cnt; // 조회수
 	private Status status; // 게시글 상태
 	private Long drno; // 연결된 모금회차 고유번호
+	
+	private String thumbnail; // 썸네일
+	private String voiddate; // 마감일
 }
