@@ -40,4 +40,5 @@ public class MybatisUtil {
 		System.out.println(sqlSessionFactory.getConfiguration().getEnvironment().getDataSource());
 		System.out.println(getSqlSession());
 	}
+
 }

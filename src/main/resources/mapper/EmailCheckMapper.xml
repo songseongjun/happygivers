@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="mapper.EmailCheckMapper">
+ <insert id="insertCheck">
+  INSERT INTO tbl_email_check(email, uuid, voiddate) VALUES(#{email}, #{uuid}, #{voiddate})
+</insert>
+
+<select id="selectByUUID" resultType="domain.EmailCheck">
+  SELECT * FROM tbl_email_check WHERE uuid = #{uuid}
+</select>
+
+<select id="selectByEmail" resultType="domain.EmailCheck">
+  SELECT * FROM tbl_email_check WHERE email = #{email}
+</select>
+
+<update id="updateCheck">
+  UPDATE tbl_email_check SET `check` = 1 WHERE email = #{email}
+</update>
+  </mapper> 

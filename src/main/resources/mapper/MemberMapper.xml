@@ -10,4 +10,7 @@
   	<select id="findById" resultType="Member">
   	 select * from tbl_member where id = #{id}
   	</select>
+  	<select id="findByMno" resultType="Member">
+  	 select * from tbl_member where mno = #{mno}
+  	</select>
   </mapper> 
