@@ -40,7 +40,7 @@
 	                <div class="row my-0 align-items-center">
 	                  <input class="form-check-input col-1 mx-2 my-0 p-0" type="checkbox" name="check1" value="something" style="width: 20px; height: 20px;">
 	                  <span class="col-1 text-center">${b.bno}</span>
-	                  <span class="col-1 text-center">어르신</span>
+	                  <span class="col-1 text-center">${b.cname }</span>
 	                  <span class="col text-center text-truncate"><a href="${cp}/board/view?bno=${b.bno}" class="text-black ">${b.title}</a></span>
 	                  <span class="col-1 text-center">노인복지재단</span>
 	                  <span class="col-2 text-center"><fmt:formatNumber value="${b.round.goalamount}" />원</span>
@@ -66,7 +66,11 @@
             
         </main>
 </div>
-       
+
+
+
+                
+               
         <%@ include file="../../common/footer.jsp" %>
 </body>
 </html>

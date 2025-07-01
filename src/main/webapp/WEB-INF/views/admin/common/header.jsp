@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <header>
         <div class="container d-flex justify-content-between py-3 align-items-center px-0" >
-            <a href="${cp }/admin/index"><img src="${cp }/img/logo.svg" alt="Happy  Givers"></a>
+            <a href="${cp }/admin"><img src="${cp }/img/logo.svg" alt="Happy  Givers"></a>
   
             <div class="dropdown ">
 			  <a class="overflow-hidden rounded-5 d-block dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" style="width: 40px; height: 40px; border: 2px solid var(--col-main);">

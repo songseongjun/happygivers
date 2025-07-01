@@ -7,8 +7,8 @@ import domain.Category;
 
 public interface CategoryMapper {
 	void insert(Category cate);
-	void delete(Long cno);
+	void delete(Integer cno);
 	void update(Category cate);
 	
-	Category selectOne(Long cno);
+	Category selectOne(Integer cno);
 }

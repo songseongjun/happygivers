@@ -1,6 +1,6 @@
 package mapper;
 
-import domain.en.Status;
+
 import java.util.List;
 
 import domain.Board;
@@ -13,7 +13,6 @@ public interface BoardMapper {
 	
 	
 	List<Board> list(Criteria cri);
-	List<Board> listOrgCheck(Status status);
 	long getCount(Criteria cri);
 	
 	

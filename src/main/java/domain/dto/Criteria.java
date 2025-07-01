@@ -28,7 +28,7 @@ public class Criteria { //페이지 관련
 	private int page = 1;
 	private int amount = 10;
 	private Integer cno;
-	private Status status = Status.ACTIVE;
+	private Status status;
 	private String type = ""; // TCI
 	private String keyword = "";
 	
@@ -53,7 +53,9 @@ public class Criteria { //페이지 관련
 			cri.page = Integer.parseInt(req.getParameter("page"));
 			cri.amount = Integer.parseInt(req.getParameter("amount"));
 			cri.type = req.getParameter("type");
+			cri.status = Status.valueOf(req.getParameter("status"));
 			cri.keyword = URLDecoder.decode(req.getParameter("keyword"),"utf-8");
+			log.info("{}", cri);
 		}
 		catch (Exception e) {
 		} 

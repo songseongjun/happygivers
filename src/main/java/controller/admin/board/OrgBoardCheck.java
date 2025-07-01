@@ -10,9 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import domain.Board;
-import domain.en.Status;
+import domain.dto.Criteria;
+import lombok.extern.slf4j.Slf4j;
 import service.BoardService;
+import util.ParamUtil;
 
+@Slf4j
 @WebServlet("/admin/board/orgcheck")
 public class OrgBoardCheck extends HttpServlet{
 	
@@ -21,9 +24,13 @@ public class OrgBoardCheck extends HttpServlet{
 		BoardService service = new BoardService();
 		//파라미터 받아오기
 		
-		List<Board> boards = service.listOrgCheck(Status.valueOf(req.getParameter("status")));
+		Criteria cri = ParamUtil.get(req, Criteria.class);
+//		cri.setStatus(Status.valueOf(req.getParameter("status")));
+		
+		List<Board> boards = service.list(cri);
 		for(Board b : boards) {
 			b.setRound(service.findRound(b.getDrno()));
+			b.setCname(service.findCname(b.getCno()));
 		}
 		
 		req.setAttribute("boards", boards);
