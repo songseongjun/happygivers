@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <div class="sidebar sidebar-fixed border-end" id="sidebar">
       <!-- 사이드바 헤더 -->
       <div class="sidebar-header border-bottom ps-4">

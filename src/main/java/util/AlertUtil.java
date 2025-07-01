@@ -23,4 +23,10 @@ public class AlertUtil {
 		log.info("{}", url);
 		alert(msg, url, req, resp);
 	}
+	
+	public static void alert(String msg, boolean isPrev, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+		req.setAttribute("msg", msg);
+		req.setAttribute("url", req.getHeader("Referer"));
+		req.getRequestDispatcher("/WEB-INF/views/common/alert.jsp").forward(req, resp);
+	}
 }

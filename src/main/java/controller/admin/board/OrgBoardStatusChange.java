@@ -17,28 +17,19 @@ import util.AlertUtil;
 import util.ParamUtil;
 
 @Slf4j
-@WebServlet("/admin/board/orgcheck")
-public class OrgBoardCheck extends HttpServlet{
+@WebServlet("/admin/board/orgboardstatuschange")
+public class OrgBoardStatusChange extends HttpServlet{
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		BoardService service = new BoardService();
 		//파라미터 받아오기
+		Board board = ParamUtil.get(req, Board.class);
+		log.info("{}", board);
+		service.modifyStatus(board.getBno(), board.getStatus());
 		
-		Criteria cri = ParamUtil.get(req, Criteria.class);
-//		cri.setStatus(Status.valueOf(req.getParameter("status")));
 		
-		List<Board> boards = service.list(cri);
-		if(boards == null) {
-			AlertUtil.alert("승인할 글이 없습니다.", "/admin/board/list", req, resp);
-		}
-		for(Board b : boards) {
-			b.setRound(service.findRound(b.getDrno()));
-			b.setCname(service.findCname(b.getCno()));
-			b.setName(service.findname(b.getMno()));
-		}
 		
-		req.setAttribute("boards", boards);
-		req.getRequestDispatcher("/WEB-INF/views/admin/board/orgcheck.jsp").forward(req, resp);
+		AlertUtil.alert("[ " + board.getBno() + "번 ] 글의 상태가 변경되었습니다.", true, req, resp);
 	}
 }
