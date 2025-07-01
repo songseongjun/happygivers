@@ -16,26 +16,29 @@ import lombok.extern.slf4j.Slf4j;
 import service.MemberService;
 import util.ParamUtil;
 
-@WebServlet("/member/loginuser")
+@WebServlet("/member/login")
 @Slf4j
 public class Login extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.getRequestDispatcher("/WEB-INF/views/member/loginuser.jsp").forward(req, resp);
+		
+		
+		req.setAttribute("mtype", req.getParameter("mtype"));
+		req.getRequestDispatcher("/WEB-INF/views/member/login.jsp").forward(req, resp);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-<<<<<<< HEAD
 		String id = req.getParameter("id");
 		String pw = req.getParameter("pw");
+		Member member = ParamUtil.get(req, Member.class);
 		log.info("{} {}",id,pw);
-		boolean ret = new MemberService().login(req.getParameter("id"),req.getParameter("pw"));
+		boolean ret = new MemberService().login(member.getId(), member.getPw(), member.getMtype());
 
 		log.info("{}",ret);
 		if (ret) { // 로그인
 			HttpSession session = req.getSession();
-			session.setMaxInactiveInterval(60 * 10);// 10분뒤에 로그아웃되는상황만든것
+			session.setMaxInactiveInterval(60 * 60);// 10분뒤에 로그아웃되는상황만든것
 			session.setAttribute("member", new MemberService().findById(req.getParameter("id")));
 			String url = req.getParameter("url");
 			if (url == null) {
@@ -50,35 +53,7 @@ public class Login extends HttpServlet {
 			resp.sendRedirect("login?msg=fail"); 
 
 		}
-
-=======
-		Member member = ParamUtil.get(req, Member.class);
-		boolean ret =  new MemberService().login(member.getId(), member.getPw());
 		
-		
-		
-		if(ret) { //로그인 
-		HttpSession session =req.getSession();
-		session.setMaxInactiveInterval(60*10);//10분뒤에 로그아웃되는상황만든것
-			session.setAttribute("member",new MemberService().findById(member.getId()));
-			
-		
-			String url = req.getParameter("url");
-			if(url == null) {
-				resp.sendRedirect(req.getContextPath() + "/index");
-			}
-			else {
-				String decodedUrl = URLDecoder.decode(url,"utf-8");
-				Criteria cri = Criteria.init(req);
-				resp.sendRedirect(decodedUrl + "?" + cri.getQs2());
-			}
-			
-		}else { //로그인실패
-		resp.sendRedirect("login?msg=fail");
-			
-		}
-		
->>>>>>> branch 'ssj' of https://github.com/manlubo/happygivers.git
 	}
 
 }
