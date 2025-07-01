@@ -18,6 +18,7 @@ public class Member {
 	private Long mno; //회원번호
 	private String id;//로그인아이디
 	private String pw;//비밀번호
+	private String name;//이름
 	private String email;//이메일주소
 	private String tel;//전화번호
 	private String regdate;//회원가입일
@@ -30,4 +31,13 @@ public class Member {
 	private boolean emailcheck;//이메일 인증
 	private String profile;//프로필
 	
+
+	public String getName() {
+	    return name;
+	}
+
+	public void setName(String name) {
+	    this.name = name;
+	}
+
 }

@@ -169,11 +169,11 @@
                 <!-- 로그인 전-->
                 <div class="border p-4 rounded-3">
                     <p class="text-center" style="color: var(--col-5);">당신의 소중한 후원을 기다립니다.</p>
-                    <a href="#" class="btn btn-primary form-control py-2 fs-6">로그인</a>
+                    <a href="${cp }/member/login?mtype=USER" class="btn btn-primary form-control py-2 fs-6">로그인</a>
                     <ul class="d-flex gap-3 mt-3 mb-0 mx-auto px-0 justify-content-center small">
                         <li><a href="#" class="text-decoration-none" style="color: var(--col-5);">아이디 찾기</a></li>
                         <li><a href="#" class="text-decoration-none" style="color: var(--col-5);">비밀번호 찾기</a></li>
-                        <li><a href="#" class="text-decoration-none" style="color: var(--col-5);">회원가입</a></li>
+                        <li><a href="${cp}/member/register?mytype" class="text-decoration-none" style="color: var(--col-5);">회원가입</a></li>
 
                     </ul>
                 </div>
