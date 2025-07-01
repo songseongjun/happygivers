@@ -78,7 +78,7 @@
 		                        </div>
 								<div class="d-flex justify-content-between mt-2">
 									<small class="text-muted ">23명 참여중</small>
-									<small class="text-muted voidDate" data-voiddate="${b.voiddate }"></small>
+									<small class="text-muted voidDate" data-voiddate="${b.round.voiddate }"></small>
 								</div>
 		                    </div>
 		                </a>

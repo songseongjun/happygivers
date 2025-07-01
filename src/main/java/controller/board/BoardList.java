@@ -28,7 +28,7 @@ public class BoardList extends HttpServlet{
 		List<Board> boards = boardService.list(cri);
 		for (Board b : boards) {
 			b.setThumbnail(boardService.findThumbnail(b.getContent()));
-			b.setVoiddate(boardService.findVoidDate(b.getDrno()));
+			b.setRound(boardService.findRound(b.getDrno()));
 			log.info(b.getThumbnail());
 		}
 		

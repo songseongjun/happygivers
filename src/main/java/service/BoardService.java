@@ -7,11 +7,13 @@ import java.util.regex.Pattern;
 import org.apache.ibatis.session.SqlSession;
 
 import domain.Board;
+import domain.Category;
 import domain.Donate;
 import domain.DonateRound;
 import domain.dto.Criteria;
 import domain.en.Status;
 import mapper.BoardMapper;
+import mapper.CategoryMapper;
 import mapper.DonateMapper;
 import util.MybatisUtil;
 
@@ -113,6 +115,9 @@ public class BoardService {
 		return null;
 	}
 	
+
+	
+	
 	// 게시글 개수 가져오기
 	public long getCount(Criteria cri) {
 		try(SqlSession session = MybatisUtil.getSqlSession()) {
@@ -149,19 +154,39 @@ public class BoardService {
 	    return null;
 	}
 	
-	// 마감일 가져오기
-		public String findVoidDate(Long brno) {
+	
+	
+	// 회차정보 가져오기
+		public DonateRound findRound(Long brno) {
 			try(SqlSession session = MybatisUtil.getSqlSession()){
 				if (brno == null) return null;
 			    
 				DonateMapper mapper = session.getMapper(DonateMapper.class);
 			    DonateRound round = mapper.selectOneRound(brno);
-				return round.getVoiddate();
+				return round;
 			}
 			catch (Exception e){
 				e.printStackTrace();
 			}
 			return null;
 		}
+		
+	// 카테고리명 가져오기
+		public String findCname(Integer cno) {
+			try(SqlSession session = MybatisUtil.getSqlSession()){
+				if (cno == null) return null;
+			    
+				CategoryMapper mapper = session.getMapper(CategoryMapper.class);
+			    Category cate = mapper.selectOne(cno);
+				return cate.getCname();
+			}
+			catch (Exception e){
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
+	
+	
 	
 }

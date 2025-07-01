@@ -11,3 +11,4 @@
     <!-- Main styles for this application-->
     <link href="${cp }/admin/css/style.css" rel="stylesheet">
     <link href="${cp }/admin/css/chartjs.css" rel="stylesheet">
+    

@@ -13,21 +13,23 @@
  		<result column="cno" property="cno"/>
  		<result column="cnt" property="cnt"/>
  		<result column="status" property="status"/>
- 	</resultMap> 	
+ 	</resultMap>
+
 
 <sql id="criteria">
  		<where>
  			<trim prefixOverrides="AND | OR">
- 			<choose>
-		        <when test="cno != null">
-		          AND cno = #{cno}
-		        </when>
-		        <otherwise>
-		          AND drno is not null
-		        </otherwise>
-		      </choose>
- 			<if test="status != null">
+ 			<if test="cno != null">
+ 				AND cno = #{cno}
+ 			</if>
+ 			<if test="cno == null">
+ 				AND cno BETWEEN 3 AND 9
+ 			</if>
+			<if test="status != null">
 		 		and status = #{status}
+ 			</if>
+			<if test="status == null">
+		 		and status = 'ACTIVE'
  			</if>
  			<if test="types != null">
  				<foreach collection="types" item="t" open="and(" close=")" separator="or">
@@ -75,13 +77,17 @@
  		delete from tbl_board where bno = #{bno}
  	</delete>
  	
- 	<!-- 활성화 게시글 리스트 -->
+ 	
+ 	<!-- 게시글 리스트 -->
  	<select id="list" resultMap="b">
  		select * 
  		from tbl_board
  		<include refid="criteria"/>
  		order by bno DESC
  	</select>
+ 	
+ 	
+ 	
  	
  	<!-- 게시글 하나 선택 -->
  	<select id="selectOne" resultMap="b">
