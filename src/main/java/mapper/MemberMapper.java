@@ -7,4 +7,5 @@ public interface MemberMapper {
 	int insert(Member member);
 	
 	Member findById(String id);
+	Member findByMno(Long mno);
 }

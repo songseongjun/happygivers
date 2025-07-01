@@ -36,10 +36,11 @@
                 <input type="password" class="form-control" placeholder="비밀번호" name="pw" id="pw">
                 <label for="pw">비밀번호</label>
               </div>
+              <!-- 이메일인증발송 -->
               <div class="form-floating input-group">
-                <input type="text" class="form-control" placeholder="이메일주소 (비밀번호 찾기 등 본인 확인용)" name="email" id="email" autocomplete="email">
-                <label for="email" style="z-index: 10;">이메일주소 (비밀번호 찾기 등 본인 확인용)</label>
-                <button class="btn btn-outline-primary" id="emailckplz">인증번호 받기</button>
+              <input type="text" class="form-control" name="email" id="email" placeholder="이메일">
+              <label for="email">이메일</label>
+              <button type="button" id="emailckplz" class="btn btn-outline-primary">이메일 인증</button>
               </div>
               
               <div class="form-floating input-group">
@@ -53,11 +54,6 @@
               <div class="form-floating">
                 <input type="text" class="form-control" placeholder="이름" name="name" id="name" autocomplete="name">
                 <label for="name">이름</label>
-              </div>
-              
-              <div class="form-floating">
-                <input type="text" class="form-control" placeholder="닉네임" name="nickname" id="nickname">
-                <label for="nickname">닉네임</label>
               </div>
               
               <div class="form-floating">
@@ -113,6 +109,15 @@ $(document).ready(function(){
 	    const fullAddr = $("#roadAddress").val() + " " + $("#detailAddress").val();
 	    $("#location").val(fullAddr);
 	  });
+	});
+
+
+
+document.querySelector("#emailckplz").addEventListener("click", function() {
+	  const email = document.querySelector("#email").value;
+	  fetch("/happygivers/email/send?email=" + email)
+	    .then(res => res.text())
+	    .then(msg => alert("메일이 전송되었습니다. 5분 내에 인증해주세요!"));
 	});
 
 </script>

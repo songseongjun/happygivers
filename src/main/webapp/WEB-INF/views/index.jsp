@@ -167,6 +167,7 @@
             </div>
             <div class="col-lg-4 px-0" style="max-width: 360px;">
                 <!-- 로그인 전-->
+                <c:if test="${empty member}">
                 <div class="border p-4 rounded-3">
                     <p class="text-center" style="color: var(--col-5);">당신의 소중한 후원을 기다립니다.</p>
                     <a href="${cp }/member/login?mtype=USER" class="btn btn-primary form-control py-2 fs-6">로그인</a>
@@ -177,18 +178,20 @@
 
                     </ul>
                 </div>
+                </c:if>
                        
              
 
 
 
                 <!-- 로그인 후-->
-                <!-- <div class="border rounded-3">
+                <c:if test="${not empty member }">
+                <div class="border rounded-3">
                     <div class="p-4 d-flex align-items-center gap-3 border-bottom">
                         <div class="overflow-hidden rounded-circle" style="width: 64px; height: 64px; border: 2px solid var(--border-1);">
                             <img src="${cp }/img/img1.png" class="object-fit-cover" alt="프로필사진" style="width: 64px; height: 64px;">
                         </div>
-                        <p class="fw-semibold fs-6 mb-0 flex-grow-1 text-truncate" style="color: var(--col-4);"><span style="color: var(--col-6);">키다리아저씨</span> 님</p>
+                        <p class="fw-semibold fs-6 mb-0 flex-grow-1 text-truncate" style="color: var(--col-4);"><span style="color: var(--col-6);">${member.name }</span> 님</p>
                         <a href="#" class="text-decoration-none border px-3 py-1 rounded-5 small" style="color: var(--col-3);">로그아웃</a>
                     </div>
                     <div class="p-3" style="background-color: var(--col-1);">
@@ -197,7 +200,8 @@
                             <a href="#" class="text-decoration-none fw-medium small" style="color: var(--col-5);">마이페이지</a>
                         </div>
                     </div>
-                </div> -->
+                </div>
+                </c:if>
 
                 <!-- 기부금 -->
                 <div class="border rounded-3 mt-4">
