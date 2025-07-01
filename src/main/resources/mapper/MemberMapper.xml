@@ -4,7 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="mapper.MemberMapper">
   	<insert id="insert">
- 	insert into tbl_member (id,pw,name,email,tel,nickname,location) values(#{id},#{pw},#{name},#{email},#{tel},#{nickname},#{location});
+ insert into tbl_member (id,pw,name,email,tel,nickname,location,mtype) values(#{id},#{pw},#{name},#{email},#{tel},#{nickname},#{location},#{mtype});
  	
   	</insert>
   	<select id="findById" resultType="Member">

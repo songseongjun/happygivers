@@ -16,7 +16,9 @@ public class MemberService {
 		try (SqlSession session = MybatisUtil.getSqlSession()) {
 			MemberMapper mapper = session.getMapper(MemberMapper.class);
 			member.setPw(PasswordEncoder.encode(member.getPw()));
-			return mapper.insert(member);
+			int result = mapper.insert(member);
+		    session.commit();
+			return result;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -29,8 +31,8 @@ public class MemberService {
 		if(member == null) {
 			return false;
 		}
-//			return PasswordEncoder.matches(pw, member.getPw()) && !member.getMtype().equals(mtype); 이쪽부분 고쳐야댐
-		return pw.equals(member.getPw()) && mtype.equals(member.getMtype());
+		return PasswordEncoder.matches(pw, member.getPw()) && mtype.equals(member.getMtype());
+//		return pw.equals(member.getPw()) && mtype.equals(member.getMtype());
 		}
 
 			//로그인 구현 기능

@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+  String mtype = request.getParameter("mtype");
+  if (mtype == null) mtype = "USER";
+  request.setAttribute("mtype", mtype); 
+%>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,15 +13,19 @@
 </head>
 <body>
 <%@ include file="../common/header.jsp" %>
+
 	<div class="container">
       <main>
         <h2 class="text-center">회원가입</h2>
         <div class="d-flex border rounded-3 mx-auto mt-5" style="max-width: 460px;">
-          <a href="#" class="flex-grow-1 btn btn-primary">일반회원</a>
-          <a href="#" class="flex-grow-1 btn">기관회원</a>
+          <a href="${cp}/member/register?mtype=USER" class="flex-grow-1 btn ${mtype == 'USER' ? 'btn-primary' : ''}">일반회원</a>
+          <a href="${cp }/member/register?mtype=ORG" class="flex-grow-1 btn ${mtype == 'ORG' ? 'btn-primary' : ''}">기관회원</a>
         </div>
-        <form class="d-flex flex-column mx-auto my-5 gap-4" style="max-width: 460px;">
-
+        <form action="/happygivers/member/register" method="post"
+      	class="d-flex flex-column mx-auto my-5 gap-4" style="max-width: 460px;">
+      	
+				<input type="hidden" name="mtype" value="${mtype}">
+				
             <div class="d-flex border rounded-3 list-group p-3 gap-3">
               <div class="form-floating">
                 <input type="text" class="form-control" placeholder="아이디" name="id" id="id">
@@ -57,12 +67,17 @@
               <div class="form-floating input-group">
                 <input type="text" class="form-control" id="roadAddress" name="roadAddress" placeholder="도로명 주소 또는 지번 주소" readonly>
                 <label for="roadAddress" style="z-index: 10;">도로명 주소 또는 지번 주소</label>
+                
+                
                 <button class="btn btn-outline-primary" type="button" onclick="execDaumPostcode()">주소 검색</button>
               </div>
               <div class="form-floating ">
                 <input type="text" class="form-control" id="detailAddress" name="detailAddress" placeholder="상세 주소">
                 <label for="detailAddress">상세 주소</label>
+                
+                
               </div>
+                <input type="hidden" name="location" id="location" />
             </div>
               
             <div class="d-flex border rounded-3 list-group p-3 gap-3" id="tosForm">
@@ -85,21 +100,21 @@
                 </label>
               </div>
             </div>
-            <button class="btn btn-primary btn-lg">회원가입</button>
-          
+            <button type="submit" class="btn btn-primary btn-lg">회원가입</button>
+          		
         </form>
       </main>
     </div>
 <%@ include file="../common/footer.jsp" %>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
-  $(document).ready(function(){
-    $("#roadAddress").on("input",function(){
-      const roadAddr = $(this).val();
-      const fullAddr = $("roadAddress").val() + " " + $("#detailAddress").val();
-      $("#location").val(roadAddr);
-    });
-  });
+$(document).ready(function(){
+	  $("#roadAddress, #detailAddress").on("input", function(){
+	    const fullAddr = $("#roadAddress").val() + " " + $("#detailAddress").val();
+	    $("#location").val(fullAddr);
+	  });
+	});
+
 </script>
 
 </body>
