@@ -64,7 +64,7 @@
                      <div class="col">
 		                <a href="${cp}/board/view?bno=${b.bno}&drno=${b.drno}" class="card post-card h-100 border-0 text-decoration-none">
 		                	<div class="overflow-hidden rounded-3">
-		                    	<img src="${cp }/img/img1.png" class="card-img-top img-zoom" alt="Post Image">
+		                    	<img src="${b.thumbnail != null ? b.thumbnail : 'https://placehold.co/300x250?text=No+img' }" class="card-img-top img-zoom" alt="Post Image">
 		                	</div>
 		                    <div class="card-body d-flex flex-column px-0 pt-2">
 		                        <p class="post-title my-2 fw-medium fs-6" style="color: var(--col-6);">${b.title }</p>
@@ -78,9 +78,7 @@
 		                        </div>
 								<div class="d-flex justify-content-between mt-2">
 									<small class="text-muted ">23명 참여중</small>
-									<small class="text-muted voidDate" data-voiddate="${b.regdate }">
-									${b.regdate }
-									</small>
+									<small class="text-muted voidDate" data-voiddate="${b.voiddate }"></small>
 								</div>
 		                    </div>
 		                </a>

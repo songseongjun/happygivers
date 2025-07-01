@@ -72,6 +72,8 @@ nav a:hover {color: var(--col-main);}
 
 .img-zoom {
   transition: transform 0.3s ease;
+  max-height: 176px;
+  object-fit : cover;
 }
 a:hover .img-zoom {
   transform: scale(1.05);
