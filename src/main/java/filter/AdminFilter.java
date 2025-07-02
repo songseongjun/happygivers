@@ -13,7 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import domain.Member;
 import domain.en.Mtype;
-
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @WebFilter("/admin/*")
 public class AdminFilter implements Filter{
 	@Override
@@ -24,17 +25,18 @@ public class AdminFilter implements Filter{
 
 
 		Object o = req.getSession().getAttribute("member");
-//		if(o == null || !(o instanceof Member)) {
-//			res.setStatus(401);
-//			res.sendRedirect("index");
-//			return;
-//		}
-//		Member member = (Member) o;
-//		if(member.getMtype() != Mtype.ADMIN || member.getMtype() != Mtype.MANAGER) {
-//			res.setStatus(403);
-//			res.sendRedirect("index");
-//			return;
-//		}
+		if(o == null || !(o instanceof Member)) {
+			res.setStatus(401);
+			res.sendRedirect("index");
+			return;
+		}
+		Member member = (Member) o;
+		log.info("{}", member);
+		if(!(member.getMtype().equals(Mtype.ADMIN) || member.getMtype().equals(Mtype.MANAGER))) {
+			res.setStatus(403);
+			res.sendRedirect("index");
+			return;
+		}
 				
 		
 		chain.doFilter(request, response);
