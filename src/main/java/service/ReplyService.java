@@ -38,6 +38,9 @@ public class ReplyService {
 		return null;
 	}
 	
+	
+	
+	
 	public void register(Reply Reply) {
 		try(SqlSession session = MybatisUtil.getSqlSession()) {
 			ReplyMapper mapper = session.getMapper(ReplyMapper.class);

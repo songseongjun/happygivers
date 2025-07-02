@@ -17,6 +17,7 @@ import mapper.BoardMapper;
 import mapper.CategoryMapper;
 import mapper.DonateMapper;
 import mapper.MemberMapper;
+import mapper.ReplyMapper;
 import util.MybatisUtil;
 
 public class BoardService {
@@ -203,4 +204,18 @@ public class BoardService {
 			return null;
 		}
 	
+	// 댓글 개수 가져오기
+	public int getReplyCount(Long bno) {
+		try(SqlSession session = MybatisUtil.getSqlSession()) {
+			ReplyMapper mapper = session.getMapper(ReplyMapper.class);
+			int count = mapper.getReplyCount(bno);
+			
+			return count;
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
+		return 0;
+	}	
+		
 }
