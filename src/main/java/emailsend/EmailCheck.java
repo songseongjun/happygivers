@@ -9,8 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import domain.Member;
+import mapper.MemberMapper;
 import service.EmailCheckService;
 import util.JsonRespUtil;
+import util.MybatisUtil;
 import util.RedisUtil;
 
 @WebServlet("/member/email-check") // 이메일 인증 확인 링크로 들어오면 호출됨
@@ -19,7 +22,7 @@ public class EmailCheck extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-    	// 1. 사용자 브라우저에서 URL에 포함된 uuid 파라미터 추출
+        // 1. 사용자 브라우저에서 URL에 포함된 uuid 파라미터 추출
         String uuid = req.getParameter("uuid");
 
         // 2. uuid가 null 이거나 비어있으면 잘못된 요청 처리
@@ -32,21 +35,28 @@ public class EmailCheck extends HttpServlet {
         //  3. Redis에 저장된 인증 토큰 확인 (서비스에서 처리)
         EmailCheckService service = new EmailCheckService();
         boolean result = service.isVerified(uuid);
-
         if (result) {
-            // 4. 인증 성공 시 - 이메일 정보 Redis에서 가져옴
             String email = service.getEmail(uuid);
-
-            // 5. Redis에서 인증 토큰 삭제 (1회용 인증이므로)
             service.removeToken(uuid);
 
-            // 6. 인증 성공 메시지 보여줄 JSP로 포워딩
-            req.setAttribute("email", email); // 인증된 이메일 전달
-            req.getRequestDispatcher("/WEB-INF/views/member/verified.jsp").forward(req, resp);
+            //  DB에 이메일 인증 완료 처리
+            MemberMapper mapper = MybatisUtil.getSqlSession().getMapper(MemberMapper.class);
+            mapper.updateEmailVerifiedByEmail(email);
+            MybatisUtil.getSqlSession().commit();
+
+            // 로그인 세션 자동 부여 (선택적)
+            Member member = mapper.selectByEmail(email);
+            req.getSession().setAttribute("member", member);
+
+            //  index.jsp로 이동
+            resp.sendRedirect("/index.jsp");
+
         } else {
-            // 7. 인증 실패 시 - 실패 화면으로 이동
+            // 실패 시
             req.getRequestDispatcher("/WEB-INF/views/member/verifyFail.jsp").forward(req, resp);
         }
+
+     
     }
 
     @Override
