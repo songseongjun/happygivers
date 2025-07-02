@@ -14,4 +14,6 @@ public interface ReplyMapper {
 	
 	Reply selectOne(Long rno);
 	List<Reply> list(@Param("bno") Long bno, @Param("lastRno") Long lastRno);
+	
+	int getReplyCount(Long bno);
 }

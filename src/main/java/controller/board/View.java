@@ -38,10 +38,12 @@ public class View extends HttpServlet{
 		board.setRound(service.findRound(board.getDrno()));
 		board.setCname(service.findCname(board.getCno()));
 		board.setName(service.findname(board.getMno()));
+		int replyCount = service.getReplyCount(board.getBno()); 
 		
 		
 		req.setAttribute("cri", cri);
 		req.setAttribute("board", board);
+		req.setAttribute("replyCount", replyCount);
 		req.getRequestDispatcher("/WEB-INF/views/board/view.jsp").forward(req, resp);
 	}
 }
