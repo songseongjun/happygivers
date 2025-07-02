@@ -10,7 +10,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.13/locale/ko.min.js" integrity="sha512-ycjm4Ytoo3TvmzHEuGNgNJYSFHgsw/TkiPrGvXXkR6KARyzuEpwDbIfrvdf6DwXm+b1Y+fx6mo25tBr1Icg7Fw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.13/plugin/relativeTime.min.js" integrity="sha512-MVzDPmm7QZ8PhEiqJXKz/zw2HJuv61waxb8XXuZMMs9b+an3LoqOqhOEt5Nq3LY1e4Ipbbd/e+AWgERdHlVgaA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <style>
-.toastui-editor-contents *{
+.toastui-editor-contents *:not([data-nodeid='1']){
+	margin: 1.5rem 0 !important;
+}
+
+.toastui-editor-contents [data-nodeid='1'] *not(:first-child) {
 	margin: 1.5rem 0 !important;
 }
 
@@ -26,6 +30,7 @@
 	height: auto;
 	object-fit: cover;
 	border-radius: 1rem;
+	
 }
 </style>
 </head>
@@ -77,7 +82,12 @@
                                 <span><strong><fmt:formatNumber value="${board.round.goalamount}" />원 목표</strong></span>
                             </div>
                         </div>
-                        <a href="#" class="btn btn-primary form-control py-2" >기부하기</a>
+                        <div class="d-flex flex-column gap-2">
+	                        <a href="#" class="btn btn-primary form-control py-2" >기부하기</a>
+	                        <c:if test="${(member.mno == board.mno or member.mtype == ADMIN) and not empty member}">
+	                        <a href="${cp }/board/modify?bno=${board.bno}" class="btn btn-outline-primary form-control py-2" >수정하기</a>
+	                        </c:if>
+                        </div>
                     </div> 
                 </div>
 
