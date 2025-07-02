@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import domain.Board;
 import domain.dto.Criteria;
+import domain.en.Status;
 import lombok.extern.slf4j.Slf4j;
 import service.BoardService;
 import util.ParamUtil;
@@ -25,7 +26,7 @@ public class BoardList extends HttpServlet{
 		//파라미터 받아오기
 		
 		Criteria cri = ParamUtil.get(req, Criteria.class);
-//		cri.setStatus(Status.valueOf(req.getParameter("status")));
+		log.info("{}", cri);
 		
 		List<Board> boards = service.list(cri);
 		for(Board b : boards) {

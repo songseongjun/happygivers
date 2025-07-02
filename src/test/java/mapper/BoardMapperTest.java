@@ -54,8 +54,9 @@ public class BoardMapperTest {
 	@DisplayName("목록 조회 1페이지 10개씩 4번 카테고리 활성화된 게시글")
 	public void testList() {
 		//given
-		Criteria cri = new Criteria(1, 10, 4, Status.ACTIVE);
+		Criteria cri = new Criteria(1, 10, 4);
 		// when
+		cri.setStatus(Status.ACTIVE);
 		List<Board> boards = boardMapper.list(cri);
 		
 		// then ~ actual, expect

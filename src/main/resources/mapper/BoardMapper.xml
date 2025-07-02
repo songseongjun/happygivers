@@ -19,9 +19,9 @@
 <sql id="criteria">
  		<where>
  			<trim prefixOverrides="AND | OR">
- 			<if test="cno != null">
- 				AND cno = #{cno}
- 			</if>
+ 			<if test="types == null and cno != null">
+				AND cno = #{cno}
+			</if>
  			<if test="cno == null">
  				AND cno BETWEEN 3 AND 9
  			</if>
@@ -37,8 +37,12 @@
  						<when test="t eq 'C'.toString">
  							content like concat('%', #{keyword}, '%')
  						</when>
- 						<when test="t eq 'I'.toString">
- 							id like concat('%', #{keyword}, '%')
+ 						<when test="t eq 'N'.toString">
+ 							 mno = (
+						        SELECT mno
+						        FROM tbl_member
+						        WHERE name like concat('%', #{keyword}, '%')
+						    ) 
  						</when>
  					</choose>
  				</foreach>
