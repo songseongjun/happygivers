@@ -16,8 +16,4 @@ public interface MemberMapper {
 	
 	List<Member> findIdsByEmailAndName(@Param("email") String email, @Param("name") String name);
 
-	void updateEmailVerifiedByEmail(String email);
-	
-	Member selectByEmail(String email);
-
 }
