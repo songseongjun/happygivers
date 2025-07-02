@@ -18,7 +18,13 @@ import service.MemberService;
 public class Logout extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.getSession().invalidate();
+		HttpSession session = req.getSession(false); //현재세션가져오기
+		if(session !=null) {
+			session.invalidate();
+		}
+//		req.getSession().invalidate();
+		
+//		session.setAttribute("loginUser", member);//로그인한 사용자 객체 저장
 		resp.sendRedirect(req.getContextPath()+ "/index");
 	}
 

@@ -1,6 +1,7 @@
 package service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -36,8 +37,15 @@ public class EmailCheckService {
     public boolean isVerified(String email) {
         try (SqlSession session = MybatisUtil.getSqlSession()) {
             EmailCheckMapper mapper = session.getMapper(EmailCheckMapper.class);
-            EmailCheck check = mapper.selectByEmail(email);//이메일로 인증 정보 조회
-            return check != null && check.getCheck() == 1; // 인증 완료되었는지 확인
+            List<EmailCheck> checks = mapper.selectByEmail(email);//이메일로 인증 정보 조회
+            if(checks !=null && !checks.isEmpty()) {
+            	EmailCheck check = checks.get(0);
+            	return check.getCheck() == 1;  // 인증 완료되었는지 확인
+            }
+            
         }
+        return false;
     }
+    
+    
 }

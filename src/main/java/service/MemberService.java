@@ -1,5 +1,7 @@
 package service;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 
 import domain.Member;
@@ -44,5 +46,17 @@ public class MemberService {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	//아이디 찾기 이메일
+	public List<Member> findIdsByEmailAndName(String email, String name){
+	SqlSession sqlSession = MybatisUtil.getSqlSession();
+	try {
+		MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
+		return mapper.findIdsByEmailAndName(email, name);
+	}finally {
+		sqlSession.close();
+	}
+		
 	}
 }
