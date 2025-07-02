@@ -17,11 +17,10 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 public class Criteria { //페이지 관련
 	
-	public Criteria(int page, int amount, int cno, Status status) {
+	public Criteria(int page, int amount, int cno) {
 		this.page = page;
 		this.amount = amount;
 		this.cno = cno;
-		this.status = status;
 		
 	}
 
@@ -55,7 +54,6 @@ public class Criteria { //페이지 관련
 			cri.type = req.getParameter("type");
 			cri.status = Status.valueOf(req.getParameter("status"));
 			cri.keyword = URLDecoder.decode(req.getParameter("keyword"),"utf-8");
-			log.info("{}", cri);
 		}
 		catch (Exception e) {
 		} 

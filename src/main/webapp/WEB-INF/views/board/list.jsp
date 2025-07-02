@@ -24,11 +24,16 @@
 <%@ include file="../common/header.jsp" %>
 	<div class="container">
         <main>
+        	<c:if test="${not empty pageDto.cri.type}">
             <div class="search text-center">
+            	
+            	
                 <h3>Search</h3>
-                <p class="mb-5">'<span class="fw-semibold">CATEGORY</span>'으로 검색하신 결과입니다</p>
+                <p class="mb-5">'<span class="fw-semibold">${pageDto.cri.keyword }</span>'으로 검색하신 결과입니다</p>
             </div>
-            <!-- Category List Start -->
+            </c:if>
+            
+            <c:if test="${empty pageDto.cri.type}">
             <div class="d-flex justify-content-around mx-5">
                 <div >
                     <a href="${cp }/board/list"><img src="${cp }/img/menuicon/all.png" alt="all"><button class="btn btn-sm rounded-4 ms-2 ${pageDto.cri.cno == null ? 'active-tab' : 'tab'}">전체</button></a>                
@@ -55,20 +60,22 @@
                     <a href="${cp }/board/list?cno=9"><img src="${cp }/img/menuicon/social.png" alt="all"><button class="btn btn-sm rounded-4 ms-2 ${pageDto.cri.cno == '9' ? 'active-tab' : 'tab'}">사회</button></a>                
                 </div>
             </div>
-            <!-- Category List End -->
+            </c:if>
+            
              
             <div class="my-5">
                 <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4" id="boardList">
                      <!-- 포스트 -->
+                   <c:if test="${not empty boards}">
 					<c:forEach items="${boards }" var="b">
                      <div class="col">
-		                <a href="${cp}/board/view?bno=${b.bno}&drno=${b.drno}" class="card post-card h-100 border-0 text-decoration-none">
+		                <a href="${cp}/board/view?bno=${b.bno}" class="card post-card h-100 border-0 text-decoration-none">
 		                	<div class="overflow-hidden rounded-3">
 		                    	<img src="${b.thumbnail != null ? b.thumbnail : 'https://placehold.co/300x250?text=No+img' }" class="card-img-top img-zoom" alt="Post Image">
 		                	</div>
 		                    <div class="card-body d-flex flex-column px-0 pt-2">
 		                        <p class="post-title my-2 fw-medium fs-6" style="color: var(--col-6);">${b.title }</p>
-                                   <p class="post-meta mb-2 small" style="color: var(--col-3);">${b.mno}</p>
+                                   <p class="post-meta mb-2 small" style="color: var(--col-3);">${b.name}</p>
 		                        <div class="progress my-2" style="height: 3px;">
                                    <div class="progress-bar" style="width:70%"></div>
                                 </div>
@@ -84,6 +91,7 @@
 		                </a>
 		            </div>
 		            </c:forEach>
+		          </c:if>
                      
                 </div>
             </div>
@@ -114,13 +122,10 @@
             <div class="search-bar">
                 <form class="col input-group search-form">
                     <select class="form-select form-select-sm" name="type">
+                        <option value="TCN">전체</option>
                         <option value="T">제목</option>
                         <option value="C">내용</option>
-                        <option value="I">작성자</option>
-                        <option value="TC">제목+내용</option>
-                        <option value="TI">제목+작성자</option>
-                        <option value="CI">내용+작성자</option>
-                        <option value="TCI">제목+내용+작성자</option>
+                        <option value="N">작성자</option>
                     </select>
                     <input type="text" class="form-control form-control-sm w-75" placeholder="Search" name="keyword">
                     <input type="hidden" name="page" value="1">
@@ -128,6 +133,13 @@
                     <input type="hidden" name="cno" value="${pageDto.cri.cno}">
                     <button class="btn btn-dark btn-sm" type="submit">검색</button>
                 </form>
+                <script type="text/javascript">
+            		$(".search-form").submit(function() {
+            			event.preventDefault();
+            			this.keyword.value = encodeURIComponent(this.keyword.value);
+						this.submit();          			
+            		})
+            	</script>
             </div>
         </main>
 

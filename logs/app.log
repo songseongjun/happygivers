@@ -1,5 +1,10 @@
-01:21:10.254 [main] INFO  sqltiming - select * from tbl_member where id = 'admin'
- {executed in 6 msec}
-01:21:10.282 [main] INFO  MemberMapperTest - Member(mno=1, id=admin, pw=1234, email=admin@gitbaby.com, tel=010-1111-1111, regdate=2025-06-28 18:32:14, mtype=ADMIN, status=ACTIVE, bdgstatus=false, nickname=관리자, location=독도, content=null, emailcheck=true, profile=null)
-01:30:56.689 [main] INFO  sqltiming - select * from tbl_member where id = 'admin'
- {executed in 6 msec}
+12:51:08.373 [main] INFO  sqltiming - select * 
+ 		from tbl_board
+
+ 		 WHERE cno = 4
+
+		 		and status = 'ACTIVE' 
+
+ 		order by bno DESC
+ {executed in 9 msec}
+12:51:08.398 [main] INFO  BoardMapperTest - []

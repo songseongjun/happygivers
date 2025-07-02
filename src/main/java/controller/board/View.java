@@ -32,14 +32,16 @@ public class View extends HttpServlet{
 		
 		Criteria cri = Criteria.init(req);
 		BoardService service = new BoardService();
+		
 		Board board = service.findByBno(ParamUtil.get(req, Board.class).getBno());
-		DonateService donateService = new DonateService();
-		DonateRound round = donateService.findByDrno(board.getDrno());
+
+		board.setRound(service.findRound(board.getDrno()));
+		board.setCname(service.findCname(board.getCno()));
+		board.setName(service.findname(board.getMno()));
 		
 		
 		req.setAttribute("cri", cri);
 		req.setAttribute("board", board);
-		req.setAttribute("round", round);
 		req.getRequestDispatcher("/WEB-INF/views/board/view.jsp").forward(req, resp);
 	}
 }
