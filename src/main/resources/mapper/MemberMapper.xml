@@ -24,4 +24,15 @@
   	where email = #{email}
   	and name = #{name}
   	</select>
+  	
+  	<update id="updateEmailVerifiedByEmail" parameterType="string">
+    UPDATE tbl_member
+    SET email_verified = 1
+    WHERE email = #{email}
+</update>
+
+<select id="selectByEmail" parameterType="string" resultType="vo.MemberVO">
+    SELECT * FROM tbl_member WHERE email = #{email}
+</select>
+  	
   </mapper> 
