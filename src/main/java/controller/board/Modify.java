@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -17,10 +18,13 @@ import com.google.gson.reflect.TypeToken;
 import domain.Board;
 import domain.Donate;
 import domain.DonateRound;
+import domain.Member;
 import domain.dto.Criteria;
+import domain.en.Mtype;
 import domain.en.Status;
 import lombok.extern.slf4j.Slf4j;
 import service.BoardService;
+import service.DonateService;
 import util.AlertUtil;
 import util.ParamUtil;
 
@@ -32,53 +36,44 @@ public class Modify extends HttpServlet{
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// 멤버 도매인 등록시
-//		Criteria cri = Criteria.init(req);
-//		Member loginMember = req.getSession().getAttribute("member");
-//		if(loginMember == null) {
-//			AlertUtil.alert("로그인 후 글 작성해주세요", "/member/login?" + cri.getQs2(), req, resp, true);
-//			return;
-//		}
-//		if(loginMember.mtype != Mtype.ORG) {
-//			AlertUtil.alert("글 작성 권한이 없습니다.", "/index", req, resp);
-//			return;
-//		}
+		// 권한 확인		
+		HttpSession session = req.getSession();
+		Member member = (Member) session.getAttribute("member");
+		BoardService boardService = new BoardService();
+		Board board = boardService.findByBno(Long.valueOf(req.getParameter("bno")));
 		
+		if(member == null || !(member.getStatus().equals(Status.ACTIVE) && member.getMtype().equals(Mtype.ORG) && member.getMno().equals(board.getMno()) || member.getMtype().equals(Mtype.ADMIN))) {
+			AlertUtil.alert("접근 권한이 없습니다.", "/board/view?bno=" + board.getBno(), req, resp);
+		}
+		
+		board.setRound(boardService.findRound(board.getDrno()));
+		
+		req.setAttribute("board", board);
 		req.getRequestDispatcher("/WEB-INF/views/board/modify.jsp").forward(req, resp);
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//		Criteria cri = Criteria.init(req);
-//		Member loginMember = req.getSession().getAttribute("member");
-//		if(loginMember == null) {
-//			AlertUtil.alert("로그인 후 글 작성해주세요", "/member/login?" + cri.getQs2(), req, resp, true);
-//			return;
-//		}
-//		if(loginMember.mtype != Mtype.ORG) {
-//			AlertUtil.alert("글 작성 권한이 없습니다.", "/index", req, resp);
-//			return;
-//		}
-		
-
-
-		// board 인스턴스 생성
-		// donate 인스턴스 생성
-		Donate donate = ParamUtil.get(req, Donate.class);
-		DonateRound round = ParamUtil.get(req, DonateRound.class);		
-		Board board = ParamUtil.get(req, Board.class); 
-		log.info("{}", board);
-		
-
+		// 권한 확인		
+		HttpSession session = req.getSession();
+		Member member = (Member) session.getAttribute("member");
 		BoardService boardService = new BoardService();
+		Board board = boardService.findByBno(Long.valueOf(req.getParameter("bno")));
 		
+		if(member == null || !(member.getStatus().equals(Status.ACTIVE) && member.getMtype().equals(Mtype.ORG) && member.getMno().equals(board.getMno()) || member.getMtype().equals(Mtype.ADMIN))) {
+			AlertUtil.alert("접근 권한이 없습니다.", "/board/view?bno=" + board.getBno(), req, resp);
+		}
 			
-		boardService.write(board, donate, round);
-			
-	
+		Board modifyBoard = ParamUtil.get(req, Board.class);
+		DonateRound round = ParamUtil.get(req, DonateRound.class);
+//		round.setDrno(modifyBoard.getDrno());
+		DonateService donateService = new DonateService();
+		log.info("{}", modifyBoard.getDrno());
+		log.info("{}", round);
+		donateService.updateRound(round);
+		boardService.modify(modifyBoard);
 		
 		
-		
-		AlertUtil.alert("글이 등록되었습니다.", "/board/list?cno=" + board.getCno(), req, resp);
+		AlertUtil.alert("글이 수정되었습니다.", "/board/view?bno=" + board.getBno(), req, resp);
 	}
 }
