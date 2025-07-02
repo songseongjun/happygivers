@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.Date;
+
 import org.apache.ibatis.type.Alias;
 
 import domain.en.Mtype;
@@ -21,7 +23,7 @@ public class Member {
 	private String name;//이름
 	private String email;//이메일주소
 	private String tel;//전화번호
-	private String regdate;//회원가입일
+	private Date regdate;//회원가입일
 	private Mtype mtype;//회원 유형
 	private Status status;//회원 상태
 	private boolean bdgstatus;//배지노출

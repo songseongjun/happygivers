@@ -13,4 +13,15 @@
   	<select id="findByMno" resultType="Member">
   	 select * from tbl_member where mno = #{mno}
   	</select>
+  	
+  	<resultMap type="domain.Member" id="MemberMap">
+  	<result property="regdate" column="regdate" javaType="java.util.Date"/>
+  	</resultMap>
+  	
+  	<select id="findIdsByEmailAndName" resultMap="MemberMap">
+  	select id, name, regdate
+  	from tbl_member
+  	where email = #{email}
+  	and name = #{name}
+  	</select>
   </mapper> 

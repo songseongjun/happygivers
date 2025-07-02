@@ -172,7 +172,7 @@
                     <p class="text-center" style="color: var(--col-5);">당신의 소중한 후원을 기다립니다.</p>
                     <a href="${cp }/member/login?mtype=USER" class="btn btn-primary form-control py-2 fs-6">로그인</a>
                     <ul class="d-flex gap-3 mt-3 mb-0 mx-auto px-0 justify-content-center small">
-                        <li><a href="#" class="text-decoration-none" style="color: var(--col-5);">아이디 찾기</a></li>
+                        <li><a href="${cp}/member/find-id" class="text-decoration-none" style="color: var(--col-5);">아이디 찾기</a></li>
                         <li><a href="#" class="text-decoration-none" style="color: var(--col-5);">비밀번호 찾기</a></li>
                         <li><a href="${cp}/member/register?mytype" class="text-decoration-none" style="color: var(--col-5);">회원가입</a></li>
 
@@ -192,7 +192,11 @@
                             <img src="${cp }/img/img1.png" class="object-fit-cover" alt="프로필사진" style="width: 64px; height: 64px;">
                         </div>
                         <p class="fw-semibold fs-6 mb-0 flex-grow-1 text-truncate" style="color: var(--col-4);"><span style="color: var(--col-6);">${member.name }</span> 님</p>
-                        <a href="#" class="text-decoration-none border px-3 py-1 rounded-5 small" style="color: var(--col-3);">로그아웃</a>
+                        
+                        <c:if test="${not empty member}">
+                        <a href="${pageContext.request.contextPath}/member/logout" class="text-decoration-none border px-3 py-1 rounded-5 small" style="color: var(--col-3);">로그아웃</a>
+                        </c:if>
+                        
                     </div>
                     <div class="p-3" style="background-color: var(--col-1);">
                         <div class="d-flex justify-content-around">

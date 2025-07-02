@@ -11,9 +11,15 @@
   SELECT * FROM tbl_email_check WHERE uuid = #{uuid}
 </select>
 
-<select id="selectByEmail" resultType="domain.EmailCheck">
-  SELECT * FROM tbl_email_check WHERE email = #{email}
+
+<select id="selectByEmail" resultType="EmailCheck" parameterType="string">
+  SELECT * 
+  FROM tbl_email_check 
+  WHERE email = #{email}
+  ORDER BY voiddate DESC
+  LIMIT 1
 </select>
+
 
 <update id="updateCheck">
   UPDATE tbl_email_check SET `check` = 1 WHERE email = #{email}

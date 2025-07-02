@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import domain.EmailCheck;
 import domain.Member;
+import domain.en.Mtype;
+import jakarta.mail.Session;
 import lombok.extern.slf4j.Slf4j;
 import mapper.EmailCheckMapper;
 import service.EmailCheckService;
@@ -36,17 +38,15 @@ public class Register extends HttpServlet {
 		        req.getRequestDispatcher("/WEB-INF/views/member/register.jsp").forward(req, resp);// 회원가입 페이지로 되돌림
 		        return;
 		    }
-		    Member member1 = ParamUtil.get(req, Member.class);//나머지 회원 정보 추출
-		    new MemberService().register(member1);// 회원 등록
-		    resp.sendRedirect("../index");// 메인 페이지로 리디렉션
-		    	
+		    
 		//회원가입 타입 기관회원 유저회원
 		String mtype = req.getParameter("mtype");
-		Member member = ParamUtil.get(req, Member.class);
+		Member member =ParamUtil.get(req, Member.class);//나머지 회원 정보 추출
+		member.setMtype(Mtype.valueOf(mtype));
 
-		log.info("{}", member);
-		new MemberService().register(member);
-		resp.sendRedirect("../index");
+		log.info("회원가입 시도: {}", member);
+		new MemberService().register(member);//회원 등록
+		resp.sendRedirect("../index");// 메인 페이지로 리디렉션
 //		resp.sendRedirect(req.getContextPath() + "/index");
 	}
 	

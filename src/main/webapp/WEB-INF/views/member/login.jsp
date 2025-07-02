@@ -30,19 +30,24 @@
 				 <input class="form-check-input" type="checkbox" id="autologin" name="autologin" value="yes" checked>
 				<label class="form-check-label" for="autologin">자동로그인</label>
 				</div>
-				<a href="${cp}/member/register?mtype=${mtype}"class="text-decoration-none text-primary fw-bold" style="font-size: 0.95rem;">
-				회원가입
-				</a>
-				<input type="hidden" name="mtype" value="${mtype}">
+				
+				
+				
 				
 			</div>
+			<c:if test="${mtype = 'ADMIN'}">
+            <input type="hidden" name="mtype" value="ADMIN">
+			</c:if>
 			<c:if test="${mtype = 'USER'}">
             <input type="hidden" name="mtype" value="USER">
 			</c:if>
 			<c:if test="${mtype = 'ORG'}">
             <input type="hidden" name="mtype" value="ORG">
 			</c:if>
-			      <button class="btn btn-primary btn-lg">로그인</button>
+			      <button class="btn btn-primary btn-lg w-100">로그인</button>
+			      <a href="${cp}/member/register?mtype=${mtype}" class="btn btn-outline-primary w-100 mt-2">
+					   회원가입
+					</a>
           
         </form>
       </main>
