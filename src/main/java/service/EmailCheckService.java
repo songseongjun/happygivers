@@ -1,51 +1,29 @@
 package service;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import util.RedisUtil;
 
-import org.apache.ibatis.session.SqlSession;
-
-import domain.EmailCheck;
-import mapper.EmailCheckMapper;
-import util.MybatisUtil;
-
-//이메일 DB처리서비스
+//이메일 Redis처리서비스  uuid=인증토큰
 public class EmailCheckService {
+	
+	 // 인증 토큰 저장: Redis에 (uuid, email) 쌍으로 저장
+    public void saveToken(String uuid, String email) {
+        // Redis에 uuid라는 키로 email을 저장하고 10분(600초) 뒤에 자동 삭제되도록 설정함
+        RedisUtil.set(uuid, email, 600);
+    }
 
-				//이메일 인증 요청 저장
-    public void save(String email, String uuid, LocalDateTime voiddate) {
-        try (SqlSession session = MybatisUtil.getSqlSession()) {
-            EmailCheckMapper mapper = session.getMapper(EmailCheckMapper.class);//매퍼객체저장함
-            mapper.insertCheck(email, uuid, voiddate);//tbl_email_check테이블에 저장
-            session.commit();
-        }
+    // 인증 토큰 확인: uuid가 유효한지 확인 (Redis에 존재하면 인증됨)
+    public boolean isVerified(String uuid) {
+        // Redis에서 해당 uuid가 존재하면 인증 완료된 것으로 간주
+        return RedisUtil.exists(uuid);
     }
-    		//인증 링크 클릭시 호출되는 메서드
-    public boolean verifyUUID(String uuid) {
-        try (SqlSession session = MybatisUtil.getSqlSession()) {
-            EmailCheckMapper mapper = session.getMapper(EmailCheckMapper.class);//매퍼객체호출
-            EmailCheck check = mapper.selectByUUID(uuid);//uuid로 해당 정보 조회
-            if (check != null && check.getVoiddate().isAfter(LocalDateTime.now())) {//존재한유효시간이내라면
-                mapper.updateCheck(check.getEmail());// 인증 완료 처리 (check = 1)
-                session.commit();
-                return true; //인증 성공
-            }
-        }
-        return false;
+
+    // 이메일 가져오기 필요한 경우, uuid로 이메일 꺼내오기
+    public String getEmail(String uuid) {
+        return RedisUtil.get(uuid);
     }
-    					//이메일 인증 됐는지 확인
-    public boolean isVerified(String email) {
-        try (SqlSession session = MybatisUtil.getSqlSession()) {
-            EmailCheckMapper mapper = session.getMapper(EmailCheckMapper.class);
-            List<EmailCheck> checks = mapper.selectByEmail(email);//이메일로 인증 정보 조회
-            if(checks !=null && !checks.isEmpty()) {
-            	EmailCheck check = checks.get(0);
-            	return check.getCheck() == 1;  // 인증 완료되었는지 확인
-            }
-            
-        }
-        return false;
+
+    // 인증 완료되면 토큰 삭제 (재사용 방지용)
+    public void removeToken(String uuid) {
+        RedisUtil.remove(uuid);
     }
-    
-    
 }
