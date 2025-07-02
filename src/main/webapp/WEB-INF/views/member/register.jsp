@@ -39,7 +39,7 @@
               <!-- 이메일인증발송 -->
               <div class="form-floating input-group">
               <input type="text" class="form-control" name="email" id="email" placeholder="이메일">
-              <label for="email">이메일</label>
+              <label for="email" style="z-index: 10;">이메일</label>
               <button type="button" id="emailckplz" class="btn btn-outline-primary">이메일 인증</button>
               </div>
               

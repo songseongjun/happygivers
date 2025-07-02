@@ -174,7 +174,7 @@
                     <ul class="d-flex gap-3 mt-3 mb-0 mx-auto px-0 justify-content-center small">
                         <li><a href="${cp}/member/find-id" class="text-decoration-none" style="color: var(--col-5);">아이디 찾기</a></li>
                         <li><a href="#" class="text-decoration-none" style="color: var(--col-5);">비밀번호 찾기</a></li>
-                        <li><a href="${cp}/member/register?mytype" class="text-decoration-none" style="color: var(--col-5);">회원가입</a></li>
+                        <li><a href="${cp}/member/register?mtype=USER" class="text-decoration-none" style="color: var(--col-5);">회원가입</a></li>
 
                     </ul>
                 </div>

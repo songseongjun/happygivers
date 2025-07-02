@@ -8,12 +8,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import domain.EmailCheck;
 import domain.Member;
 import domain.en.Mtype;
+import emailsend.EmailCheck;
 import jakarta.mail.Session;
 import lombok.extern.slf4j.Slf4j;
-import mapper.EmailCheckMapper;
 import service.EmailCheckService;
 import service.MemberService;
 import util.ParamUtil;
