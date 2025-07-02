@@ -42,12 +42,7 @@
               <label for="email" style="z-index: 10;">이메일</label>
               <button type="button" id="emailckplz" class="btn btn-outline-primary">이메일 인증</button>
               </div>
-              
-              <div class="form-floating input-group">
-                <input type="text" class="form-control" placeholder="인증번호입력" name="emailck" id="emailck">
-                <label for="emailck" style="z-index: 10;">인증번호 입력</label>
-                <button class="btn btn-outline-primary" id="emailcked">인증번호 확인</button>
-              </div>
+             
             </div>
             
             <div class="d-flex border rounded-3 list-group p-3 gap-3">
@@ -115,10 +110,14 @@ $(document).ready(function(){
 
 document.querySelector("#emailckplz").addEventListener("click", function() {
 	  const email = document.querySelector("#email").value;
-	  fetch("/happygivers/email/send?email=" + email)
+	  fetch("/happygivers/member/email-auth?email=" + email)
 	    .then(res => res.text())
 	    .then(msg => alert("메일이 전송되었습니다. 5분 내에 인증해주세요!"));
+	  
+	  
 	});
+	
+
 
 </script>
 

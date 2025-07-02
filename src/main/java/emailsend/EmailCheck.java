@@ -1,6 +1,7 @@
 package emailsend;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,13 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import service.EmailCheckService;
+import util.JsonRespUtil;
+import util.RedisUtil;
 
 @WebServlet("/member/email-check") // 이메일 인증 확인 링크로 들어오면 호출됨
 public class EmailCheck extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // 1. 사용자 브라우저에서 URL에 포함된 uuid 파라미터 추출
+
+    	// 1. 사용자 브라우저에서 URL에 포함된 uuid 파라미터 추출
         String uuid = req.getParameter("uuid");
 
         // 2. uuid가 null 이거나 비어있으면 잘못된 요청 처리
