@@ -9,7 +9,7 @@
 <%@ include file="../common/header.jsp" %>
 	<div class="container">
         <main>
-        <h2 class="text-center my-5">기부 글 작성</h2>
+        <h2 class="text-center my-5">기부 글 수정</h2>
         <form class="my-4" id="writeForm" method="post">
           <div class="form-control d-flex gap-2 mb-2">
             <div>
@@ -47,7 +47,7 @@
           
           <div class="float-end mt-4">
             <a href="${cp }/board/list" class="btn btn-outline-primary me-2">취소</a>
-            <button class="btn btn-primary me-2">승인요청</button>
+            <button class="btn btn-primary me-2">수정하기</button>
           </div>
         	
         </form>

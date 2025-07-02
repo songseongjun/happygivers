@@ -77,7 +77,12 @@
                                 <span><strong><fmt:formatNumber value="${board.round.goalamount}" />원 목표</strong></span>
                             </div>
                         </div>
+                        <c:if test="${member.mno != board.mno or empty member}">
                         <a href="#" class="btn btn-primary form-control py-2" >기부하기</a>
+                        </c:if>
+                        <c:if test="${member.mno == board.mno or member.mtype == ADMIN}">
+                        <a href="${cp }/board/modify?bno=${board.bno}" class="btn btn-outline-primary form-control py-2" >수정하기</a>
+                        </c:if>
                     </div> 
                 </div>
 
