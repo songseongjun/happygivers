@@ -44,70 +44,18 @@
                 <div>
                     <div class="d-flex justify-content-between align-items-center mt-5">
                         <p class="fs-5 fw-semibold m-0">댓글<span class="small"> 25</span></p>
-                        <button class="btn btn-outline-primary">댓글 작성</button>
+                        <c:if test="${not empty member }">
+                        <button class="btn btn-outline-primary btn-write-form">댓글 작성</button>
+                        </c:if>
+                        <c:if test="${empty member }">
+                        <a href="${cp }/member/login?mtype=USER" class="btn btn-outline-primary">로그인</a>
+                        </c:if>
                     </div>
                     <hr>
-                    <ul class="m-0 p-0 d-flex flex-column gap-4">
-                        <!-- 댓글 한개 -->
-                        <li class="d-flex gap-3">
-                            <div class="rounded-5 overflow-hidden border-2" style="border: 2px solid var(--border-1); width: 40px; height: 40px; box-sizing: border-box;"><img src="img/img1.png" alt="프로필 사진" style="width: 40px; height: 40px; object-fit: cover;" ></div>
-                            <div class="flex-grow-1">
-                                <div class="d-flex justify-content-between my-2">
-                                    <p class="fw-medium m-0" style="color: var(--col-3);"><span style="color: var(--col-6);">키다리아저씨</span>님</p>
-                                    <p class="small text-muted m-0">상위 5%</p>
-                                </div>
-                                <div class="p-3 rounded-3 mt-3" style="background-color: var(--col-1);">
-                                    <p class="m-0 small">응원합니다.</p>
-                                </div>
-                                <div class="small d-flex justify-content-end gap-3 mt-2">
-                                    <label><i class="fa-regular fa-heart me-1"></i> 좋아요<button class="d-none"></button></label>
-                                    <span>3분 전</span>
-                                    <label class="text-decoration-underline" style="color: var(--col-3);">수정<button class="d-none"></button></label>
-                                    <label class="text-decoration-underline" style="color: var(--col-3);">삭제<button class="d-none"></button></label>
-                                </div>
-                            </div>
-                        </li>
-                        <!-- 댓글 한개 -->
-                        <li class="d-flex gap-3">
-                            <div class="rounded-5 overflow-hidden border-2" style="border: 2px solid var(--border-2); width: 40px; height: 40px; box-sizing: border-box;"><img src="img/img1.png" alt="프로필 사진" style="width: 40px; height: 40px; object-fit: cover;" ></div>
-                            <div class="flex-grow-1">
-                                <div class="d-flex justify-content-between my-2">
-                                    <p class="fw-medium m-0" style="color: var(--col-3);"><span style="color: var(--col-6);">키다리아저씨</span>님</p>
-                                    <p class="small text-muted m-0">상위 5%</p>
-                                </div>
-                                <div class="p-3 rounded-3 mt-3" style="background-color: var(--col-1);">
-                                    <p class="m-0 small">응원합니다.</p>
-                                </div>
-                                <div class="small d-flex justify-content-end gap-3 mt-2">
-                                    <label><i class="fa-regular fa-heart me-1"></i> 좋아요<button class="d-none"></button></label>
-                                    <span>3분 전</span>
-                                    <label class="text-decoration-underline" style="color: var(--col-3);">수정<button class="d-none"></button></label>
-                                    <label class="text-decoration-underline" style="color: var(--col-3);">삭제<button class="d-none"></button></label>
-                                </div>
-                            </div>
-                        </li>
-                        <!-- 댓글 한개 -->
-                        <li class="d-flex gap-3">
-                            <div class="rounded-5 overflow-hidden border-2" style="border: 2px solid var(--border-3); width: 40px; height: 40px; box-sizing: border-box;"><img src="img/img1.png" alt="프로필 사진" style="width: 40px; height: 40px; object-fit: cover;" ></div>
-                            <div class="flex-grow-1">
-                                <div class="d-flex justify-content-between my-2">
-                                    <p class="fw-medium m-0" style="color: var(--col-3);"><span style="color: var(--col-6);">키다리아저씨</span>님</p>
-                                    <p class="small text-muted m-0">상위 5%</p>
-                                </div>
-                                <div class="p-3 rounded-3 mt-3" style="background-color: var(--col-1);">
-                                    <p class="m-0 small">응원합니다.</p>
-                                </div>
-                                <div class="small d-flex justify-content-end gap-3 mt-2">
-                                    <label><i class="fa-regular fa-heart me-1"></i> 좋아요<button class="d-none"></button></label>
-                                    <span>3분 전</span>
-                                    <label class="text-decoration-underline" style="color: var(--col-3);">수정<button class="d-none"></button></label>
-                                    <label class="text-decoration-underline" style="color: var(--col-3);">삭제<button class="d-none"></button></label>
-                                </div>
-                            </div>
-                        </li>
+                    <ul class="m-0 p-0 d-flex flex-column gap-4 reviews">
                     </ul>
                     <div class="d-flex justify-content-center mt-4">
-                        <button class="btn btn-outline-secondary rounded-5 px-4">댓글 더보기 <i class="fa-solid fa-chevron-down small ms-1" style="color: var(--col-3);"></i></button>
+                        <button class="btn btn-outline-secondary rounded-5 px-4 btn-reply-more">댓글 더보기 <i class="fa-solid fa-chevron-down small ms-1" style="color: var(--col-3);"></i></button>
                     </div>
                 </div>
 
@@ -278,7 +226,40 @@
             </div>
         </main>
     </div>
+<div class="modal fade" id="reviewModal">
+   <div class="modal-dialog">
+       <div class="modal-content">
 
+           <!-- Modal Header -->
+           <div class="modal-header">
+               <h4 class="modal-title fs-5">댓글 작성</h4>
+               <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+           </div>
+
+           <!-- Modal body -->
+           <div class="modal-body">
+               <form action="/action_page.php">
+                   <div class="mb-3 mt-3">
+                       <label for="content" class="form-label"><i class="fa-solid fa-comment text-secondary me-2"></i> 댓글 내용</label>
+                       <textarea class="form-control no-resize" id="content" placeholder="Enter Content" name="content" rows="5"  ></textarea>
+                   </div>
+                   <div class="mb-3">
+                       <label for="writer" class="form-label"><i class="fa-solid fa-user text-secondary me-2"></i> 작성자</label>
+                       <input type="text" class="form-control" id="writer" placeholder="작성자" name="writer" value="${member.id }" disabled="disabled">
+                   </div>
+               </form>
+           </div>
+
+           <!-- Modal footer -->
+           <div class="modal-footer">
+               <button type="button" class="btn btn-primary btn-sm btn-write-submit">댓글 쓰기</button>
+               <button type="button" class="btn btn-outline-primary btn-sm btn-modify-submit">수정</button>
+               <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">닫기</button>
+           </div>
+
+       </div>
+   </div>
+</div>
 <%@ include file="../common/footer.jsp" %>
 <script type="text/javascript">
 	dayjs.extend(window.dayjs_plugin_relativeTime);
@@ -299,6 +280,183 @@
     initialValue: content
   });
 
+</script>
+<script>
+    $(_ => {
+    	const bno = '${board.bno}'
+        const url = "${cp}" + "/reply/";
+        const modal = new bootstrap.Modal($("#reviewModal").get(0), {})
+        // makeReplyLi(reply) > str
+        
+        function makeReplyLi(r) {
+        	return `<li class="d-flex gap-3" data-rno="\${r.rno}">
+            <div class="rounded-5 overflow-hidden border-2" style="border: 2px solid var(--border-1); width: 40px; height: 40px; box-sizing: border-box;"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQm38aJRuNJH9z0qvbVUWR9rDQ2N7DoUWDXSA&s" alt="프로필 사진" style="width: 100%; height: 100%; object-fit: cover;" ></div>
+            <div class="flex-grow-1">
+                <div class="d-flex justify-content-between my-2">
+                    <p class="fw-medium m-0" style="color: var(--col-6);">\${r.nickname == null ? r.name : r.nickname}</p>
+                    <p class="small text-muted m-0">상위 5%</p>
+                </div>
+                <div class="p-3 rounded-3 mt-3" style="background-color: var(--col-1);">
+                    <p class="m-0 small">\${r.content}</p>
+                </div>
+                <div class="small d-flex justify-content-end gap-3 mt-2">
+                    <label><i class="fa-regular fa-heart me-1"></i> 좋아요<button class="d-none"></button></label>
+                    <span>\${dayjs(r.regdate, dayForm).fromNow()}</span>
+                    <label class="text-decoration-underline " style="color: var(--col-3); cursor: pointer;">수정<button class="d-none btn-modify-form"></button></label>
+                    <label class="text-decoration-underline" style="color: var(--col-3); cursor: pointer;">삭제<button class="d-none btn-remove-submit"></button></label>
+                </div>
+            </div>
+        </li>`;
+        }
+        
+        function list(bno, lastRno) {
+        	lastRno = lastRno ? ("/" + lastRno) : '';
+        	let reqUrl = url + 'list/' + bno  + lastRno;
+        	
+            $.ajax({
+                 url : reqUrl,
+                success : function(data){
+                    if(!data || data.length === 0) {
+                    	if($(".reviews li").length === 0){
+                    		$(".reviews").html("<li class='list-group-item text-center text-muted'>댓글이 없습니다</li>");
+                    	}
+                    	else {
+                    		$(".btn-reply-more").prop("disabled", true).text("추가 댓글이 없습니다");
+                    	}
+                    	return;
+                    		
+                    }
+                    $(".btn-reply-more").removeClass("d-none");
+                    let str = '';
+                    for(let r of data) {
+                        str += makeReplyLi(r);  
+                    }
+                    $(".reviews").append(str); // 교체, 추가
+                }
+            })
+        }
+        list(bno);
+
+
+        // 글쓰기 폼 활성화 btn-write-form 작동 확인 완료
+        $(".btn-write-form").click(function() {
+            console.log("글쓰기 폼");
+            $("#reviewModal form").get(0).reset();
+            $("#reviewModal .modal-footer button").show().eq(1).hide();
+            modal.show();
+        })
+        
+        // 글쓰기 버튼 이벤트 btn-write-submit
+        $(".btn-write-submit").click(function() {
+            const result = confirm("등록하시겠습니까?");
+            if(!result) return;
+
+            const content = $("#content").val().trim();
+            const id = $("#writer").val().trim();
+            
+
+            const obj = {content, id, bno};
+            console.log(obj);
+            console.log("글쓰기 전송");
+
+            $.ajax({
+                url,
+                method : 'POST',
+                data : JSON.stringify(obj),
+                success : function(data) {
+                    if(data.result) { 
+                        modal.hide();
+                        // 작성된 댓글
+                        if(data.reply){ // not null, not undefined
+	                        data.reply.regdate = dayjs().format(dayForm);
+	                        const strLi = makeReplyLi(data.reply);
+	                        $(".reviews").prepend(strLi);
+                        }
+                    }
+                }
+            })
+        })
+        // 글수정 폼 활성화 btn-modify-form
+        $(".reviews").on("click",".btn-modify-form",function() {
+            console.log("글수정 폼");
+            const rno = $(this).closest("li").data("rno");
+            $.getJSON(url + rno, function(data){
+                $("#reviewModal .modal-footer button").show().eq(0).hide();
+                $("#content").val(data.content);
+                $("#writer").val(data.id);
+                $("#reviewModal").data("rno", rno);
+                console.log(data);
+                modal.show();
+            })
+        })
+
+        // 글 수정 버튼 이벤트 btn-modify-submit
+        $(".btn-modify-submit").click(function() {
+            const result = confirm("수정하시겠습니까?");
+            if(!result) return;
+            
+            const rno = $("#reviewModal").data("rno");
+            console.log(rno);
+            
+            const content = $("#content").val().trim();
+            const id = $("#writer").val().trim();
+       
+            
+            const obj = {content, id, rno};
+
+            $.ajax({
+                url : url + rno,
+                method : 'PUT',
+                data : JSON.stringify(obj),
+                success : function(data) {
+                    if(data.result){
+                        modal.hide();
+                        // 재호출 (get)
+                        $.getJSON(url + rno, function(data){
+                        	console.log(data);
+                        	// 문자열 생성
+                        	const strLi = makeReplyLi(data);
+                        	// rno를 가지고 수정할 li를 탐색
+                        	const $li = $(`.reviews li[data-rno=\${rno}]`);
+                        	console.log($li.html());
+                        	// replaceWith 내용교체
+                        	$li.replaceWith(strLi);
+                        })
+                    }
+                }
+            })
+
+            console.log("글수정 전송");
+        })
+
+        // 글 삭제 버튼 이벤트 btn-remove-submit
+        $(".reviews").on("click",".btn-remove-submit",function() {
+            const result = confirm("삭제하시겠습니까?");
+            if(!result) return;
+            
+            const $li = $(this).closest("li");
+            const rno = $li.data("rno");
+            console.log("글 삭제 전송");
+            $.ajax({
+                url : url + rno,
+                method : 'DELETE',
+                success : function(data) {
+                    if(data.result){
+                       $li.remove();
+                    }
+                }
+            })
+        })
+        // 댓글 더보기 버튼 이벤트
+        $(".btn-reply-more").click(_ => {
+        	// 현재 댓글 목록 중 마지막 댓글 번호를 가져오기
+        	const lastRno = $(".reviews li:last").data("rno");
+        	console.log(lastRno);
+        	
+        	list(bno, lastRno);
+        })
+        
+    })
 </script>
 </body>
 </html>
