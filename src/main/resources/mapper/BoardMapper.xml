@@ -19,12 +19,30 @@
 <sql id="criteria">
  		<where>
  			<trim prefixOverrides="AND | OR">
- 			<if test="types == null and cno != null">
-				AND cno = #{cno}
+ 			
+ 			<!-- 검색이 없는 경우 -->
+			<if test="types == null">
+				<if test="cno != null">
+					AND cno = #{cno}
+				</if>
+				<if test="cno == null and ctype != null">
+					AND cno IN (
+						SELECT cno
+						FROM tbl_category
+						WHERE ctype = #{ctype}
+					)
+				</if>
 			</if>
- 			<if test="cno == null">
- 				AND cno BETWEEN 3 AND 9
- 			</if>
+
+			<!-- 검색이 있는 경우: 무조건 ctype 기준 -->
+			<if test="types != null and ctype != null">
+				AND cno IN (
+					SELECT cno
+					FROM tbl_category
+					WHERE ctype = #{ctype}
+				)
+			</if>
+			
 			<if test="status != null">
 		 		and status = #{status}
  			</if>

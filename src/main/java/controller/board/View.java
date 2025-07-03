@@ -37,7 +37,7 @@ public class View extends HttpServlet{
 
 		board.setRound(service.findRound(board.getDrno()));
 		board.setCname(service.findCname(board.getCno()));
-		board.setName(service.findname(board.getMno()));
+		board.setName(service.findName(board.getMno()));
 		int replyCount = service.getReplyCount(board.getBno()); 
 		
 		

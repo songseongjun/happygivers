@@ -1,5 +1,5 @@
 package domain.en;
 
 public enum Status {
-	ACTIVE, DISABLED, DELETE
+	READY, ACTIVE, DISABLED, DELETE
 }

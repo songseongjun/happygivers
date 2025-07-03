@@ -32,7 +32,7 @@ public class BoardList extends HttpServlet{
 		for(Board b : boards) {
 			b.setRound(service.findRound(b.getDrno()));
 			b.setCname(service.findCname(b.getCno()));
-			b.setName(service.findname(b.getMno()));
+			b.setName(service.findName(b.getMno()));
 		}
 		
 		req.setAttribute("boards", boards);
