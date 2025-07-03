@@ -21,7 +21,7 @@ public interface MemberMapper {
     List<Member> findIdsByEmailAndName(@Param("email") String email, @Param("name") String name);
 
     // 5. 이메일 인증 여부 업데이트 (tbl_member)
-    void updateEmailVerifiedByEmail(String email);
+    void updateEmailCheckByEmail(String email); // 인증 성공 시 emailcheck = 1
 
     // 6. 이메일로 회원 조회
     Member selectByEmail(String email);

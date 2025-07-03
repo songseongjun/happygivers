@@ -42,11 +42,9 @@
   </select>
 
   <!-- 이메일 인증 여부 업데이트 (tbl_member 테이블) -->
-  <update id="updateEmailVerifiedByEmail" parameterType="string">
-    UPDATE tbl_member
-    SET email_verified = 1
-    WHERE email = #{email}
-  </update>
+ <update id="updateEmailCheckByEmail">
+  UPDATE tbl_member SET emailcheck = 1 WHERE email = #{email}
+</update>
 
   <!-- 이메일로 회원 객체 조회 -->
   <select id="selectByEmail" parameterType="string" resultType="domain.Member">
