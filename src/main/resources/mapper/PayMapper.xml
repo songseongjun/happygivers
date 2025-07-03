@@ -23,6 +23,9 @@
 	<select id="list" resultType="pay">
 		select *
 		from tbl_pay
+		where dano IN ( SELECT dano
+					    FROM tbl_donate_action
+					    WHERE drno = #{drno} )
 	</select>
 	
 	

@@ -12,7 +12,7 @@ public interface PayMapper {
 	void update(Pay pay);
 	
 	
-	List<Pay> list();
+	List<Pay> list(Long drno);
 
 	Pay selectOne(Long pno);
 }
