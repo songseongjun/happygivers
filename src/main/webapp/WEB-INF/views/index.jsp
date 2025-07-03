@@ -30,49 +30,49 @@
                     <p class="fs-5 fw-semibold">나의 도움이 필요한 후원처</p>
                     <ul class="d-flex px-0 m-0">
                         <li style="width: 12.5%;">
-                            <a href="#" class="text-decoration-none d-flex flex-column align-items-center">
+                            <a href="${cp }/board/list" class="text-decoration-none d-flex flex-column align-items-center">
                                 <img src="${cp }/img/menuicon/all.png" style="width: 32px;" alt="전체">
                                 <p class="d-block py-1 m-0 rounded-5 text-center mt-2" style="background-color: var(--col-1); color: var(--col-6); min-width: 60px;">전체</p>
                             </a>
                         </li>
                         <li style="width: 12.5%;">
-                            <a href="#" class="text-decoration-none d-flex flex-column align-items-center">
+                            <a href="${cp }/board/list?cno=3" class="text-decoration-none d-flex flex-column align-items-center">
                                 <img src="${cp }/img/menuicon/kid.png" style="width: 32px;" alt="전체">
                                 <p class="d-block py-1 m-0 rounded-5 text-center mt-2" style="background-color: var(--col-1); color: var(--col-6); min-width: 60px;">청소년</p>
                             </a>
                         </li>
                         <li style="width: 12.5%;">
-                            <a href="#" class="text-decoration-none d-flex flex-column align-items-center">
+                            <a href="${cp }/board/list?cno=4" class="text-decoration-none d-flex flex-column align-items-center">
                                 <img src="${cp }/img/menuicon/old.png" style="width: 32px;" alt="전체">
                                 <p class="d-block py-1 m-0 rounded-5 text-center mt-2" style="background-color: var(--col-1); color: var(--col-6); min-width: 60px;">어르신</p>
                             </a>
                         </li>
                         <li style="width: 12.5%;">
-                            <a href="#" class="text-decoration-none d-flex flex-column align-items-center">
+                            <a href="${cp }/board/list?cno=5" class="text-decoration-none d-flex flex-column align-items-center">
                                 <img src="${cp }/img/menuicon/animal.png" style="width: 32px;" alt="전체">
                                 <p class="d-block py-1 m-0 rounded-5 text-center mt-2" style="background-color: var(--col-1); color: var(--col-6); min-width: 60px;">동물</p>
                             </a>
                         </li>
                         <li style="width: 12.5%;">
-                            <a href="#" class="text-decoration-none d-flex flex-column align-items-center">
+                            <a href="${cp }/board/list?cno=6" class="text-decoration-none d-flex flex-column align-items-center">
                                 <img src="${cp }/img/menuicon/earth.png" style="width: 32px;" alt="전체">
                                 <p class="d-block py-1 m-0 rounded-5 text-center mt-2" style="background-color: var(--col-1); color: var(--col-6); min-width: 60px;">지구</p>
                             </a>
                         </li>
                         <li style="width: 12.5%;">
-                            <a href="#" class="text-decoration-none d-flex flex-column align-items-center">
+                            <a href="${cp }/board/list?cno=7" class="text-decoration-none d-flex flex-column align-items-center">
                                 <img src="${cp }/img/menuicon/area.png" style="width: 32px;" alt="전체">
                                 <p class="d-block py-1 m-0 rounded-5 text-center mt-2" style="background-color: var(--col-1); color: var(--col-6); min-width: 60px;">환경</p>
                             </a>
                         </li>
                         <li style="width: 12.5%;">
-                            <a href="#" class="text-decoration-none d-flex flex-column align-items-center">
+                            <a href="${cp }/board/list?cno=8" class="text-decoration-none d-flex flex-column align-items-center">
                                 <img src="${cp }/img/menuicon/needy.png" style="width: 32px;" alt="전체">
                                 <p class="d-block py-1 m-0 rounded-5 text-center mt-2" style="background-color: var(--col-1); color: var(--col-6); min-width: 60px;">장애인</p>
                             </a>
                         </li>
                         <li style="width: 12.5%;">
-                            <a href="#" class="text-decoration-none d-flex flex-column align-items-center">
+                            <a href="${cp }/board/list?cno=9" class="text-decoration-none d-flex flex-column align-items-center">
                                 <img src="${cp }/img/menuicon/social.png" style="width: 32px;" alt="전체">
                                 <p class="d-block py-1 m-0 rounded-5 text-center mt-2" style="background-color: var(--col-1); color: var(--col-6); min-width: 60px;">사회</p>
                             </a>

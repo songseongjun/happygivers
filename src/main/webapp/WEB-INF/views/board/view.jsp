@@ -10,7 +10,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.13/locale/ko.min.js" integrity="sha512-ycjm4Ytoo3TvmzHEuGNgNJYSFHgsw/TkiPrGvXXkR6KARyzuEpwDbIfrvdf6DwXm+b1Y+fx6mo25tBr1Icg7Fw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.13/plugin/relativeTime.min.js" integrity="sha512-MVzDPmm7QZ8PhEiqJXKz/zw2HJuv61waxb8XXuZMMs9b+an3LoqOqhOEt5Nq3LY1e4Ipbbd/e+AWgERdHlVgaA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <style>
-.toastui-editor-contents *{
+.toastui-editor-contents *:not([data-nodeid='1']){
+	margin: 1.5rem 0 !important;
+}
+
+.toastui-editor-contents [data-nodeid='1'] *not(:first-child) {
 	margin: 1.5rem 0 !important;
 }
 
@@ -26,6 +30,7 @@
 	height: auto;
 	object-fit: cover;
 	border-radius: 1rem;
+	
 }
 </style>
 </head>
@@ -43,7 +48,7 @@
                 <!-- 댓글 -->
                 <div>
                     <div class="d-flex justify-content-between align-items-center mt-5">
-                        <p class="fs-5 fw-semibold m-0">댓글<span class="small"> 25</span></p>
+                        <p class="fs-5 fw-semibold m-0">댓글<span class="small"> ${replyCount}</span></p>
                         <c:if test="${not empty member }">
                         <button class="btn btn-outline-primary btn-write-form">댓글 작성</button>
                         </c:if>
@@ -74,10 +79,15 @@
                             </div>
                             <div class="progress-wrapper d-flex justify-content-between mb-4">
                                 <span class="text-primary ">65% 달성</span>
-                                <span><strong><fmt:formatNumber value="${round.goalamount}" />원 목표</strong></span>
+                                <span><strong><fmt:formatNumber value="${board.round.goalamount}" />원 목표</strong></span>
                             </div>
                         </div>
-                        <a href="#" class="btn btn-primary form-control py-2" >기부하기</a>
+                        <div class="d-flex flex-column gap-2">
+	                        <a href="#" class="btn btn-primary form-control py-2" >기부하기</a>
+	                        <c:if test="${(member.mno == board.mno or member.mtype == ADMIN) and not empty member}">
+	                        <a href="${cp }/board/modify?bno=${board.bno}" class="btn btn-outline-primary form-control py-2" >수정하기</a>
+	                        </c:if>
+                        </div>
                     </div> 
                 </div>
 
@@ -245,8 +255,9 @@
                    </div>
                    <div class="mb-3">
                        <label for="writer" class="form-label"><i class="fa-solid fa-user text-secondary me-2"></i> 작성자</label>
-                       <input type="text" class="form-control" id="writer" placeholder="작성자" name="writer" value="${member.id }" disabled="disabled">
+                       <input type="text" class="form-control" placeholder="작성자" value="${member.nickname }" disabled="disabled">
                    </div>
+                       <input type="hidden" id="writer" name="writer" value="${member.mno }">
                </form>
            </div>
 
@@ -286,9 +297,11 @@
     	const bno = '${board.bno}'
         const url = "${cp}" + "/reply/";
         const modal = new bootstrap.Modal($("#reviewModal").get(0), {})
+        const loginUserMno = ${member.mno != null ? member.mno : 'null'};
         // makeReplyLi(reply) > str
         
         function makeReplyLi(r) {
+        	const isOwner = loginUserMno === r.mno; 
         	return `<li class="d-flex gap-3" data-rno="\${r.rno}">
             <div class="rounded-5 overflow-hidden border-2" style="border: 2px solid var(--border-1); width: 40px; height: 40px; box-sizing: border-box;"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQm38aJRuNJH9z0qvbVUWR9rDQ2N7DoUWDXSA&s" alt="프로필 사진" style="width: 100%; height: 100%; object-fit: cover;" ></div>
             <div class="flex-grow-1">
@@ -302,8 +315,11 @@
                 <div class="small d-flex justify-content-end gap-3 mt-2">
                     <label><i class="fa-regular fa-heart me-1"></i> 좋아요<button class="d-none"></button></label>
                     <span>\${dayjs(r.regdate, dayForm).fromNow()}</span>
+                    \${isOwner ? `
                     <label class="text-decoration-underline " style="color: var(--col-3); cursor: pointer;">수정<button class="d-none btn-modify-form"></button></label>
                     <label class="text-decoration-underline" style="color: var(--col-3); cursor: pointer;">삭제<button class="d-none btn-remove-submit"></button></label>
+                    ` : ''
+                    }
                 </div>
             </div>
         </li>`;
@@ -352,10 +368,10 @@
             if(!result) return;
 
             const content = $("#content").val().trim();
-            const id = $("#writer").val().trim();
+            const mno = $("#writer").val().trim();
             
 
-            const obj = {content, id, bno};
+            const obj = {content, mno, bno};
             console.log(obj);
             console.log("글쓰기 전송");
 
@@ -383,7 +399,7 @@
             $.getJSON(url + rno, function(data){
                 $("#reviewModal .modal-footer button").show().eq(0).hide();
                 $("#content").val(data.content);
-                $("#writer").val(data.id);
+                $("#writer").val(data.mno);
                 $("#reviewModal").data("rno", rno);
                 console.log(data);
                 modal.show();
@@ -399,10 +415,10 @@
             console.log(rno);
             
             const content = $("#content").val().trim();
-            const id = $("#writer").val().trim();
+            const mno = $("#writer").val().trim();
        
             
-            const obj = {content, id, rno};
+            const obj = {content, mno, rno};
 
             $.ajax({
                 url : url + rno,

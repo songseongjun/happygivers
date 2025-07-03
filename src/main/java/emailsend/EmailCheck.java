@@ -37,12 +37,10 @@ public class EmailCheck extends HttpServlet {
             String email = service.getEmail(uuid);
 
             // 5. 인증된 이메일 DB 상태 업데이트
-         // 5. 인증된 이메일 DB 상태 업데이트
             MemberMapper mapper = MybatisUtil.getSqlSession().getMapper(MemberMapper.class);
             mapper.updateEmailVerifiedByEmail(email);  // tbl_member 테이블 업데이트
             mapper.verifyEmail(uuid);                  // tbl_email_check 테이블 업데이트
-            MybatisUtil.getSqlSession().commit();      // 둘 다 적용
-
+            MybatisUtil.getSqlSession().commit();      // 커밋
 
             // 6. Redis에서 uuid 토큰 삭제 (1회용 인증)
             service.removeToken(uuid);
@@ -53,7 +51,6 @@ public class EmailCheck extends HttpServlet {
 
             // 8. index.jsp로 이동
             resp.sendRedirect("/index.jsp");
-
         } else {
             // 9. 인증 실패: 토큰 없거나 만료됨
             req.setAttribute("message", "이메일 인증이 만료되었거나 잘못된 요청입니다.");
