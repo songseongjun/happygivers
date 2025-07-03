@@ -44,7 +44,7 @@
           <!-- 히든으로 값 전달 -->
           <input type="hidden" name="content" id="content">
           <input type="hidden" name="mno" value="${member.mno }">
-          <input type="hidden" name="status" value="DISABLED">
+          <input type="hidden" name="status" value="READY">
           
           
           

@@ -49,11 +49,14 @@
                 <div>
                     <div class="d-flex justify-content-between align-items-center mt-5">
                         <p class="fs-5 fw-semibold m-0">댓글<span class="small"> ${replyCount}</span></p>
-                        <c:if test="${not empty member }">
+                        <c:if test="${not empty member and member.status == 'ACTIVE' }">
                         <button class="btn btn-outline-primary btn-write-form">댓글 작성</button>
                         </c:if>
                         <c:if test="${empty member }">
                         <a href="${cp }/member/login?mtype=USER" class="btn btn-outline-primary">로그인</a>
+                        </c:if>
+                        <c:if test="${member.status != 'ACTIVE' and not empty member}">
+                        <button  class="btn btn-secondary" disabled>권한없음</button>
                         </c:if>
                     </div>
                     <hr>

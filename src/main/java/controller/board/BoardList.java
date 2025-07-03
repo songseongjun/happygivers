@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import domain.Board;
 import domain.dto.Criteria;
 import domain.dto.PageDto;
+import domain.en.Ctype;
 import domain.en.Status;
 import lombok.extern.slf4j.Slf4j;
 import service.BoardService;
@@ -30,22 +31,46 @@ public class BoardList extends HttpServlet{
 		    cri = new Criteria();
 		}
 		
+		String path = req.getServletPath();
 		cri.setStatus(Status.ACTIVE);
-			
-		
-		log.info("{}", cri);
 
-		List<Board> boards = boardService.list(cri);
-		for (Board b : boards) {
-			b.setThumbnail(boardService.findThumbnail(b.getContent()));
-			b.setRound(boardService.findRound(b.getDrno()));
-			b.setCname(boardService.findCname(b.getCno()));
-			b.setName(boardService.findname(b.getMno()));
+		
+		// 기부 게시글 리스트 처리
+		if ("/board/list".equals(path)) { 
+			cri.setCtype(Ctype.DONATE);
+			
+			List<Board> boards = boardService.list(cri);
+			
+			for (Board b : boards) {
+				b.setThumbnail(boardService.findThumbnail(b.getContent())); // 썸네일 추출
+				b.setRound(boardService.findRound(b.getDrno())); // 모금정보 추출
+				b.setCname(boardService.findCname(b.getCno())); // 카테고리명 추출
+				b.setName(boardService.findName(b.getMno())); // 작성자 이름 추출
+			}
+			
+			
+			req.setAttribute("pageDto", new PageDto(cri, boardService.getCount(cri)));
+			log.info("{}", req.getAttribute("pageDto"));
+			req.setAttribute("boards", boards);
+
+		}
+		// 피드 게시글 리스트 처리
+		else if ("/feed/list".equals(path)) { 
+			cri.setCtype(Ctype.FEED);
+			
+			List<Board> boards = boardService.list(cri);
+			
+			for (Board b : boards) {
+				b.setThumbnail(boardService.findThumbnail(b.getContent())); // 썸네일 추출
+				b.setNickname(boardService.findNickname(b.getMno())); // 작성자 닉네임
+			}
+			
+			req.setAttribute("pageDto", new PageDto(cri, boardService.getCount(cri)));
+			log.info("{}", req.getAttribute("pageDto"));
+			req.setAttribute("boards", boards);
 		}
 		
-		req.setAttribute("pageDto", new PageDto(cri, boardService.getCount(cri)));
-		log.info("{}", req.getAttribute("pageDto"));
-		req.setAttribute("boards", boards);
-		req.getRequestDispatcher("/WEB-INF/views/board/list.jsp").forward(req, resp);
+		log.info("{}", cri);
+		req.getRequestDispatcher("/WEB-INF/views" + path + ".jsp").forward(req, resp);
 	}
 }

@@ -190,13 +190,14 @@ public class BoardService {
 		}
 		
 	// 작성자명 가져오기
-		public String findname(Long mno) {
+		public String findName(Long mno) {
 			try(SqlSession session = MybatisUtil.getSqlSession()){
 				if (mno == null) return null;
 			    
 				MemberMapper mapper = session.getMapper(MemberMapper.class);
 			    Member member = mapper.findByMno(mno);
-				return member.getName();
+
+			    return member.getName();
 			}
 			catch (Exception e){
 				e.printStackTrace();
@@ -204,6 +205,25 @@ public class BoardService {
 			return null;
 		}
 	
+		// 닉네임 가져오기
+		public String findNickname(Long mno) {
+			try(SqlSession session = MybatisUtil.getSqlSession()){
+				if (mno == null) return null;
+			    
+				MemberMapper mapper = session.getMapper(MemberMapper.class);
+			    Member member = mapper.findByMno(mno);
+			    if(member.getNickname() == null) {
+			    	return null;
+			    }
+			    return member.getNickname();
+			}
+			catch (Exception e){
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
+		
 	// 댓글 개수 가져오기
 	public int getReplyCount(Long bno) {
 		try(SqlSession session = MybatisUtil.getSqlSession()) {

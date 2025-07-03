@@ -5,6 +5,7 @@ import java.net.URLDecoder;
 
 import javax.servlet.http.HttpServletRequest;
 
+import domain.en.Ctype;
 import domain.en.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,6 +31,7 @@ public class Criteria { //페이지 관련
 	private Status status;
 	private String type = ""; // TCI
 	private String keyword = "";
+	private Ctype ctype;
 	
 	public int getOffset() {
 		int offset = amount * (page-1);

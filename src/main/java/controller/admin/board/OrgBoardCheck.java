@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import domain.Board;
 import domain.dto.Criteria;
+import domain.en.Status;
 import lombok.extern.slf4j.Slf4j;
 import service.BoardService;
 import util.AlertUtil;
@@ -27,6 +28,7 @@ public class OrgBoardCheck extends HttpServlet{
 		
 		Criteria cri = ParamUtil.get(req, Criteria.class);
 //		cri.setStatus(Status.valueOf(req.getParameter("status")));
+		cri.setStatus(Status.READY);
 		
 		List<Board> boards = service.list(cri);
 		if(boards == null) {
@@ -35,7 +37,7 @@ public class OrgBoardCheck extends HttpServlet{
 		for(Board b : boards) {
 			b.setRound(service.findRound(b.getDrno()));
 			b.setCname(service.findCname(b.getCno()));
-			b.setName(service.findname(b.getMno()));
+			b.setName(service.findName(b.getMno()));
 		}
 		
 		req.setAttribute("boards", boards);
