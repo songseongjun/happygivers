@@ -20,39 +20,80 @@
 	              <input type="number" class="form-control" placeholder="기부금액" name="totalAmount" id="totalAmount" min="0"  required>
 	              <label for="goalamount">기부금액</label>
 	            </div>
-                <button class="btn btn-primary form-control mt-4 py-2 fs-5 fw-semibold" id="checkOutBtn" onclick="handlePayment()">결제하기</button>
+	            <div>
+			    <img id="itemImage" src="" alt="이미지" width="200"><br>
+			    <strong id="itemName"></strong><br>
+			    <span class="price-value"></span>
+			  </div>
+                <button class="btn btn-primary form-control mt-4 py-2 fs-5 fw-semibold" id="checkOutBtn">결제하기</button>
             </div>
           
 		</main>
 	</div>
 
 <%@ include file="../common/footer.jsp" %>
+	
+ <script> 
+	let donate = null;
+    async function loadDonate() {
+      const res = await fetch("${cp}/api/donate?bno=${board.bno}");
+      donate = await res.json();
+      return donate;
+    }
 
-<script>
-  async function handlePayment() {
-    try {
-      const response = await PortOne.requestPayment({
-        storeId: "store-f1ff113e-a12f-48a2-ad88-1a67d77bd7ad", // 스토어아이디
-        channelKey: "channel-key-52c3a9b7-5696-4767-8b91-0295776acbd8", // 채널 키
-        paymentId: `payment-${crypto.randomUUID()}`, // 주문번호
-        orderName: "나이키 와플 트레이너 2 SD", // 기부게시판 타이틀
-        totalAmount: 100, // 금액
-        currency: "CURRENCY_KRW", // 한화
-        payMethod: "CARD" // 결제 타입
+    async function requestPayment(donate) {
+	  const paymentId = 'payment-' + crypto.randomUUID();
+	  console.log(paymentId);
+	  
+      const result = await PortOne.requestPayment({
+        storeId: donate.storeId,
+        channelKey: donate.channelKey,
+        paymentId: paymentId,
+        orderName: donate.board.title,
+        totalAmount: 100,
+        currency: "CURRENCY_KRW",
+        payMethod: "CARD",
+        customData: {
+          mno: "${member.mno}",
+          bno: donate.board.bno
+        }
       });
 
-      if (response.code === "SUCCESS") {
-        alert("✅ 결제 성공! paymentId: " + response.data.paymentId);
-        // TODO: 서버에 결제 정보 전송 및 검증
-      } else {
-        alert("❌ 결제 실패: " + response.message);
+      if (result.code !== undefined) {
+        alert("❌ 결제 실패: " + result.message);
+        return;
       }
-    } catch (error) {
-      console.error("결제 요청 실패:", error);
-      alert("결제 중 오류가 발생했습니다.");
+
+      const complete = await fetch("${cp}/api/payment/complete", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ paymentId: result.paymentId })
+      });
+
+      if (complete.ok) {
+        const json = await complete.json();
+        if (json.status === "PAID") {
+          alert("✅ 결제 완료!");
+        } else {
+          alert("❌ 결제는 되었지만 상태 확인 실패");
+        }
+      } else {
+        alert("❌ 서버 검증 실패");
+      }
     }
-  }
-</script>
+    
+    $("#checkOutBtn").on("click", async() => {
+      const donate = await loadDonate();
+      $("#itemName").text(donate.board.title);
+      $("#itemImage").attr("src", donate.board.thumbnail);
+      $(".price-value").text('100'.toLocaleString() + "원");
+
+      await requestPayment(donate);
+    })
+
+  </script>
 
 
 </body>

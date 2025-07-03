@@ -17,12 +17,12 @@ public class Pay extends HttpServlet{
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//		BoardService boardService = new BoardService();
-//		Board board = boardService.findByBno(Long.parseLong(req.getParameter("bno")));
-//		board.setRound(boardService.findRound(board.getDrno()));
-//		
-//		
-//		req.setAttribute("board", board);
+		BoardService boardService = new BoardService();
+		Board board = boardService.findByBno(Long.parseLong(req.getParameter("bno")));
+		board.setRound(boardService.findRound(board.getDrno()));
+		
+		
+		req.setAttribute("board", board);
 		req.getRequestDispatcher("/WEB-INF/views/pay/pay.jsp").forward(req, resp);
 	}
 
