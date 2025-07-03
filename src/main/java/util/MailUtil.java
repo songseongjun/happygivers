@@ -11,8 +11,6 @@ import jakarta.mail.Transport;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 
-
-//public class MailUtil {
 //	public static void main(String[] args) {
 //		sendEmail("thdtjdwns0902@gmail.com", "송상준이 발송하고 송상준이 받음", "내용없음");
 //	}
@@ -60,49 +58,45 @@ import jakarta.mail.internet.MimeMessage;
 //            throw new RuntimeException(e);
 //        }
 //    }
-//}
-
 public class MailUtil {
-    public static void sendEmail(String to, String subject, String content) {
-        String host = "smtp.gmail.com";
-        final String user = "thdtjdwns0902@gmail.com";  // Gmail 계정
-        final String password = "jaxbyqyodienwksj";         // 앱 비밀번호
+    	   // 메일 전송용 메서드
+        public static void sendEmail(String to, String subject, String content) {
+            // Gmail SMTP 서버 정보
+            final String host = "smtp.gmail.com";
+            final String user = "thdtjdwns0902@gmail.com";      // 보내는 사람 이메일
+            final String password = "jaxbyqyodienwksj";         // 앱 비밀번호
 
-        Properties props = new Properties();
-        props.put("mail.smtp.host", host);
-        props.put("mail.smtp.port", "587");
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
+            // SMTP 속성 설정
+            Properties props = new Properties();
+            props.put("mail.smtp.host", host);
+            props.put("mail.smtp.port", "587");
+            props.put("mail.smtp.auth", "true");
+            props.put("mail.smtp.starttls.enable", "true"); // TLS 보안
 
-        Session session = Session.getDefaultInstance(props, new Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(user, password);
+            // 세션 생성
+            Session session = Session.getDefaultInstance(props, new Authenticator() {
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(user, password);
+                }
+            });
+
+            try {
+                // 이메일 메시지 생성
+                MimeMessage message = new MimeMessage(session);
+                message.setFrom(new InternetAddress(user));
+                message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+                message.setSubject(subject);
+
+                // HTML 형식으로 메일 내용 설정
+                message.setContent(content, "text/html; charset=utf-8");
+
+                // 메일 전송
+                Transport.send(message);
+                System.out.println("메일 전송 완료: " + to);
+
+            } catch (MessagingException e) {
+                e.printStackTrace(); // 에러 출력
+                throw new RuntimeException("메일 전송 실패: " + e.getMessage());
             }
-        });
-        System.out.println("메일 전송 시도 중: " + to);
-        try {
-            MimeMessage message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(user));
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-            message.setSubject(subject);
-
-            // html형식
-            String html = "<h3>아래 링크를 클릭하세요</h3>" +
-                          "<a href='" + content + "' target='_blank'>" + content + "</a>";
-
-            message.setContent(html, "text/html; charset=utf-8");
-
-            Transport.send(message);
-            System.out.println("메일 전송 완료");
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        }
-    } 
-
-    public class MailTest {
-        public static void main(String[] args) {
-            MailUtil.sendEmail("thdtjdwns0902@gmail.com", "테스트 제목", "테스트 본문입니다.");
         }
     }
-
-}

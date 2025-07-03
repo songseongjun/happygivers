@@ -1,29 +1,77 @@
 package service;
 
+import org.apache.ibatis.session.SqlSession;
+
+import domain.Member;
+import mapper.MemberMapper;
+import util.MybatisUtil;
 import util.RedisUtil;
 
-//이메일 Redis처리서비스  uuid=인증토큰
+// 이메일 Redis 처리 + DB 인증 처리 서비스
 public class EmailCheckService {
-	
-	 // 인증 토큰 저장: Redis에 (uuid, email) 쌍으로 저장
+
+    // 인증 토큰 저장
     public void saveToken(String uuid, String email) {
-        // Redis에 uuid라는 키로 email을 저장하고 10분(600초) 뒤에 자동 삭제되도록 설정함
-        RedisUtil.set(uuid, email, 600);
+        RedisUtil.set(uuid, email, 600); // 10분 TTL
     }
 
-    // 인증 토큰 확인: uuid가 유효한지 확인 (Redis에 존재하면 인증됨)
+    // 인증 토큰 존재 여부 확인
     public boolean isVerified(String uuid) {
-        // Redis에서 해당 uuid가 존재하면 인증 완료된 것으로 간주
         return RedisUtil.exists(uuid);
     }
 
-    // 이메일 가져오기 필요한 경우, uuid로 이메일 꺼내오기
+    // 토큰으로 이메일 꺼내기
     public String getEmail(String uuid) {
         return RedisUtil.get(uuid);
     }
 
-    // 인증 완료되면 토큰 삭제 (재사용 방지용)
+    // 토큰 삭제 (1회용)
     public void removeToken(String uuid) {
         RedisUtil.remove(uuid);
+    }
+
+    //  인증 성공 처리: emailcheck = 1 + email_check.check = 1
+    public boolean verifyEmail(String uuid) {
+        SqlSession session = MybatisUtil.getSqlSession();
+        try {
+            MemberMapper mapper = session.getMapper(MemberMapper.class);
+
+            // 1. uuid로 이메일 꺼냄
+            String email = RedisUtil.get(uuid);
+            if (email == null) return false;
+
+            // 2. tbl_member.emailcheck = 1
+            mapper.updateEmailCheckByEmail(email);
+
+            // 3. tbl_email_check.check = 1
+            mapper.verifyEmail(uuid);
+
+            session.commit();
+
+            // 4. Redis 인증 토큰 삭제
+            RedisUtil.remove(uuid);
+            System.out.println("인증 시작 - uuid: " + uuid);
+            System.out.println("이메일 인증 처리 - email: " + email);
+
+            return true;
+            
+        } catch (Exception e) {
+            session.rollback();
+            e.printStackTrace();
+            return false;
+        } finally {
+            session.close();
+        }
+    }
+
+    // 인증된 사용자 조회 (세션 등록용)
+    public Member getMemberByEmail(String email) {
+        SqlSession session = MybatisUtil.getSqlSession();
+        try {
+            MemberMapper mapper = session.getMapper(MemberMapper.class);
+            return mapper.selectByEmail(email);
+        } finally {
+            session.close();
+        }
     }
 }

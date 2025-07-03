@@ -2,26 +2,65 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  <mapper namespace="mapper.MemberMapper">
-  	<insert id="insert">
- insert into tbl_member (id,pw,name,email,tel,nickname,location,mtype) values(#{id},#{pw},#{name},#{email},#{tel},#{nickname},#{location},#{mtype});
- 	
-  	</insert>
-  	<select id="findById" resultType="Member">
-  	 select * from tbl_member where id = #{id}
-  	</select>
-  	<select id="findByMno" resultType="Member">
-  	 select * from tbl_member where mno = #{mno}
-  	</select>
-  	
-  	<resultMap type="domain.Member" id="MemberMap">
-  	<result property="regdate" column="regdate" javaType="java.util.Date"/>
-  	</resultMap>
-  	
-  	<select id="findIdsByEmailAndName" resultMap="MemberMap">
-  	select id, name, regdate
-  	from tbl_member
-  	where email = #{email}
-  	and name = #{name}
-  	</select>
-  </mapper> 
+<mapper namespace="mapper.MemberMapper">
+
+  <!-- 회원가입 -->
+  <insert id="insert" parameterType="Member">
+    INSERT INTO tbl_member (id, pw, name, email, tel, nickname, location, mtype)
+    VALUES (
+      #{id}, #{pw},
+      #{name, jdbcType=VARCHAR},
+      #{email},
+      #{tel, jdbcType=VARCHAR},
+      #{nickname, jdbcType=VARCHAR},
+      #{location, jdbcType=VARCHAR},
+      #{mtype}
+    )
+  </insert>
+
+  <!-- ID로 회원 조회 -->
+  <select id="findById" resultType="domain.Member">
+    SELECT * FROM tbl_member WHERE id = #{id}
+  </select>
+
+  <!-- 회원번호로 조회 -->
+  <select id="findByMno" resultType="domain.Member">
+    SELECT * FROM tbl_member WHERE mno = #{mno}
+  </select>
+
+  <!-- 이메일 + 이름으로 아이디 찾기 -->
+  <select id="findIdsByEmailAndName" resultType="domain.Member">
+    SELECT id, name, regdate
+    FROM tbl_member
+    WHERE email = #{email}
+      AND name = #{name}
+  </select>
+
+  <!-- 이메일로 회원 조회 (중복검사용) -->
+  <select id="findByEmail" resultType="domain.Member">
+    SELECT * FROM tbl_member WHERE email = #{email}
+  </select>
+
+  <!-- 이메일 인증 여부 업데이트 (tbl_member 테이블) -->
+ <update id="updateEmailCheckByEmail">
+  UPDATE tbl_member SET emailcheck = 1 WHERE email = #{email}
+</update>
+
+  <!-- 이메일로 회원 객체 조회 -->
+  <select id="selectByEmail" parameterType="string" resultType="domain.Member">
+    SELECT * FROM tbl_member WHERE email = #{email}
+  </select>
+
+  <!-- tbl_email_check 테이블에서 check 컬럼 업데이트 -->
+  <update id="verifyEmail" parameterType="string">
+    UPDATE tbl_email_check
+    SET `check` = 1
+    WHERE uuid = #{uuid}
+  </update>
+
+  <!-- 날짜 형식을 위한 resultMap -->
+  <resultMap type="domain.Member" id="MemberMap">
+    <result property="regdate" column="regdate" javaType="java.util.Date"/>
+  </resultMap>
+
+</mapper>
