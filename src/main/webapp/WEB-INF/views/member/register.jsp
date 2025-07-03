@@ -65,7 +65,7 @@
         <div class="form-floating input-group my-2">
           <input type="email" class="form-control" name="email" id="email" placeholder="이메일" required>
           <label for="email" style="z-index: 10;">이메일</label>
-          <button type="button" id="emailckplz" class="btn btn-outline-primary">이메일 인증</button>
+         
         </div>
 
         <div class="d-grid">

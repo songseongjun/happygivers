@@ -6,6 +6,10 @@
 <%@ include file="common/head.jsp" %>
 </head>
 <body>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:if test="${not empty msg}">
+    <script>alert('${msg}');</script>
+</c:if>
 <%@ include file="common/header.jsp" %>
 	<div class="container px-0">
         <main class="row justify-content-between mx-0">

@@ -48,9 +48,10 @@ public class EmailCheck extends HttpServlet {
             // 7. 로그인 세션 부여
             Member member = mapper.selectByEmail(email);
             req.getSession().setAttribute("member", member);
-
+            	
             // 8. index.jsp로 이동
-            resp.sendRedirect("/index.jsp");
+            resp.sendRedirect("../index");
+            
         } else {
             // 9. 인증 실패: 토큰 없거나 만료됨
             req.setAttribute("message", "이메일 인증이 만료되었거나 잘못된 요청입니다.");
@@ -61,6 +62,8 @@ public class EmailCheck extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // POST 요청 대비
+   
+    	
         resp.setContentType("text/plain; charset=UTF-8");
         resp.getWriter().write("이 요청은 GET 방식으로만 처리 가능합니다.");
     }
