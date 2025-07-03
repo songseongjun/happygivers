@@ -189,7 +189,7 @@
 
 
                 <!-- 로그인 후-->
-                <c:if test="${not empty member }">
+                < <c:if test="${not empty member }">
                 <div class="border rounded-3">
                     <div class="p-4 d-flex align-items-center gap-3 border-bottom">
                         <div class="overflow-hidden rounded-circle" style="width: 64px; height: 64px; border: 2px solid var(--border-1);">
@@ -205,11 +205,14 @@
                     <div class="p-3" style="background-color: var(--col-1);">
                         <div class="d-flex justify-content-around">
                             <a href="#" class="text-decoration-none fw-medium small" style="color: var(--col-5);">프로필 수정</a>
-                            <a href="#" class="text-decoration-none fw-medium small" style="color: var(--col-5);">마이페이지</a>
+                             <a href="${pageContext.request.contextPath}/member/mypage"class="text-decoration-none fw-medium small"style="color: var(--col-5);">마이페이지</a>
                         </div>
                     </div>
                 </div>
-                </c:if>
+                </c:if> 
+               
+				                
+				                
 
                 <!-- 기부금 -->
                 <div class="border rounded-3 mt-4">

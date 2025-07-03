@@ -15,8 +15,21 @@ import util.MailUtil;
 @WebServlet("/member/email-auth")
 public class EmailAuth extends HttpServlet {
 
+    // GET 요청 (mypage.jsp 에서 버튼 클릭 시 도착)
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        // GET 요청도 POST 요청처럼 처리
+        processEmailAuth(req, resp);
+    }
+
+    // POST 요청 대비
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        processEmailAuth(req, resp);
+    }
+
+    // 공통 메서드: 이메일 인증 처리
+    private void processEmailAuth(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         // 1. 이메일 파라미터 가져오기
         String email = req.getParameter("email");
 
@@ -26,7 +39,7 @@ public class EmailAuth extends HttpServlet {
             return;
         }
 
-        // 2. UUID 생성 및 Redis 저장 (5분 유효)
+        // 2. UUID 생성 및 Redis 저장
         String uuid = UUID.randomUUID().toString();
         new EmailCheckService().saveToken(uuid, email);
 

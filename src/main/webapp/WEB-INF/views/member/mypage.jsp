@@ -76,8 +76,11 @@
                         <div class="overflow-hidden rounded-circle" style="width: 64px; height: 64px; border: 2px solid var(--border-1);">
                             <img src="img/img1.png" class="object-fit-cover" alt="프로필사진" style="width: 64px; height: 64px;">
                         </div>
-                        <p class="fw-semibold fs-6 mb-0 flex-grow-1 text-truncate" style="color: var(--col-4);"><span style="color: var(--col-6);">키다리아저씨</span> 님</p>
-                        <a href="#" class="text-decoration-none border px-3 py-1 rounded-5 small" style="color: var(--col-3);">로그아웃</a>
+                        <p class="fw-semibold fs-6 mb-0 flex-grow-1 text-truncate" style="color: var(--col-4);"><span style="color: var(--col-6);">${member.name }</span> 님</p>
+                       <a href="${pageContext.request.contextPath}/member/logout"
+						   class="text-decoration-none border px-3 py-1 rounded-5 small"
+						   style="color: var(--col-3);">로그아웃</a>
+
                     </div>
                 </div>
             		  <%
@@ -113,15 +116,34 @@
                         <div class="d-flex">
                             <p class="fs-5 fw-semibold m-0" style="color: var(--col-6);">회원정보</p>
                         </div>
+                       
+                       		<!-- 휴대폰,닉네임 ,주소 입력폼 -->
+						<form action="${pageContext.request.contextPath}/member/update-profile" method="post" class="mt-4">
+						    <div class="mb-2">
+						        <label>닉네임</label>
+						        <input type="text" name="nickname" value="${member.nickname}" class="form-control">
+						    </div>
+						    <div class="mb-2">
+						        <label>휴대폰 번호</label>
+						        <input type="text" name="tel" value="${member.tel}" class="form-control">
+						    </div>
+						    <div class="mb-2">
+						        <label>주소</label>
+						        <input type="text" name="location" value="${member.location}" class="form-control">
+						    </div>
+						    <button type="submit" class="btn btn-primary">저장</button>
+						</form>
+						
                         <ul class="p-0 d-flex flex-column mt-2 mb-0">
-                            <li><a href="#" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">프로필 사진 변경</a></li>
-                            <li><a href="#" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">닉네임 변경</a></li>
+                            <li><a href="#" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">프로필 사진 등록</a></li>
+                            <!-- <li><a href="#" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">닉네임 등록</a></li>
                             <li><a href="#" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">배지 활성화 여부 변경</a></li>
-                            <li><a href="#" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">자기소개 변경</a></li>
-                            <li><a href="#" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">휴대폰 번호 변경</a></li>
-                            <li><a href="#" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">이메일 변경</a></li>
+                            <li><a href="#" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">휴대폰 번호 등록</a></li>-->
+                 
+                            <li><a href="#" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">주소등록</a></li>
                             <li><a href="#" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">비밀번호 변경</a></li>
                         </ul>
+						                        
                     </div>
                     <div>
                         <div class="d-flex">
