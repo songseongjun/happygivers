@@ -31,6 +31,7 @@ public class Member {
 	private String location;//주소
 	private String content;//소개글
 	private boolean emailcheck;//이메일 인증
+	private int emailVerified;//이메일 (0:미인증,1:인증)
 	private String profile;//프로필
 	
 
@@ -42,4 +43,11 @@ public class Member {
 	    this.name = name;
 	}
 
+	   public int getEmailVerified() {
+	        return emailVerified;
+	    }
+
+	    public void setEmailVerified(int emailVerified) {
+	        this.emailVerified = emailVerified;
+	    }
 }

@@ -3,10 +3,17 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="mapper.MemberMapper">
-  	<insert id="insert">
- insert into tbl_member (id,pw,name,email,tel,nickname,location,mtype) values(#{id},#{pw},#{name},#{email},#{tel},#{nickname},#{location},#{mtype});
- 	
-  	</insert>
+  	<insert id="insert" parameterType="Member">
+	  INSERT INTO tbl_member (id, pw, name, email, tel, nickname, location, mtype)
+	  VALUES (#{id}, #{pw}, 
+	          #{name, jdbcType=VARCHAR}, 
+	          #{email}, 
+	          #{tel, jdbcType=VARCHAR}, 
+	          #{nickname, jdbcType=VARCHAR}, 
+	          #{location, jdbcType=VARCHAR}, 
+	          #{mtype})
+	</insert>
+
   	<select id="findById" resultType="Member">
   	 select * from tbl_member where id = #{id}
   	</select>
@@ -18,21 +25,27 @@
   	<result property="regdate" column="regdate" javaType="java.util.Date"/>
   	</resultMap>
   	
-  	<select id="findIdsByEmailAndName" resultMap="MemberMap">
-  	select id, name, regdate
-  	from tbl_member
-  	where email = #{email}
-  	and name = #{name}
-  	</select>
   	
-  	<update id="updateEmailVerifiedByEmail" parameterType="string">
-    UPDATE tbl_member
-    SET email_verified = 1
-    WHERE email = #{email}
-</update>
-
-<select id="selectByEmail" parameterType="string" resultType="vo.MemberVO">
+  	
+  	<select id="findByEmail" resultType="domain.Member">
     SELECT * FROM tbl_member WHERE email = #{email}
 </select>
   	
+  
+  <update id="updateEmailVerifiedByEmail" parameterType="string">
+    UPDATE tbl_member SET email_verified = 1 WHERE email = #{email}
+</update>
+
+
+<select id="selectByEmail" parameterType="string" resultType="domain.Member">
+  SELECT * FROM tbl_member WHERE email = #{email}
+</select>
+
+<update id="verifyEmail" parameterType="string">
+  UPDATE tbl_email_check
+  SET `check` = 1
+  WHERE uuid = #{uuid}
+</update>
+
+
   </mapper> 

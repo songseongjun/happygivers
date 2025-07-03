@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
@@ -5,8 +6,6 @@
   if (mtype == null) mtype = "USER";
   request.setAttribute("mtype", mtype); 
 %>
-    
-<!DOCTYPE html>
 <html>
 <head>
 <%@ include file="../common/head.jsp" %>
@@ -24,22 +23,22 @@
         <form action="/happygivers/member/register" method="post"
       	class="d-flex flex-column mx-auto my-5 gap-4" style="max-width: 460px;">
       	
-		    <input type="hidden" name="mtype" value="${mtype}">
-			<div class="border rounded-3 list-group p-3 gap-3 collapse show" id="tosForm" >
+	    <input type="hidden" name="mtype" value="${mtype}">
+		<div class="border rounded-3 list-group p-3 gap-3 collapse show" id="tosForm" >
               <div class="form-check mb-2">
-                <input class="form-check-input" type="checkbox" id="agreeAll">
+                <input class="form-check-input" type="checkbox" id="agreeAll" name="agreeAll">
                 <label class="form-check-label fw-bold" for="agreeAll">모두 동의</label>
               </div>
-  
+
              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="tos" required>
+                <input class="form-check-input" type="checkbox" id="tos" name="tos" required>
                 <label class="form-check-label" for="tos">
                   <span class="text-primary text-decoration-none fw-bold me-1">[필수]</span> <a href="#" target="_blank" style="color: var(--col-5);"> 이용약관 동의</a>
                 </label>
               </div>
-  
+
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="privacy" required>
+                <input class="form-check-input" type="checkbox" id="privacy" name="privacy" required>
                 <label class="form-check-label" for="privacy">
                   <span class="text-primary text-decoration-none fw-bold me-1">[필수]</span> <a href="#" target="_blank" style="color: var(--col-5);">개인정보 수집 및 이용 동의</a>
                 </label>
@@ -53,7 +52,7 @@
                 <input type="text" class="form-control" placeholder="아이디" name="id" id="id">
                 <label for="id">아이디</label>
               </div>
-  
+
               <div class="form-floating my-2">
                 <input type="password" class="form-control" placeholder="비밀번호" name="pw" id="pw">
                 <label for="pw">비밀번호</label>
@@ -64,79 +63,50 @@
               <label for="email" style="z-index: 10;">이메일</label>
               </div>
               <div class="d-grid">
-             	<button type="submit" class="btn btn-primary btn-lg btn-block">회원가입</button>
+              	<button type="submit" class="btn btn-primary btn-lg btn-block">회원가입</button>
                </div>
             </div>
             <script>
 			  function goNextStep() {
 				  $('#tosForm').stop().animate({ opacity: 0, height: 0 }, 300, function () {
 				      $(this).hide();
-	
+
 				      // 초기화
 				      $('#step2_account').css({ opacity: 0, display: 'block', height: 'auto' });
 				      const actualHeight = $('#step2_account').outerHeight();
 				      $('#step2_account').css({ height: 0 });
-	
+
 				      $('#step2_account').animate({ opacity: 1, height: actualHeight }, 400, function () {
 				        $(this).css({ height: 'auto' }); // auto로 복원
 				      });
 				    });
 			  }
 			</script>
-          <!--   <div class="d-flex border rounded-3 list-group p-3 gap-3">
-              <div class="form-floating">
-                <input type="text" class="form-control" placeholder="이름" name="name" id="name" autocomplete="name">
-                <label for="name">이름</label>
-              </div>
-              
-              <div class="form-floating">
-                <input type="text" class="form-control" placeholder="전화번호" name="tel" id="tel" autocomplete="tel">
-                <label for="tel">전화번호</label>
-              </div>
-              <div class="form-floating input-group">
-                <input type="text" class="form-control" id="roadAddress" name="roadAddress" placeholder="도로명 주소 또는 지번 주소" readonly>
-                <label for="roadAddress" style="z-index: 10;">도로명 주소 또는 지번 주소</label>
-                
-                
-                <button class="btn btn-outline-primary" type="button" onclick="execDaumPostcode()">주소 검색</button>
-              </div>
-              <div class="form-floating ">
-                <input type="text" class="form-control" id="detailAddress" name="detailAddress" placeholder="상세 주소">
-                <label for="detailAddress">상세 주소</label>
-                
-                
-              </div>
-                <input type="hidden" name="location" id="location" />
-            </div> -->
-
-            	
         </form>
       </main>
     </div>
 <%@ include file="../common/footer.jsp" %>
-<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
-/* $(document).ready(function(){
-	  $("#roadAddress, #detailAddress").on("input", function(){
-	    const fullAddr = $("#roadAddress").val() + " " + $("#detailAddress").val();
-	    $("#location").val(fullAddr);
-	  });
-	});
+$(_ => {
+    // 모두 동의 체크 시 다른것도 체크
+    $('#agreeAll').click(_ => {
+      if($(event.target).prop("checked")){
+        $("#tosForm input").each((v,i) => $(i).prop("checked", "true"))
+      }
+    })
 
+    $("#emailckplz").click(function(){
+      event.preventDefault();
+    })
+    
+    $("#emailcked").click(function(){
+      event.preventDefault();
+    })
 
-
-document.querySelector("#emailckplz").addEventListener("click", function() {
-	  const email = document.querySelector("#email").value;
-	  fetch("/happygivers/member/email-auth?email=" + email)
-	    .then(res => res.text())
-	    .then(msg => alert("메일이 전송되었습니다. 5분 내에 인증해주세요!"));
-	  
-	  
-	});
-	 */
-
-
+    
+  });
 </script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 </body>
 </html>

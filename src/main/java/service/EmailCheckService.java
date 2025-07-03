@@ -1,5 +1,8 @@
 package service;
 
+import org.apache.ibatis.session.SqlSession;
+
+import util.MybatisUtil;
 import util.RedisUtil;
 
 //이메일 Redis처리서비스  uuid=인증토큰
@@ -8,7 +11,8 @@ public class EmailCheckService {
 	 // 인증 토큰 저장: Redis에 (uuid, email) 쌍으로 저장
     public void saveToken(String uuid, String email) {
         // Redis에 uuid라는 키로 email을 저장하고 10분(600초) 뒤에 자동 삭제되도록 설정함
-        RedisUtil.set(uuid, email, 600);
+    	
+        RedisUtil.set(uuid, email, 600); 
     }
 
     // 인증 토큰 확인: uuid가 유효한지 확인 (Redis에 존재하면 인증됨)
@@ -26,4 +30,16 @@ public class EmailCheckService {
     public void removeToken(String uuid) {
         RedisUtil.remove(uuid);
     }
+    
+    public boolean verifyEmail(String uuid) {
+        SqlSession session = MybatisUtil.getSqlSession();
+        try {
+            int updated = session.update("mapper.MemerMapper.verifyEmail", uuid);
+            session.commit();
+            return updated > 0;
+        } finally {
+            session.close();
+        }
+    }
+
 }

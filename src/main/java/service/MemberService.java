@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import domain.Member;
 import domain.en.Mtype;
+import jakarta.mail.Session;
 import lombok.extern.slf4j.Slf4j;
 import mapper.MemberMapper;
 import util.MybatisUtil;
@@ -59,4 +60,15 @@ public class MemberService {
 	}
 		
 	}
-}
+	
+	public Member findByEmail(String email) {
+	    try (SqlSession session = MybatisUtil.getSqlSession()) {
+	        MemberMapper mapper = session.getMapper(MemberMapper.class);
+	        return mapper.findByEmail(email);
+	    }
+	}
+
+	}
+
+
+

@@ -1,4 +1,20 @@
 <!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="domain.Member" %>
+
+<%
+    Member member = (Member) session.getAttribute("member");
+    if (member == null) {
+%>
+    <script>
+        alert("로그인이 필요한 페이지입니다.");
+        location.href = "/member/login.jsp";
+    </script>
+<%
+        return;
+    }
+%>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -77,6 +93,31 @@
                         <a href="#" class="text-decoration-none border px-3 py-1 rounded-5 small" style="color: var(--col-3);">로그아웃</a>
                     </div>
                 </div>
+                
+                <!-- 이메일 인증 상태 -->
+				<div class="border rounded-3 mt-4 p-4">
+				    <p class="fs-5 fw-semibold" style="color: var(--col-6);">이메일 인증 상태</p>
+				    <%
+				        if (member.getEmailVerified() == 1) {
+				    %>
+				        <div class="alert alert-success p-2 mt-2" role="alert">
+				            이메일 인증이 완료되었습니다.
+				        </div>
+				    <%
+				        } else {
+				    %>
+				        <div class="alert alert-warning p-2 mt-2" role="alert">
+				           이메일 인증이 필요합니다.
+				        </div>
+				        <form action="/member/email-auth" method="get">
+				            <input type="hidden" name="email" value="<%= member.getEmail() %>">
+				            <button class="btn btn-outline-primary btn-sm mt-2" type="submit">이메일 인증 다시 받기</button>
+				        </form>
+				    <%
+				        }
+				    %>
+				</div>
+                
 
                 
                 <!-- 공지사항 -->
