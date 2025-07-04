@@ -60,7 +60,9 @@
  
  	<!-- 모금회차 하나 선택 -->
  	<select id="selectOneRound" resultType="donateRound">
- 		select r.*, (select sum(amount) from tbl_donate_action where drno = #{drno}) nowamount  
+ 		select r.*, 
+ 		(select sum(amount) from tbl_donate_action where drno = #{drno}) nowamount , 
+ 		(SELECT COUNT(DISTINCT mno) FROM tbl_donate_action WHERE drno = #{drno}) donatecount 
  		from tbl_donate_round r 
  		where drno = #{drno}
  	</select>
@@ -78,19 +80,40 @@
  		</selectKey>
  	</insert>
  	
- 	<!-- 모금 회차 정보 수정 -->
+ 	<!-- 기부내역 수정 -->
  	<update id="updateAction">
  	
  	</update>
  	
- 	<!--  모금회차 삭제 -->
+ 	<!--  기부내역 삭제 -->
  	<delete id="deleteAction">
  		
  	</delete>
  
- 	<!-- 모금회차 하나 선택 -->
+ 	<!-- 기부내역 하나 선택 -->
  	<select id="selectOneAction" resultType="donateRound">
  		
  	</select>
+
+ 	<!-- 해당 모금함에 기부한 금액 -->
+ 	<select id="findMyAmount" resultType="int">
+ 		select sum(amount)
+ 		from tbl_donate_action
+ 		where drno = #{drno} and mno = #{mno}
+ 	</select>
+ 	
+ 	<!-- 해당 플랫폼에서 기부된 전체 금액 -->
+ 	<select id="findTotalAmount" resultType="long">
+ 		select sum(amount)
+ 		from tbl_donate_action
+ 	</select>
+ 	
+ 	<!-- 해당 플랫폼에 기부한 전체금액 -->
+ 	<select id="findMyTotalAmount" resultType="int">
+ 		select sum(amount)
+ 		from tbl_donate_action
+ 		where mno = #{mno}
+ 	</select>
+ 	
  	
 </mapper>

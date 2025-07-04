@@ -24,4 +24,5 @@ public class DonateRound {
 	private Status status; // 모금함 상태
 	
 	private int nowamount; // 현재 모금액
+	private int donatecount; // 참여인원수
 }

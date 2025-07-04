@@ -103,8 +103,10 @@
         const json = await complete.json();
         if (json.status === "PAID") {
           alert("결제가 완료되었습니다.");
+          location.reload();
         } else {
           alert("결제가 완료되었습니다.");
+          location.reload();
         }
       } else {
         alert("서버 검증에 실패하였습니다.");
