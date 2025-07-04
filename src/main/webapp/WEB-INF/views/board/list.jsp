@@ -80,7 +80,7 @@
                                    <div class="progress-bar" style="width:70%"></div>
                                 </div>
 		                        <div class="progress-wrapper d-flex justify-content-between">
-		                            <span><strong>2,424원</strong></span>
+		                            <span><strong><fmt:formatNumber value="${b.round.nowamount}" />원</strong></span>
 		                            <span class="text-primary">24%</span>
 		                        </div>
 								<div class="d-flex justify-content-between mt-2">

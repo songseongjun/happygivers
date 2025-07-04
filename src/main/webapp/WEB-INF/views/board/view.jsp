@@ -75,7 +75,7 @@
                     <div class="d-flex flex-column justify-content-between flex-grow-1">
                         <div class="card-body">
                             <p class="fs-3 fw-semibold mb-1">${board.title }</p>
-                            <p class="post-meta my-3 fs-5 fw-bold text-end" style="color: var(--col-6);">2,752,046원</p>
+                            <p class="post-meta my-3 fs-5 fw-bold text-end" style="color: var(--col-6);"><fmt:formatNumber value="${board.round.nowamount}" />원</p>
                             
                             <div class="progress my-3" style="height: 5px;">
                                 <div class="progress-bar" style="width:70%"></div>
@@ -86,7 +86,7 @@
                             </div>
                         </div>
                         <div class="d-flex flex-column gap-2">
-	                        <a href="#" class="btn btn-primary form-control py-2" >기부하기</a>
+	                        <button type="button" class="btn btn-primary form-control py-2" data-bs-toggle="modal" data-bs-target="#donatePay">기부하기</button>
 	                        <c:if test="${(member.mno == board.mno or member.mtype == ADMIN) and not empty member}">
 	                        <a href="${cp }/board/modify?bno=${board.bno}" class="btn btn-outline-primary form-control py-2" >수정하기</a>
 	                        </c:if>
@@ -274,6 +274,7 @@
        </div>
    </div>
 </div>
+<%@ include file="donatemodal.jsp" %>
 <%@ include file="../common/footer.jsp" %>
 <script type="text/javascript">
 	dayjs.extend(window.dayjs_plugin_relativeTime);
