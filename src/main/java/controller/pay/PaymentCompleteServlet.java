@@ -9,6 +9,8 @@ import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -23,7 +25,13 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
+import domain.DonateAction;
+import domain.Pay;
+import domain.PayLog;
+import domain.en.PayStatus;
+import domain.en.PayType;
 import lombok.extern.slf4j.Slf4j;
+import service.PayService;
 import util.JsonRespUtil;
 @Slf4j
 @WebServlet("/api/payment/complete")
@@ -44,6 +52,7 @@ public class PaymentCompleteServlet extends HttpServlet{
 			}
 
 	 API_SECRET = props.getProperty("portone.secret");
+	 
 	}
     
 	
@@ -72,8 +81,45 @@ public class PaymentCompleteServlet extends HttpServlet{
             if (responseCode == 200) {
                 JsonObject result = JsonParser.parseReader(new InputStreamReader(conn.getInputStream())).getAsJsonObject();
                 log.info("{}",result);
-                String id = result.get("status").getAsString();
+                
                 String status = result.get("status").getAsString(); // 예: PAID, FAILED
+                log.info("{}",status);
+                // 결제 성공 시
+                
+                if(status.equals("PAID")) {
+                	// 커스텀 데이터 파싱
+                	String customDataRaw = result.get("customData").getAsString();
+                	JsonObject customData = JsonParser.parseString(customDataRaw).getAsJsonObject();
+                	// donateaction 인스턴스 생성
+                	long drno = customData.get("drno").getAsLong();
+                	long mno = customData.get("mno").getAsLong();
+                	int realAmount = Integer.parseInt(result.get("amount").getAsJsonObject().get("total").getAsString().split("\\.")[0]);
+                	int amount = realAmount * 1000;
+                	DonateAction action = DonateAction.builder().drno(drno).mno(mno).amount(amount).build();
+                	
+                	// pay 인스턴스 생성
+                	String paytype = result.get("method").getAsJsonObject().get("provider").getAsString();
+                	List<String> useTypes = new ArrayList<String>(List.of("CARD", "TOSSPAY", "KAKAOPAY", "TRANSFER")); 
+                	if(!useTypes.contains(paytype)) {
+                		paytype = "ETC";
+                	}
+                	String receipt = result.get("receiptUrl").getAsString();
+                	String uuid = result.get("id").getAsString();
+                	Pay pay = Pay.builder().mno(mno).payamount(amount).paytype(PayType.valueOf(paytype)).paystatus(PayStatus.valueOf(status)).receipt(receipt).uuid(uuid).build();
+                	
+                	// paylog 인스턴스 생성
+                	String pgResponseRaw = result.get("pgResponse").getAsString();
+                	JsonObject pgResponse = JsonParser.parseString(pgResponseRaw).getAsJsonObject();
+                	String resultMsg = pgResponse.get("ResultMsg").getAsString();
+                	PayLog paylog = PayLog.builder().paystatus(PayStatus.valueOf(status)).result(resultMsg).build();
+                	
+                	
+                	log.info("{} :: {} :: {}", action, pay, paylog);
+                	
+                	PayService payService = new PayService();
+                	payService.register(action, pay, paylog);
+                }
+                
                 
                 // Object o = map;
                 Gson gson = new Gson();
@@ -106,20 +152,20 @@ public class PaymentCompleteServlet extends HttpServlet{
         // 3. 요청 바디 구성
         JsonObject json = new JsonObject();
         json.addProperty("apiSecret", API_SECRET);
-
+        log.info("3 :: {}", json);
         // 4. 요청 전송
         try (OutputStream os = conn.getOutputStream()) {
             os.write(json.toString().getBytes(StandardCharsets.UTF_8));
         }
-
+        log.info("4");
         // 5. 응답 코드 확인 후 InputStream 선택
         int code = conn.getResponseCode();
         InputStream input = (code >= 200 && code < 300) ? conn.getInputStream() : conn.getErrorStream();
-
+        log.info("{}", code);
         // 6. 응답 JSON 파싱 및 access_token 추출
         try (InputStreamReader isr = new InputStreamReader(input, StandardCharsets.UTF_8)) {
             JsonObject response = JsonParser.parseReader(isr).getAsJsonObject();
-
+           
             // 🔍 디버깅용 로그 출력
             System.out.println("🟢 PortOne 응답: " + response);
 

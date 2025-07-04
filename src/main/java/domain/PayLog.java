@@ -4,8 +4,8 @@ package domain;
 
 import org.apache.ibatis.type.Alias;
 
+import domain.en.Mtype;
 import domain.en.PayStatus;
-import domain.en.PayType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,19 +15,13 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Alias("pay")
-public class Pay {
+@Alias("paylog")
+public class PayLog {
+	private Long plno;
 	private Long pno;
-	private Long dano;
-	private Long mno;
-	private int payamount;
-	private PayType paytype;
 	private PayStatus paystatus;
-	private String confirm;
-	private String receipt;
-	private String uuid;
-	private String regdate;
-	private String voiddate;
+	private String result;
+	private Mtype mtype;
 	private String moddate;
 	
 	

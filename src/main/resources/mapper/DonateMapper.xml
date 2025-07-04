@@ -66,6 +66,27 @@
  		select max(round) from tbl_donate_round where dno = #{dno}
  	</select> 	
  	
+ 	<!-- 모금 회차 정보 생성 -->
+ 	<insert id="insertAction">
+	 	insert into tbl_donate_action(drno, mno, amount) values (#{drno}, #{mno}, #{amount})
+	 	<selectKey keyProperty="dano" resultType="long" order="AFTER">
+ 		select max(dano) from tbl_donate_action
+ 		</selectKey>
+ 	</insert>
  	
+ 	<!-- 모금 회차 정보 수정 -->
+ 	<update id="updateAction">
+ 	
+ 	</update>
+ 	
+ 	<!--  모금회차 삭제 -->
+ 	<delete id="deleteAction">
+ 		
+ 	</delete>
+ 
+ 	<!-- 모금회차 하나 선택 -->
+ 	<select id="selectOneAction" resultType="donateRound">
+ 		
+ 	</select>
  	
 </mapper>

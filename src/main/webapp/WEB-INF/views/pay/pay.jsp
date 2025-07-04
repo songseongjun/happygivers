@@ -55,7 +55,7 @@
         payMethod: "CARD",
         customData: {
           mno: "${member.mno}",
-          bno: donate.board.bno
+          drno: donate.board.round.drno
         }
       });
 
