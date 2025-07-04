@@ -54,10 +54,10 @@ public class EmailAuth extends HttpServlet {
         // 5. 사용자에게 알림 후 마이페이지로 이동
         resp.setContentType("text/html; charset=UTF-8");
         resp.getWriter().println(
-            "<script>" +
-                "alert('인증 메일이 재발송되었습니다. 5분 안에 클릭해주세요.');" +
-                "location.href='/mypage.jsp';" +
-            "</script>"
+        		 "<script>" +
+        			 "alert('인증 메일이 재발송되었습니다. 5분 안에 클릭해주세요.');" +
+        			  "location.href='" + req.getContextPath() + "/mypage';" +
+        	"</script>"
         );
     }
 }

@@ -67,10 +67,10 @@
 		location = #{location}
 		WHERE mno = #{mno}
 	</update>
-
+			<!-- 마이페이지에 이름닉네임등등입력 -->
 	<update id="updateProfile" parameterType="domain.Member">
 		UPDATE tbl_member
-		SET tel = #{tel}, nickname = #{nickname}, location = #{location}
+		SET tel = #{tel}, name = #{name}, nickname = #{nickname}, location = #{location}
 		WHERE mno = #{mno}
 	</update>
 
