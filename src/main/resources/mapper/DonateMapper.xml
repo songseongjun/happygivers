@@ -27,7 +27,9 @@
  
  	<!-- 모금함 하나 선택 -->
  	<select id="selectOne" resultType="donate">
- 		select * from tbl_donate where dno = #{dno}
+ 		select *
+ 		from tbl_donate
+ 		where dno = #{dno}
  	</select>
  	
  	
@@ -58,7 +60,9 @@
  
  	<!-- 모금회차 하나 선택 -->
  	<select id="selectOneRound" resultType="donateRound">
- 		select * from tbl_donate_round where drno = #{drno}
+ 		select r.*, (select sum(amount) from tbl_donate_action where drno = #{drno}) nowamount  
+ 		from tbl_donate_round r 
+ 		where drno = #{drno}
  	</select>
  	
 	<!-- 라운드 정보 가져오기 -->

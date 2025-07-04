@@ -22,4 +22,6 @@ public class DonateRound {
 	private String regdate; // 생성일
 	private String voiddate; // 마감일
 	private Status status; // 모금함 상태
+	
+	private int nowamount; // 현재 모금액
 }

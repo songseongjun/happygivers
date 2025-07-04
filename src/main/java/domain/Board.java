@@ -32,6 +32,7 @@ public class Board {
 	private String thumbnail; // 썸네일
 	private DonateRound round; // 라운드 개체
 	private String cname; // 카테고리명
-	private String name; // 작성자d 이름
+	private String name; // 작성자 이름
 	private String nickname; // 작성자 닉네임
+
 }
