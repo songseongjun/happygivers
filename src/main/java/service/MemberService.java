@@ -81,7 +81,7 @@ public class MemberService {
 	            session.close(); // 자원 정리
 	        }
 	    }
-	    
+	    		//회원 이름,닉네임,전화번호,주소 등록수정
 	    public void updateProfile(Member member) {
 	        SqlSession session = MybatisUtil.getSqlSession();
 	        try {

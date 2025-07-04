@@ -189,7 +189,7 @@
 
 
                 <!-- 로그인 후-->
-                < <c:if test="${not empty member }">
+                <c:if test="${not empty member }">
                 <div class="border rounded-3">
                     <div class="p-4 d-flex align-items-center gap-3 border-bottom">
                         <div class="overflow-hidden rounded-circle" style="width: 64px; height: 64px; border: 2px solid var(--border-1);">
@@ -197,15 +197,15 @@
                         </div>
                         <p class="fw-semibold fs-6 mb-0 flex-grow-1 text-truncate" style="color: var(--col-4);"><span style="color: var(--col-6);">${member.name }</span> 님</p>
                         
-                        <c:if test="${not empty member}">
-                        <a href="${pageContext.request.contextPath}/member/logout" class="text-decoration-none border px-3 py-1 rounded-5 small" style="color: var(--col-3);">로그아웃</a>
-                        </c:if>
+                        
+                        <a href="${cp}/member/logout" class="text-decoration-none border px-3 py-1 rounded-5 small" style="color: var(--col-3);">로그아웃</a>
+                        
                         
                     </div>
                     <div class="p-3" style="background-color: var(--col-1);">
                         <div class="d-flex justify-content-around">
-                            <a href="#" class="text-decoration-none fw-medium small" style="color: var(--col-5);">프로필 수정</a>
-                             <a href="${pageContext.request.contextPath}/member/mypage"class="text-decoration-none fw-medium small"style="color: var(--col-5);">마이페이지</a>
+                            <a href="${cp}/mypage/profile" class="text-decoration-none fw-medium small" style="color: var(--col-5);">프로필 수정</a>
+                             <a href="${cp}/mypage"class="text-decoration-none fw-medium small"style="color: var(--col-5);">마이페이지</a>
                         </div>
                     </div>
                 </div>

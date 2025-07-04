@@ -1,9 +1,12 @@
 package service;
 
+import java.util.UUID;
+
 import org.apache.ibatis.session.SqlSession;
 
 import domain.Member;
 import mapper.MemberMapper;
+import util.MailUtil;
 import util.MybatisUtil;
 import util.RedisUtil;
 
@@ -74,4 +77,19 @@ public class EmailCheckService {
             session.close();
         }
     }
+    public void resendAuthEmail(String email) {
+        UUID uuid = UUID.randomUUID();
+        RedisUtil.set("email:" + uuid, email, 300);
+
+        // 인증 링크 생성
+        String link = "http://localhost:8080/member/email-check?uuid=" + uuid;
+
+        // 메일 내용 생성
+        String html = "<h3>아래 링크를 클릭하여 인증을 완료해주세요</h3>" +
+                      "<a href='" + link + "' target='_blank'>" + link + "</a>";
+
+        // 메일 전송
+        MailUtil.sendEmail(email, "Happygivers 이메일 재인증", html);
+    }
+
 }

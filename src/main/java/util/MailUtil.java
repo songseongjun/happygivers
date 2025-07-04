@@ -80,6 +80,7 @@ public class MailUtil {
                 }
             });
 
+            
             try {
                 // 이메일 메시지 생성
                 MimeMessage message = new MimeMessage(session);
@@ -99,4 +100,5 @@ public class MailUtil {
                 throw new RuntimeException("메일 전송 실패: " + e.getMessage());
             }
         }
+        
     }

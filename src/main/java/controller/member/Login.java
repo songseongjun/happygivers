@@ -14,6 +14,7 @@ import domain.Member;
 import domain.dto.Criteria;
 import lombok.extern.slf4j.Slf4j;
 import service.MemberService;
+import util.AlertUtil;
 import util.ParamUtil;
 
 @WebServlet("/member/login")
@@ -39,7 +40,12 @@ public class Login extends HttpServlet {
 		if (ret) { // 로그인
 			HttpSession session = req.getSession();
 			session.setMaxInactiveInterval(60 * 60);// 10분뒤에 로그아웃되는상황만든것
-			session.setAttribute("member", new MemberService().findById(req.getParameter("id")));
+			Member loginMember = new MemberService().findById(req.getParameter("id")); 
+			session.setAttribute("member", loginMember);
+			if(!loginMember.isEmailcheck()) {
+				AlertUtil.alert("이메일 미인증 상태입니다. 인증을 완료해주세요.", "/mypage", req, resp);
+				return;
+			}
 			String url = req.getParameter("url");
 			if (url == null) {
 				resp.sendRedirect(req.getContextPath() + "/index");
