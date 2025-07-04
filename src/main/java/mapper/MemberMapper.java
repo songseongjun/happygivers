@@ -20,6 +20,8 @@ public interface MemberMapper {
     // 4. 이메일과 이름으로 아이디 찾기
     List<Member> findIdsByEmailAndName(@Param("email") String email, @Param("name") String name);
 
+    void updateMember(Member member); // 회원정보 업데이트용 메서드
+    
     // 5. 이메일 인증 여부 업데이트 (tbl_member)
     void updateEmailCheckByEmail(String email); // 인증 성공 시 emailcheck = 1
 
@@ -31,4 +33,7 @@ public interface MemberMapper {
 
     // 8. tbl_email_check 테이블에서 check 컬럼 true로 바꾸기
     void verifyEmail(String uuid);
+    
+    void updateProfile(Member member);
+
 }

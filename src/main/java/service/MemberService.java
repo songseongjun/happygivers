@@ -67,8 +67,35 @@ public class MemberService {
 	        return mapper.findByEmail(email);
 	    }
 	}
+	
+
+	    // 회원정보 수정
+	    public void update(Member member) {
+	        SqlSession session = MybatisUtil.getSqlSession();
+
+	        try {
+	            MemberMapper mapper = session.getMapper(MemberMapper.class);
+	            mapper.updateMember(member); // Mapper에 정의된 쿼리 호출
+	            session.commit(); // 실제 DB 반영
+	        } finally {
+	            session.close(); // 자원 정리
+	        }
+	    }
+	    
+	    public void updateProfile(Member member) {
+	        SqlSession session = MybatisUtil.getSqlSession();
+	        try {
+	            MemberMapper mapper = session.getMapper(MemberMapper.class);
+	            mapper.updateProfile(member);
+	            session.commit();
+	        } finally {
+	            session.close();
+	        }
+	    }
 
 	}
+
+
 
 
 
