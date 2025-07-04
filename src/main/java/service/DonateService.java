@@ -32,4 +32,41 @@ public class DonateService {
 			e.printStackTrace();
 		}
 	}
+	
+	// 위치한 기부함에 기부한 금액 가져오기
+	public int findMyAmount(Long drno, Long mno) {
+		try(SqlSession session = MybatisUtil.getSqlSession()) {
+			DonateMapper mapper = session.getMapper(DonateMapper.class); 
+			return mapper.findMyAmount(drno, mno);
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	// 플랫폼에 기부한 전체 금액 가져오기
+	public int findMyTotalAmount(Long mno) {
+		try(SqlSession session = MybatisUtil.getSqlSession()) {
+			DonateMapper mapper = session.getMapper(DonateMapper.class); 
+			return mapper.findMyTotalAmount(mno);
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	// 플랫폼에 기부된 전체 금액 가져오기
+	public long findTotalAmount() {
+		try(SqlSession session = MybatisUtil.getSqlSession()) {
+			DonateMapper mapper = session.getMapper(DonateMapper.class); 
+			return mapper.findTotalAmount();
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
 }

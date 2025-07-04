@@ -17,7 +17,7 @@
 <div class="container px-0">
 
 	<main class="d-flex justify-content-between mx-0">
-            <div class="col-lg-8 px-0" style="max-width: 860px;">
+            <div class="col-lg-8 px-0" style="max-width: 860px; width:100%;">
                 <!-- 슬라이더 -->
               <div class="mb-4 table-responsive rounded-4 overflow-hidden border">
 	            <table class="table m-0 text-center table-borderless">

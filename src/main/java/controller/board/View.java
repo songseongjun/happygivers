@@ -9,17 +9,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import domain.Board;
-import domain.DonateRound;
+import domain.Member;
 import domain.dto.Criteria;
-import domain.dto.PageDto;
-import mapper.DonateMapper;
+
+import lombok.extern.slf4j.Slf4j;
+
 import service.BoardService;
 import service.DonateService;
 import util.AlertUtil;
 import util.ParamUtil;
 
 
-
+@Slf4j
 @WebServlet("/board/view")
 public class View extends HttpServlet{
 	
@@ -38,9 +39,16 @@ public class View extends HttpServlet{
 		board.setRound(service.findRound(board.getDrno()));
 		board.setCname(service.findCname(board.getCno()));
 		board.setName(service.findName(board.getMno()));
-		int replyCount = service.getReplyCount(board.getBno()); 
+		int replyCount = service.getReplyCount(board.getBno());
+		Member member = (Member) req.getSession(false).getAttribute("member");
+		int myamount = 0;
+		log.info("{}", member);
+		if(member != null) {
+			DonateService donateService = new DonateService();
+			myamount = donateService.findMyAmount(board.getDrno(), member.getMno());
+		}
 		
-		
+		req.setAttribute("myamount", myamount);
 		req.setAttribute("cri", cri);
 		req.setAttribute("board", board);
 		req.setAttribute("replyCount", replyCount);

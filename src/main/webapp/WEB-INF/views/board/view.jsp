@@ -78,10 +78,10 @@
                             <p class="post-meta my-3 fs-5 fw-bold text-end" style="color: var(--col-6);"><fmt:formatNumber value="${board.round.nowamount}" />원</p>
                             
                             <div class="progress my-3" style="height: 5px;">
-                                <div class="progress-bar" style="width:70%"></div>
+                                <div class="progress-bar" style="width:${Math.round(board.round.nowamount / board.round.goalamount * 100) > 100 ? '100%' : Math.round(board.round.nowamount / board.round.goalamount * 100)}"></div>
                             </div>
                             <div class="progress-wrapper d-flex justify-content-between mb-4">
-                                <span class="text-primary ">65% 달성</span>
+                                <span class="text-primary ">${Math.round(board.round.nowamount / board.round.goalamount * 100)}% 달성</span>
                                 <span><strong><fmt:formatNumber value="${board.round.goalamount}" />원 목표</strong></span>
                             </div>
                         </div>
@@ -100,10 +100,10 @@
                     <div class="p-4">
                         <div class="d-flex justify-content-between">
                             <p class="fs-6 fw-semibold" style="color: var(--col-6);">모금함 기부 현황</p>
-                            <p class="small" style="color: var(--col-4);">23<span>명 참여</span></p>
+                            <p class="small" style="color: var(--col-4);">${board.round.donatecount}<span>명 참여</span></p>
                         </div>
                         <div class="rounded-3 py-2" style="background-color: var(--col-1);">
-                            <p class="text-center fw-semibold fs-5 m-0">24,242,242,242<span>원</span></p>
+                            <p class="text-center fw-semibold fs-5 m-0"><fmt:formatNumber value="${board.round.nowamount}" /><span>원</span></p>
                         </div>
                     </div>
                     <div class="p-4" style="background-color: var(--col-1);">
@@ -111,7 +111,7 @@
                             <p class="fs-6 fw-semibold" style="color: var(--col-6);">내 기부금</p>
                         </div>
                         <div class="rounded-3 py-2" style="background-color: var(--col-0);" >
-                            <p class="text-center fw-semibold fs-5 m-0">10,000<span>원</span></p>
+                            <p class="text-center fw-semibold fs-5 m-0"><fmt:formatNumber value="${myamount}" /><span>원</span></p>
                         </div>
                     </div>
                 </div>

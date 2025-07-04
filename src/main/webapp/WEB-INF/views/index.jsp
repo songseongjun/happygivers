@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 <%@ include file="common/head.jsp" %>
 </head>
 <body>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:if test="${not empty msg}">
     <script>alert('${msg}');</script>
 </c:if>
@@ -222,7 +223,7 @@
                             <p class="small" style="color: var(--col-4);">2025.06.20 <span>기준</span></p>
                         </div>
                         <div class="rounded-3 py-2" style="background-color: var(--col-1);">
-                            <p class="text-center fw-semibold fs-5 m-0">24,242,242,242<span>원</span></p>
+                            <p class="text-center fw-semibold fs-5 m-0"><fmt:formatNumber value="${totalAmount}" /><span>원</span></p>
                         </div>
                     </div>
                     <div class="p-4" style="background-color: var(--col-1);">
@@ -231,7 +232,7 @@
                             <p class="small" style="color: var(--col-4);">2025.06.20 <span>기준</span></p>
                         </div>
                         <div class="rounded-3 py-2" style="background-color: var(--col-0);" >
-                            <p class="text-center fw-semibold fs-5 m-0">10,000<span>원</span></p>
+                            <p class="text-center fw-semibold fs-5 m-0"><fmt:formatNumber value="${myTotalAmount}" /><span>원</span></p>
                         </div>
                     </div>
                     
