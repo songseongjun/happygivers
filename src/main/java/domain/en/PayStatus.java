@@ -1,5 +1,5 @@
 package domain.en;
 
 public enum PayStatus {
-	READY, SUCCESS, FAIL, REFUND
+	PAID, FAILED, CANCELED, REFUND
 }

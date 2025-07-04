@@ -21,7 +21,8 @@ public class DonateService {
 		}
 		return null;
 	}
-	
+
+	// round 수정
 	public void updateRound(DonateRound round) {
 		try(SqlSession session = MybatisUtil.getSqlSession()) {
 			DonateMapper mapper = session.getMapper(DonateMapper.class); 
