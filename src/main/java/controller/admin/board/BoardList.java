@@ -30,12 +30,18 @@ public class BoardList extends HttpServlet{
 		
 		List<Board> boards = service.list(cri);
 		for(Board b : boards) {
+			String content = b.getContent();
+			b.setContent(service.removeImgContent(content));
 			b.setRound(service.findRound(b.getDrno()));
 			b.setCname(service.findCname(b.getCno()));
 			b.setName(service.findName(b.getMno()));
 		}
 		
+		req.setAttribute("cno", cri.getCno());
 		req.setAttribute("boards", boards);
 		req.getRequestDispatcher("/WEB-INF/views/admin/board/boardlist.jsp").forward(req, resp);
 	}
+
+	
+	
 }

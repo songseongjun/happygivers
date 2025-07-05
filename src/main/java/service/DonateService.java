@@ -34,7 +34,7 @@ public class DonateService {
 	}
 	
 	// 위치한 기부함에 기부한 금액 가져오기
-	public int findMyAmount(Long drno, Long mno) {
+	public long findMyAmount(Long drno, Long mno) {
 		try(SqlSession session = MybatisUtil.getSqlSession()) {
 			DonateMapper mapper = session.getMapper(DonateMapper.class); 
 			return mapper.findMyAmount(drno, mno);

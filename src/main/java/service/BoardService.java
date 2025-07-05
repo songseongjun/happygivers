@@ -67,41 +67,52 @@ public class BoardService {
 	
 	
 	
-	
+	// 수정하는데 기부회차 정보가 있으면, 회차정보도 상태 동일하게 수정
 	public void modify(Board board) {
-		try(SqlSession session = MybatisUtil.getSqlSession()) {
+		SqlSession session = MybatisUtil.getSqlSession(false);
+		try{
 			BoardMapper mapper = session.getMapper(BoardMapper.class);
+			if(board.getDrno() != null) {
+				DonateMapper donateMapper = session.getMapper(DonateMapper.class);
+				DonateRound round = findRound(board.getDrno());
+				round.setStatus(board.getStatus());
+				donateMapper.updateRound(round);
+			}
 			mapper.update(board);
+			session.commit();
 		}
 		catch (Exception e){
+			session.rollback();
 			e.printStackTrace();
+		}
+		finally {
+			session.close();
 		}
 	}
 	
-	public void modifyStatus(Long bno, Status status) {
-		try(SqlSession session = MybatisUtil.getSqlSession()) {
-			BoardMapper mapper = session.getMapper(BoardMapper.class);
-			Board board = mapper.selectOne(bno);
-			board.setStatus(status);
-			mapper.update(board);
-		}
-		catch (Exception e){
-			e.printStackTrace();
-		}
-	}
 	
 	
-	
-	
-	
-	// bno로 삭제
+	// bno로 삭제 기부회차정보 있으면 회차정보는 Status값만 delete로 변경
 	public void remove(Long bno) {
-		try(SqlSession session = MybatisUtil.getSqlSession()) {
-			BoardMapper mapper = session.getMapper(BoardMapper.class); 
+		SqlSession session = MybatisUtil.getSqlSession(false);
+		try {
+			BoardMapper mapper = session.getMapper(BoardMapper.class);
+			DonateMapper donateMapper = session.getMapper(DonateMapper.class);
+			Board board = findByBno(bno);
+			if(board.getDrno() != null) {
+				DonateRound round = donateMapper.selectOneRound(board.getDrno());
+				round.setStatus(Status.DELETE);
+				donateMapper.updateRound(round);
+			}
 			mapper.delete(bno);
+			session.commit();
 		}
 		catch (Exception e){
+			session.rollback();
 			e.printStackTrace();
+		}
+		finally {
+			session.close();
 		}
 	}
 	
@@ -279,4 +290,6 @@ public class BoardService {
 			if (content == null) return "";
 		    return content.replaceAll("!\\[.*?\\]\\(.*?\\)", "");
 		}
+		
+	
 }

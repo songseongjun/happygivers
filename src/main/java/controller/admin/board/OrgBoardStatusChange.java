@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import domain.Board;
+import domain.DonateRound;
 import domain.dto.Criteria;
+import domain.en.Status;
 import lombok.extern.slf4j.Slf4j;
 import service.BoardService;
 import util.AlertUtil;
@@ -24,9 +26,13 @@ public class OrgBoardStatusChange extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		BoardService service = new BoardService();
 		//파라미터 받아오기
-		Board board = ParamUtil.get(req, Board.class);
+		Board tmp = ParamUtil.get(req, Board.class);
+		Board board = service.findByBno(tmp.getBno());
+		board.setStatus(tmp.getStatus());
+		
+		
 		log.info("{}", board);
-		service.modifyStatus(board.getBno(), board.getStatus());
+		service.modify(board);
 		
 		
 		

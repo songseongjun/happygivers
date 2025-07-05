@@ -36,7 +36,6 @@ public class ReplyServlet extends HttpServlet{
 		Gson gson = new Gson(); 
 		Object o = null;
 		if(uri.startsWith("list") || uri.equals("*")) { // 목록조회
-			log.info("{}", uri);
 			String tmp = "list/";
 			if(uri.contains(tmp)) {
 				String[] tmps = uri.split("/");
@@ -48,7 +47,6 @@ public class ReplyServlet extends HttpServlet{
 						lastRno = Long.valueOf(tmps[2]);
 					}
 					o = service.list(bno, lastRno);
-					log.info("{}", o);
 				}
 			}
 		}
