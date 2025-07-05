@@ -35,5 +35,9 @@ public interface MemberMapper {
     void verifyEmail(String uuid);
     
     void updateProfile(Member member);
+    
+ // 비밀번호변경
+    void updatePassword(@Param("id") String id, @Param("pw") String pw);
+
 
 }

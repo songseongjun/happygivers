@@ -27,6 +27,8 @@ public class MemberService {
 		}
 		return 0;
 	}
+	
+	//로그인
 	public boolean login(String id, String pw, Mtype mtype) {
 		log.info("{}", mtype);
 		Member member = findById(id);
@@ -92,6 +94,25 @@ public class MemberService {
 	            session.close();
 	        }
 	    }
+	    		// 비밀번호변경업게이트
+	    public void updatePassword(String id, String pw) {
+	        SqlSession session = MybatisUtil.getSqlSession();
+
+	        try {
+	            MemberMapper mapper = session.getMapper(MemberMapper.class);
+
+	            // 비밀번호 암호화 (꼭 해야 함)
+	            String encodedPw = PasswordEncoder.encode(pw);
+
+	            // DB 업데이트
+	            mapper.updatePassword(id, encodedPw);
+
+	            session.commit();
+	        } finally {
+	            session.close();
+	        }
+	    }
+
 
 	}
 
