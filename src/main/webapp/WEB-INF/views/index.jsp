@@ -6,6 +6,12 @@
 <html>
 <head>
 <%@ include file="common/head.jsp" %>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.13/dayjs.min.js" integrity="sha512-FwNWaxyfy2XlEINoSnZh1JQ5TRRtGow0D6XcmAWmYCRgvqOUTnzCxPc9uF35u5ZEpirk1uhlPVA19tflhvnW1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.13/locale/ko.min.js" integrity="sha512-ycjm4Ytoo3TvmzHEuGNgNJYSFHgsw/TkiPrGvXXkR6KARyzuEpwDbIfrvdf6DwXm+b1Y+fx6mo25tBr1Icg7Fw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.13/plugin/relativeTime.min.js" integrity="sha512-MVzDPmm7QZ8PhEiqJXKz/zw2HJuv61waxb8XXuZMMs9b+an3LoqOqhOEt5Nq3LY1e4Ipbbd/e+AWgERdHlVgaA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<style type="text/css">
+.catemenu:hover p{ background-color: var(--col-main) !important; color: var(--col-0) !important;}
+</style>
 </head>
 <body>
 <c:if test="${not empty msg}">
@@ -34,49 +40,49 @@
                 <div class="border p-4 rounded-4 mt-4">
                     <p class="fs-5 fw-semibold">나의 도움이 필요한 후원처</p>
                     <ul class="d-flex px-0 m-0">
-                        <li style="width: 12.5%;">
-                            <a href="${cp }/board/list" class="text-decoration-none d-flex flex-column align-items-center">
+                        <li style="width: 12.5%;" class="catemenu">
+                            <a href="${cp }/board/list" class="text-decoration-none d-flex flex-column align-items-center ">
                                 <img src="${cp }/img/menuicon/all.png" style="width: 32px;" alt="전체">
                                 <p class="d-block py-1 m-0 rounded-5 text-center mt-2" style="background-color: var(--col-1); color: var(--col-6); min-width: 60px;">전체</p>
                             </a>
                         </li>
-                        <li style="width: 12.5%;">
+                        <li style="width: 12.5%;" class="catemenu">
                             <a href="${cp }/board/list?cno=3" class="text-decoration-none d-flex flex-column align-items-center">
                                 <img src="${cp }/img/menuicon/kid.png" style="width: 32px;" alt="전체">
                                 <p class="d-block py-1 m-0 rounded-5 text-center mt-2" style="background-color: var(--col-1); color: var(--col-6); min-width: 60px;">청소년</p>
                             </a>
                         </li>
-                        <li style="width: 12.5%;">
+                        <li style="width: 12.5%;" class="catemenu">
                             <a href="${cp }/board/list?cno=4" class="text-decoration-none d-flex flex-column align-items-center">
                                 <img src="${cp }/img/menuicon/old.png" style="width: 32px;" alt="전체">
                                 <p class="d-block py-1 m-0 rounded-5 text-center mt-2" style="background-color: var(--col-1); color: var(--col-6); min-width: 60px;">어르신</p>
                             </a>
                         </li>
-                        <li style="width: 12.5%;">
+                        <li style="width: 12.5%;" class="catemenu">
                             <a href="${cp }/board/list?cno=5" class="text-decoration-none d-flex flex-column align-items-center">
                                 <img src="${cp }/img/menuicon/animal.png" style="width: 32px;" alt="전체">
                                 <p class="d-block py-1 m-0 rounded-5 text-center mt-2" style="background-color: var(--col-1); color: var(--col-6); min-width: 60px;">동물</p>
                             </a>
                         </li>
-                        <li style="width: 12.5%;">
+                        <li style="width: 12.5%;" class="catemenu">
                             <a href="${cp }/board/list?cno=6" class="text-decoration-none d-flex flex-column align-items-center">
                                 <img src="${cp }/img/menuicon/earth.png" style="width: 32px;" alt="전체">
                                 <p class="d-block py-1 m-0 rounded-5 text-center mt-2" style="background-color: var(--col-1); color: var(--col-6); min-width: 60px;">지구</p>
                             </a>
                         </li>
-                        <li style="width: 12.5%;">
+                        <li style="width: 12.5%;" class="catemenu">
                             <a href="${cp }/board/list?cno=7" class="text-decoration-none d-flex flex-column align-items-center">
                                 <img src="${cp }/img/menuicon/area.png" style="width: 32px;" alt="전체">
                                 <p class="d-block py-1 m-0 rounded-5 text-center mt-2" style="background-color: var(--col-1); color: var(--col-6); min-width: 60px;">환경</p>
                             </a>
                         </li>
-                        <li style="width: 12.5%;">
+                        <li style="width: 12.5%;" class="catemenu">
                             <a href="${cp }/board/list?cno=8" class="text-decoration-none d-flex flex-column align-items-center">
                                 <img src="${cp }/img/menuicon/needy.png" style="width: 32px;" alt="전체">
                                 <p class="d-block py-1 m-0 rounded-5 text-center mt-2" style="background-color: var(--col-1); color: var(--col-6); min-width: 60px;">장애인</p>
                             </a>
                         </li>
-                        <li style="width: 12.5%;">
+                        <li style="width: 12.5%;" class="catemenu">
                             <a href="${cp }/board/list?cno=9" class="text-decoration-none d-flex flex-column align-items-center">
                                 <img src="${cp }/img/menuicon/social.png" style="width: 32px;" alt="전체">
                                 <p class="d-block py-1 m-0 rounded-5 text-center mt-2" style="background-color: var(--col-1); color: var(--col-6); min-width: 60px;">사회</p>
@@ -87,86 +93,60 @@
                 <!-- 컨텐츠 1 -->
                 <div class="border p-4 rounded-4 mt-4">
                     <p class="fs-5 fw-semibold mb-1">소중한 기부자를 찾고 있어요.</p>
-                    <p class="fs-6 small" style="color: var(--col-3);">목표 달성까지 얼마 남지 않았어요!</p>
+                    <p class="fs-6 small" style="color: var(--col-3);">마감일까지 얼마 남지 않았어요!</p>
                     <div class="d-flex mt-4">
                         <div>
                             <div class="d-flex justify-content-between rounded-top-3" style="background-color: var(--col-6);">
                                 <p class="m-2" style="color: var(--col-2);">남은 금액</p>
-                                <p class="text-white m-2">344,343<span class="ms-2" style="color: var(--col-2);">원</span></p>
+                                <p class="text-white m-2"><fmt:formatNumber value="${deadlineBoard.round.goalamount - deadlineBoard.round.nowamount }" /><span class="ms-2" style="color: var(--col-2);">원</span></p>
                             </div>
                             <div>
-                                <img src="${cp }/img/mainimg1.png" class="rounded-bottom-3" alt="img1">
+                                <img src="${deadlineBoard.thumbnail != null ? deadlineBoard.thumbnail : 'https://placehold.co/300x250?text=No+img' }" class="rounded-bottom-3" alt="img1" style="width: 280px; height:128px; object-fit: cover;  ">
                             </div>
                         </div>
                         <div class="d-flex flex-column justify-content-between ms-4 flex-grow-1">
                             <div class="card-body">
-                                <p class="post-title mb-1 fw-semibold fs-6">학대피해아동 소망이에게 따뜻함을 알려주세요</p>
-                                <p class="post-meta mb-2 small" style="color: var(--col-3);">한국고양이보호협회</p>
-                                <div class="progress my-3" style="height: 5px;">
-                                    <div class="progress-bar" style="width:70%"></div>
+                                <p class="post-title mb-1 fw-semibold fs-6">${deadlineBoard.title }</p>
+                                <div class="d-flex justify-content-between">
+	                                <p class="post-meta mb-2 small" style="color: var(--col-3);">${deadlineBoard.name }</p>
+	                                <p class="post-meta mb-2 small" style="color: var(--col-3);" data-voiddate="${deadlineBoard.round.voiddate }"></p>
+                                </div>
+                                <div class="progress my-2" style="height: 5px;">
+                                    <div class="progress-bar" style="width:${Math.round(deadlineBoard.round.nowamount / deadlineBoard.round.goalamount * 100)}%"></div>
                                 </div>
                                 <div class="progress-wrapper d-flex justify-content-between mt-1">
-                                    <span><strong>2,752,060원</strong></span>
-                                    <span class="text-primary">65%</span>
+                                    <span><strong><fmt:formatNumber value="${deadlineBoard.round.nowamount }" />원</strong></span>
+                                    <span class="text-primary">${Math.round(deadlineBoard.round.nowamount / deadlineBoard.round.goalamount * 100)}%</span>
                                 </div>
                             </div>
-                            <a href="#" class="btn btn-outline-light form-control" style="color: var(--col-3); border-color: var(--col-2);">기부하기</a>
+                            <a href="${cp }/board/view?bno=${deadlineBoard.bno}" class="btn btn-outline-light form-control" style="color: var(--col-3); border-color: var(--col-2);">기부하기</a>
                         </div>
                     </div>
                 </div>
                 <!-- 컨텐츠 2 -->
                 <div class="border p-4 rounded-4 mt-4">
-                    <p class="fs-5 fw-semibold mb-1">오늘 많이 기부중인 모금함</p>
-                    <p class="fs-6 small" style="color: var(--col-3);">조금만 힘을 보태주세요.</p>
+                    <p class="fs-5 fw-semibold mb-1">관심이 필요한 신규 모금함</p>
+                    <p class="fs-6 small" style="color: var(--col-3);">당신의 따뜻한 관심이 필요해요!</p>
                     <ul class="px-0 d-flex justify-content-between mb-0">
+                    	<c:forEach items="${newBoards }" var="b">
                         <li style="width: 31%;">
-                            <a href="#" class="text-decoration-none">
+                            <a href="${cp }/board/view?bno=${b.bno}" class="text-decoration-none">
                                 <div class="card-body">
-                                    <img src="${cp }/img/img1.png" class="rounded-3" alt="이미지1">
-                                    <p class="post-title my-2 fw-medium fs-6" style="color: var(--col-6);">평생가족을 기다리는 친구들 입양 준비를 함께해 주세요!</p>
-                                    <p class="post-meta mb-2 small" style="color: var(--col-3);">한국고양이보호협회</p>
+                                    <img src="${b.thumbnail == null ? 'https://placehold.co/200x150?text=No+img' : b.thumbnail}" class="rounded-3" alt="이미지1" style="width:200px; height:140px; object-fit: cover;">
+                                    <p class="post-title my-2 fw-medium fs-6" style="color: var(--col-6);">${b.title }</p>
+                                    <p class="post-meta mb-2 small" style="color: var(--col-3);">${b.name }</p>
                                     <div class="progress my-2" style="height: 3px;">
-                                        <div class="progress-bar" style="width:70%"></div>
+                                        <div class="progress-bar" style="width:${Math.round(b.round.nowamount / b.round.goalamount * 100)}%"></div>
                                     </div>
                                     <div class="progress-wrapper d-flex justify-content-between mt-1">
-                                        <span style="color: var(--col-6);"><strong>2,752,060원</strong></span>
-                                        <span class="text-primary">65%</span>
-                                </div>
-                            </div>
+                                        <span style="color: var(--col-6);"><strong><fmt:formatNumber value="${b.round.nowamount }" />원</strong></span>
+                                        <span class="text-primary">${Math.round(b.round.nowamount / b.round.goalamount * 100)}%</span>
+                                	</div>
+                                    <p class="post-meta mb-2 small mt-1" style="color: var(--col-3);" data-voiddate="${b.round.voiddate }"></p>
+                            	</div>
                             </a>
                         </li>
-                        <li style="width: 31%;">
-                            <a href="#" class="text-decoration-none">
-                                <div class="card-body">
-                                    <img src="${cp }/img/img2.png" class="rounded-3" alt="이미지1">
-                                    <p class="post-title my-2 fw-medium fs-6" style="color: var(--col-6);">평생가족을 기다리는 친구들 입양 준비를 함께해 주세요!</p>
-                                    <p class="post-meta mb-2 small" style="color: var(--col-3);">한국고양이보호협회</p>
-                                    <div class="progress my-2" style="height: 3px;">
-                                        <div class="progress-bar" style="width:70%"></div>
-                                    </div>
-                                    <div class="progress-wrapper d-flex justify-content-between mt-1">
-                                        <span style="color: var(--col-6);"><strong>2,752,060원</strong></span>
-                                        <span class="text-primary">65%</span>
-                                </div>
-                            </div>
-                            </a>
-                        </li>
-                        <li style="width: 31%;">
-                            <a href="#" class="text-decoration-none">
-                                <div class="card-body">
-                                    <img src="${cp }/img/img3.png" class="rounded-3" alt="이미지1">
-                                    <p class="post-title my-2 fw-medium fs-6" style="color: var(--col-6);">평생가족을 기다리는 친구들 입양 준비를 함께해 주세요!</p>
-                                    <p class="post-meta mb-2 small" style="color: var(--col-3);">한국고양이보호협회</p>
-                                    <div class="progress my-2" style="height: 3px;">
-                                        <div class="progress-bar" style="width:70%"></div>
-                                    </div>
-                                    <div class="progress-wrapper d-flex justify-content-between mt-1">
-                                        <span style="color: var(--col-6);"><strong>2,752,060원</strong></span>
-                                        <span class="text-primary">65%</span>
-                                </div>
-                            </div>
-                            </a>
-                        </li>
+                    	</c:forEach>
                     </ul>
                 </div>
             </div>
@@ -220,7 +200,7 @@
                     <div class="p-4">
                         <div class="d-flex justify-content-between">
                             <p class="fs-6 fw-semibold" style="color: var(--col-6);">전체 기부금</p>
-                            <p class="small" style="color: var(--col-4);">2025.06.20 <span>기준</span></p>
+                            <p class="small" style="color: var(--col-4);"><span class="today">2025.06.20</span> 기준</p>
                         </div>
                         <div class="rounded-3 py-2" style="background-color: var(--col-1);">
                             <p class="text-center fw-semibold fs-5 m-0"><fmt:formatNumber value="${totalAmount}" /><span>원</span></p>
@@ -229,7 +209,7 @@
                     <div class="p-4" style="background-color: var(--col-1);">
                         <div class="d-flex justify-content-between">
                             <p class="fs-6 fw-semibold" style="color: var(--col-6);">내 기부금</p>
-                            <p class="small" style="color: var(--col-4);">2025.06.20 <span>기준</span></p>
+                            <p class="small" style="color: var(--col-4);"><span class="today">2025.06.20</span> 기준</p>
                         </div>
                         <div class="rounded-3 py-2" style="background-color: var(--col-0);" >
                             <p class="text-center fw-semibold fs-5 m-0"><fmt:formatNumber value="${myTotalAmount}" /><span>원</span></p>
@@ -310,5 +290,32 @@
         },
     });
     </script>
+<script>
+// 오늘 날짜 계산
+$(function() {
+    const today = new Date();
+
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+
+    const formatted =  year + '.' + month + '.' + day;
+
+    
+    $('.today').text(formatted);
+  });
+</script>
+<script>
+	dayjs.extend(window.dayjs_plugin_relativeTime);
+	dayjs.locale('ko');
+	const dayForm = 'YYYY-MM-DD HH:mm:ss';
+	
+	$("*[data-voiddate]").each((v,i) => {
+		const date = $(i).data("voiddate");
+		const deadlineText = dayjs(date, dayForm).fromNow();
+		$(i).text(deadlineText + " 마감");
+	})
+</script>
+
 </body>
 </html>

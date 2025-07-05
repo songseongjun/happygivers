@@ -109,7 +109,7 @@
  	</select>
  	
  	<!-- 해당 플랫폼에 기부한 전체금액 -->
- 	<select id="findMyTotalAmount" resultType="int">
+ 	<select id="findMyTotalAmount" resultType="long">
  		select sum(amount)
  		from tbl_donate_action
  		where mno = #{mno}

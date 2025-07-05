@@ -28,7 +28,7 @@
           <div id="editor"></div>
           <div class="d-flex border rounded-1 list-group p-3 gap-3 flex-row mt-2">
             <div class="form-floating flex-grow-1">
-              <input type="number" class="form-control" placeholder="모금 목표 금액(최대 1억)" name="goalamount" id="goalamount" value="${board.round.goalamount }" min="0" max="100000000" required>
+              <input type="number" class="form-control" placeholder="모금 목표 금액(최대 1억)" name="goalamount" id="goalamount" value="${board.round.goalamount }" min="1000000" max="100000000" value="1000000" required>
               <label for="goalamount">모금 목표 금액(최대 1억)</label>
             </div>
             

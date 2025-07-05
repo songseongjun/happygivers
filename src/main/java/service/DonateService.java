@@ -46,7 +46,7 @@ public class DonateService {
 	}
 
 	// 플랫폼에 기부한 전체 금액 가져오기
-	public int findMyTotalAmount(Long mno) {
+	public long findMyTotalAmount(Long mno) {
 		try(SqlSession session = MybatisUtil.getSqlSession()) {
 			DonateMapper mapper = session.getMapper(DonateMapper.class); 
 			return mapper.findMyTotalAmount(mno);

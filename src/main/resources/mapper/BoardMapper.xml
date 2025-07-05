@@ -118,4 +118,28 @@
  		select count(*) from tbl_board
 		<include refid="criteria"></include>
  	</select>
+ 	
+ 	
+ 	<!-- 마감일이 제일 가까운 하나의 게시글선택 -->
+ 	<select id="selectOneDeadline" resultMap="b">
+ 		select b.*
+		from tbl_board b
+		join tbl_donate_round dr on b.drno = dr.drno
+		left join tbl_donate_action da on dr.drno = da.drno
+		where b.status = 'ACTIVE'
+		group by b.bno, dr.voiddate, dr.goalamount
+		having dr.goalamount - coalesce(sum(da.amount), 0) > 0
+		order by dr.voiddate
+		limit 1
+ 	</select>
+ 	
+ 	
+ 	<select id="listNew" resultMap="b">
+ 		select *
+ 		from tbl_board b
+ 		where drno is not null and status = 'ACTIVE'
+ 		order by regdate desc
+ 		limit 3
+ 	</select>
+ 	
  </mapper>

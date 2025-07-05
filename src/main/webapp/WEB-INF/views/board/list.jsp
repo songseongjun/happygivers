@@ -77,7 +77,7 @@
 		                        <p class="post-title my-2 fw-medium fs-6" style="color: var(--col-6);">${b.title }</p>
                                    <p class="post-meta mb-2 small" style="color: var(--col-3);">${b.name}</p>
 		                        <div class="progress my-2" style="height: 3px;">
-                                   <div class="progress-bar" style="width:${Math.round(b.round.nowamount / b.round.goalamount * 100) > 100 ? '100%' : Math.round(b.round.nowamount / b.round.goalamount * 100)}"></div>
+                                   <div class="progress-bar" style="width:${Math.round(b.round.nowamount / b.round.goalamount * 100) > 100 ? '100' : Math.round(b.round.nowamount / b.round.goalamount * 100)}%"></div>
                                 </div>
 		                        <div class="progress-wrapper d-flex justify-content-between">
 		                            <span><strong><fmt:formatNumber value="${b.round.nowamount}" />원</strong></span>
