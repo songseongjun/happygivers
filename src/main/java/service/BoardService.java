@@ -273,4 +273,10 @@ public class BoardService {
 			}
 			return null;
 		}
+		
+	// 이미지 제거한 컨텐츠 가져오기
+		public String removeImgContent(String content) {
+			if (content == null) return "";
+		    return content.replaceAll("!\\[.*?\\]\\(.*?\\)", "");
+		}
 }
