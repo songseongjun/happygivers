@@ -25,6 +25,6 @@ public interface DonateMapper {
 	void updateAction(DonateAction action);
 	DonateAction selectOneAction(Long dano);
 	int findMyAmount(@Param("drno") Long drno,@Param("mno") Long mno);
-	int findMyTotalAmount(Long mno);
-	Long findTotalAmount();
+	long findMyTotalAmount(Long mno);
+	long findTotalAmount();
 }

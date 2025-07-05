@@ -160,12 +160,12 @@ public class BoardService {
 	
 	
 	// 회차정보 가져오기
-		public DonateRound findRound(Long brno) {
+		public DonateRound findRound(Long drno) {
 			try(SqlSession session = MybatisUtil.getSqlSession()){
-				if (brno == null) return null;
+				if (drno == null) return null;
 			    
 				DonateMapper mapper = session.getMapper(DonateMapper.class);
-			    DonateRound round = mapper.selectOneRound(brno);
+			    DonateRound round = mapper.selectOneRound(drno);
 				return round;
 			}
 			catch (Exception e){
@@ -237,5 +237,40 @@ public class BoardService {
 		}
 		return 0;
 	}	
-		
+	
+	// 마감임박 게시글 가져오기
+		public Board findByDeadline() {
+			try(SqlSession session = MybatisUtil.getSqlSession()) {
+				BoardMapper mapper = session.getMapper(BoardMapper.class); 
+				Board board = mapper.selectOneDeadline();
+				board.setRound(findRound(board.getDrno()));
+				board.setThumbnail(findThumbnail(board.getContent()));
+				board.setName(findName(board.getMno()));
+				
+				return board;
+			}
+			catch (Exception e){
+				e.printStackTrace();
+			}
+			return null;
+		}
+
+	// 마감임박 게시글 가져오기
+		public List<Board> findNewList() {
+			try(SqlSession session = MybatisUtil.getSqlSession()) {
+				BoardMapper mapper = session.getMapper(BoardMapper.class); 
+				List<Board> newBoards = mapper.listNew();
+				for(Board b : newBoards) {
+					b.setRound(findRound(b.getDrno()));
+					b.setName(findName(b.getMno()));
+					b.setThumbnail(findThumbnail(b.getContent()));
+				}
+				
+				return newBoards;
+			}
+			catch (Exception e){
+				e.printStackTrace();
+			}
+			return null;
+		}
 }

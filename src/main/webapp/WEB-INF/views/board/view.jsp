@@ -78,7 +78,7 @@
                             <p class="post-meta my-3 fs-5 fw-bold text-end" style="color: var(--col-6);"><fmt:formatNumber value="${board.round.nowamount}" />원</p>
                             
                             <div class="progress my-3" style="height: 5px;">
-                                <div class="progress-bar" style="width:${Math.round(board.round.nowamount / board.round.goalamount * 100) > 100 ? '100%' : Math.round(board.round.nowamount / board.round.goalamount * 100)}"></div>
+                                <div class="progress-bar" style="width:${Math.round(board.round.nowamount / board.round.goalamount * 100) > 100 ? '100' : Math.round(board.round.nowamount / board.round.goalamount * 100)}%"></div>
                             </div>
                             <div class="progress-wrapper d-flex justify-content-between mb-4">
                                 <span class="text-primary ">${Math.round(board.round.nowamount / board.round.goalamount * 100)}% 달성</span>
