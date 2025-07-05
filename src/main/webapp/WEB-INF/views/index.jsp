@@ -288,6 +288,10 @@
         pagination: {
             el: '.swiper-pagination',
         },
+        autoplay: {
+            delay: 5000,   
+            disableOnInteraction: true
+        }
     });
     </script>
 <script>
