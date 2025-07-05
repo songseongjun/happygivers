@@ -41,8 +41,7 @@ public class View extends HttpServlet{
 		board.setName(service.findName(board.getMno()));
 		int replyCount = service.getReplyCount(board.getBno());
 		Member member = (Member) req.getSession(false).getAttribute("member");
-		int myamount = 0;
-		log.info("{}", member);
+		long myamount = 0;
 		if(member != null) {
 			DonateService donateService = new DonateService();
 			myamount = donateService.findMyAmount(board.getDrno(), member.getMno());

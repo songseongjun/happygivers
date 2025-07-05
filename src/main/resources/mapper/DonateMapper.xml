@@ -96,7 +96,7 @@
  	</select>
 
  	<!-- 해당 모금함에 기부한 금액 -->
- 	<select id="findMyAmount" resultType="int">
+ 	<select id="findMyAmount" resultType="long">
  		select sum(amount)
  		from tbl_donate_action
  		where drno = #{drno} and mno = #{mno}
