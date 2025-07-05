@@ -112,6 +112,24 @@ public class MemberService {
 	            session.close();
 	        }
 	    }
+	    
+	 // 비밀번호 변경 메서드
+	    public boolean updatePasswordByUuid(String uuid, String newPassword) {
+	        SqlSession session = MybatisUtil.getSqlSession();
+	        try {
+	            MemberMapper mapper = session.getMapper(MemberMapper.class);
+	            // 비밀번호 암호화 필수
+	            String encodedPw = PasswordEncoder.encode(newPassword);
+
+	            // 비밀번호 변경 수행
+	            int result = mapper.updatePasswordByUuid(uuid, encodedPw);
+
+	            session.commit(); 
+	            return result == 1; 
+	        } finally {
+	            session.close();
+	        }
+	    }
 
 
 	}
