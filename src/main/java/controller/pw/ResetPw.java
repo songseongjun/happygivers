@@ -1,4 +1,4 @@
-package controller.member;
+package controller.pw;
 
 import java.io.IOException;
 
@@ -10,7 +10,7 @@ import service.MemberService;
 import util.RedisUtil;
 
 @WebServlet("/member/resetpw")
-public class ResetPwController extends HttpServlet {
+public class ResetPw extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)

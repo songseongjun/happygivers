@@ -1,4 +1,4 @@
-package controller.member;
+package controller.pw;
 
 import java.io.IOException;
 
@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import service.MemberService;
 
-public class ResetPasswordController extends HttpServlet {
+public class ResetPassword extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -40,7 +40,7 @@
 				
 				
 			</div>
-			<c:if test="${mtype = 'ADMIN'}">
+			<%-- <c:if test="${mtype = 'ADMIN'}">
             <input type="hidden" name="mtype" value="ADMIN">
 			</c:if>
 			<c:if test="${mtype = 'USER'}">
@@ -48,7 +48,10 @@
 			</c:if>
 			<c:if test="${mtype = 'ORG'}">
             <input type="hidden" name="mtype" value="ORG">
-			</c:if>
+			</c:if> --%>
+			<input type="hidden" name="mtype" value="${mtype}">
+			
+			
 			      <button class="btn btn-primary btn-lg w-100">로그인</button>
 			      <a href="${cp}/member/register?mtype=${mtype}" class="btn btn-outline-primary w-100 mt-2">
 					   회원가입

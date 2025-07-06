@@ -30,36 +30,49 @@ public class Login extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String id = req.getParameter("id");
-		String pw = req.getParameter("pw");
-		Member member = ParamUtil.get(req, Member.class);
-		log.info("{} {}",id,pw);
-		boolean ret = new MemberService().login(member.getId(), member.getPw(), member.getMtype());
+		   String id = req.getParameter("id");
+		    String pw = req.getParameter("pw");
+		    String mtypeStr = req.getParameter("mtype"); // mtype 파라미터 받기
 
-		log.info("{}",ret);
-		if (ret) { // 로그인
-			HttpSession session = req.getSession();
-			session.setMaxInactiveInterval(60 * 60);// 10분뒤에 로그아웃되는상황만든것
-			Member loginMember = new MemberService().findById(req.getParameter("id")); 
-			session.setAttribute("member", loginMember);
-			if(!loginMember.isEmailcheck()) {
-				AlertUtil.alert("이메일 미인증 상태입니다. 인증을 완료해주세요.", "/mypage", req, resp);
-				return;
-			}
-			String url = req.getParameter("url");
-			if (url == null) {
-				resp.sendRedirect(req.getContextPath() + "/index");
-			} else {
-				String decodedUrl = URLDecoder.decode(url, "utf-8");
-				Criteria cri = Criteria.init(req);
-				resp.sendRedirect(decodedUrl + "?" + cri.getQs2());
-			}
+		    Member member = ParamUtil.get(req, Member.class); // 기존 방식 유지
 
-		} else { // 로그인실패
-			resp.sendRedirect("login?msg=fail"); 
+		    // mtype이 null일 경우 대비해서 아래 코드 추가
+		    if (mtypeStr == null) {
+		        resp.sendRedirect("login?msg=missingtype");
+		        return;
+		    }
 
+		    try {
+		        domain.en.Mtype mtype = domain.en.Mtype.valueOf(mtypeStr); // enum으로 변환
+		        boolean ret = new MemberService().login(id, pw, mtype);
+
+		        if (ret) {
+		            HttpSession session = req.getSession();
+		            session.setMaxInactiveInterval(60 * 60); // 1시간
+
+		            Member loginMember = new MemberService().findById(id);
+		            session.setAttribute("member", loginMember);
+
+		            if (!loginMember.isEmailcheck()) {
+		                AlertUtil.alert("이메일 미인증 상태입니다. 인증을 완료해주세요.", "/mypage", req, resp);
+		                return;
+		            }
+
+		            String url = req.getParameter("url");
+		            if (url == null) {
+		                resp.sendRedirect(req.getContextPath() + "/index");
+		            } else {
+		                String decodedUrl = URLDecoder.decode(url, "utf-8");
+		                Criteria cri = Criteria.init(req);
+		                resp.sendRedirect(decodedUrl + "?" + cri.getQs2());
+		            }
+		        } else {
+		            resp.sendRedirect("login?msg=fail");
+		        }
+		    } catch (IllegalArgumentException e) {
+		        // mtype 값이 enum에 없을 경우 예외 처리
+		        resp.sendRedirect("login?msg=invalidtype");
+		    }
 		}
-		
-	}
 
 }
