@@ -75,11 +75,26 @@
 	</update>
 
   
-  
 
   <!-- 날짜 형식을 위한 resultMap -->
   <resultMap type="domain.Member" id="MemberMap">
     <result property="regdate" column="regdate" javaType="java.util.Date"/>
   </resultMap>
+  
+  <!-- 비밀번호 찾기 -->
+  <update id="updatePassword">
+    UPDATE tbl_member
+    SET pw = #{pw}
+    WHERE id = #{id}
+</update>
+  
+  <!-- 비밀번호 변경 -->
+  <update id="updatePasswordByUuid">
+    UPDATE tbl_member m
+    JOIN tbl_email_check e ON m.email = e.email
+    SET m.pw = #{pw}
+    WHERE e.uuid = #{uuid}
+</update>
+  
 
 </mapper>

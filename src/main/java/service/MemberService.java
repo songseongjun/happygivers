@@ -14,7 +14,7 @@ import util.PasswordEncoder;
 
 @Slf4j
 public class MemberService {
-	// 회원가입
+	// �쉶�썝媛��엯
 	public int register(Member member) {
 		try (SqlSession session = MybatisUtil.getSqlSession()) {
 			MemberMapper mapper = session.getMapper(MemberMapper.class);
@@ -27,18 +27,23 @@ public class MemberService {
 		}
 		return 0;
 	}
+	
+	//濡쒓렇�씤
 	public boolean login(String id, String pw, Mtype mtype) {
-		log.info("{}", mtype);
-		Member member = findById(id);
-		log.info("{}",member);
-		if(member == null) {
-			return false;
-		}
-		return PasswordEncoder.matches(pw, member.getPw()) && mtype.equals(member.getMtype());
-//		return pw.equals(member.getPw()) && mtype.equals(member.getMtype());
-		}
+	    log.info("{}", mtype);
+	    Member member = findById(id);
+	    log.info("{}", member);
 
-			//로그인 구현 기능
+	    // 1. mtype이 null인지 먼저 확인
+	    if (member == null || mtype == null) {
+	        return false;
+	    }
+
+	    // 2. 비밀번호 일치 + mtype 일치
+	    return PasswordEncoder.matches(pw, member.getPw()) && mtype.equals(member.getMtype());
+	}
+
+			//濡쒓렇�씤 援ы쁽 湲곕뒫
 	public Member findById(String id) {
 		try (SqlSession session = MybatisUtil.getSqlSession()) {
 			MemberMapper mapper = session.getMapper(MemberMapper.class);
@@ -49,7 +54,7 @@ public class MemberService {
 		return null;
 	}
 	
-	//아이디 찾기 이메일
+	//�븘�씠�뵒 李얘린 �씠硫붿씪
 	public List<Member> findIdsByEmailAndName(String email, String name){
 	SqlSession sqlSession = MybatisUtil.getSqlSession();
 	try {
@@ -69,19 +74,19 @@ public class MemberService {
 	}
 	
 
-	    // 회원정보 수정
+	    // �쉶�썝�젙蹂� �닔�젙
 	    public void update(Member member) {
 	        SqlSession session = MybatisUtil.getSqlSession();
 
 	        try {
 	            MemberMapper mapper = session.getMapper(MemberMapper.class);
-	            mapper.updateMember(member); // Mapper에 정의된 쿼리 호출
-	            session.commit(); // 실제 DB 반영
+	            mapper.updateMember(member); // Mapper�뿉 �젙�쓽�맂 荑쇰━ �샇異�
+	            session.commit(); // �떎�젣 DB 諛섏쁺
 	        } finally {
-	            session.close(); // 자원 정리
+	            session.close(); // �옄�썝 �젙由�
 	        }
 	    }
-	    		//회원 이름,닉네임,전화번호,주소 등록수정
+	    		//�쉶�썝 �씠由�,�땳�꽕�엫,�쟾�솕踰덊샇,二쇱냼 �벑濡앹닔�젙
 	    public void updateProfile(Member member) {
 	        SqlSession session = MybatisUtil.getSqlSession();
 	        try {
@@ -92,6 +97,43 @@ public class MemberService {
 	            session.close();
 	        }
 	    }
+	    		// 鍮꾨�踰덊샇蹂�寃쎌뾽寃뚯씠�듃
+	    public void updatePassword(String id, String pw) {
+	        SqlSession session = MybatisUtil.getSqlSession();
+
+	        try {
+	            MemberMapper mapper = session.getMapper(MemberMapper.class);
+
+	            // 鍮꾨�踰덊샇 �븫�샇�솕 (瑗� �빐�빞 �븿)
+	            String encodedPw = PasswordEncoder.encode(pw);
+
+	            // DB �뾽�뜲�씠�듃
+	            mapper.updatePassword(id, encodedPw);
+
+	            session.commit();
+	        } finally {
+	            session.close();
+	        }
+	    }
+	    
+	 // 鍮꾨�踰덊샇 蹂�寃� 硫붿꽌�뱶
+	    public boolean updatePasswordByUuid(String uuid, String newPassword) {
+	        SqlSession session = MybatisUtil.getSqlSession();
+	        try {
+	            MemberMapper mapper = session.getMapper(MemberMapper.class);
+	            // 鍮꾨�踰덊샇 �븫�샇�솕 �븘�닔
+	            String encodedPw = PasswordEncoder.encode(newPassword);
+
+	            // 鍮꾨�踰덊샇 蹂�寃� �닔�뻾
+	            int result = mapper.updatePasswordByUuid(uuid, encodedPw);
+
+	            session.commit(); 
+	            return result == 1; 
+	        } finally {
+	            session.close();
+	        }
+	    }
+
 
 	}
 

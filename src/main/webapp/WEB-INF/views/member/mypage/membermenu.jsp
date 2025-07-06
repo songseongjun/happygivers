@@ -43,6 +43,8 @@
 								 class="text-decoration-none text-truncate py-2 d-block"
 								  style="color: var(--col-3);">회원정보 수정</a>
 							</li>
+							
+							 <li><a href="${cp}/mypage/updatepw" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">비밀번호 변경</a></li>
 
                         </ul>
                     </div>
