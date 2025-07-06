@@ -126,18 +126,18 @@
 		from tbl_board b
 		join tbl_donate_round dr on b.drno = dr.drno
 		left join tbl_donate_action da on dr.drno = da.drno
-		where b.status = 'ACTIVE'
+		where b.status = 'ACTIVE' and dr.status = 'ACTIVE' 
 		group by b.bno, dr.voiddate, dr.goalamount
 		having dr.goalamount - coalesce(sum(da.amount), 0) > 0
 		order by dr.voiddate
 		limit 1
  	</select>
  	
- 	
+ 	<!-- 상태가 active인 기부 게시글 가져오기 -->
  	<select id="listNew" resultMap="b">
  		select *
  		from tbl_board b
- 		where drno is not null and status = 'ACTIVE'
+ 		where drno is not null and status = 'ACTIVE' and drno in (select drno from tbl_donate_round where status = 'ACTIVE')
  		order by regdate desc
  		limit 3
  	</select>

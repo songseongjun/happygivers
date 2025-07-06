@@ -1,5 +1,6 @@
 package service;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -92,7 +93,7 @@ public class BoardService {
 	
 	
 	
-	// bno로 삭제 기부회차정보 있으면 회차정보는 Status값만 delete로 변경
+	// 게시글, 회차정보 Status값 delete로 변경
 	public void remove(Long bno) {
 		SqlSession session = MybatisUtil.getSqlSession(false);
 		try {
@@ -104,7 +105,8 @@ public class BoardService {
 				round.setStatus(Status.DELETE);
 				donateMapper.updateRound(round);
 			}
-			mapper.delete(bno);
+			board.setStatus(Status.DELETE);
+			mapper.update(board);
 			session.commit();
 		}
 		catch (Exception e){
@@ -121,6 +123,14 @@ public class BoardService {
 		try(SqlSession session = MybatisUtil.getSqlSession()) {
 			BoardMapper mapper = session.getMapper(BoardMapper.class); 
 			List<Board> list = mapper.list(cri);
+			BoardService service = new BoardService();
+			for(Board b : list) {
+				if(b.getDrno() != null) {
+					b.setRound(service.findRound(b.getDrno()));
+					b.setName(service.findName(b.getMno()));
+				}
+			}
+			
 			return list;
 		}
 		catch (Exception e){
