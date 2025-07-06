@@ -61,8 +61,8 @@
  	<!-- 모금회차 하나 선택 -->
  	<select id="selectOneRound" resultType="donateRound">
  		select r.*, 
- 		(select sum(amount) from tbl_donate_action where drno = #{drno}) nowamount , 
- 		(SELECT COUNT(DISTINCT mno) FROM tbl_donate_action WHERE drno = #{drno}) donatecount 
+ 		(select sum(amount) from tbl_donate_action where drno = #{drno} and dano in (select dano from tbl_pay where paystatus = 'PAID')) nowamount , 
+ 		(SELECT COUNT(DISTINCT mno) FROM tbl_donate_action WHERE drno = #{drno} and dano in (select dano from tbl_pay where paystatus = 'PAID')) donatecount 
  		from tbl_donate_round r 
  		where drno = #{drno}
  	</select>
@@ -72,7 +72,7 @@
  		select max(round) from tbl_donate_round where dno = #{dno}
  	</select> 	
  	
- 	<!-- 모금 회차 정보 생성 -->
+ 	<!-- 기부 정보 생성 -->
  	<insert id="insertAction">
 	 	insert into tbl_donate_action(drno, mno, amount) values (#{drno}, #{mno}, #{amount})
 	 	<selectKey keyProperty="dano" resultType="long" order="AFTER">
@@ -97,23 +97,27 @@
 
  	<!-- 해당 모금함에 기부한 금액 -->
  	<select id="findMyAmount" resultType="long">
- 		select sum(amount)
+ 		select coalesce(sum(amount), 0)
  		from tbl_donate_action
- 		where drno = #{drno} and mno = #{mno}
+ 		where drno = #{drno} and mno = #{mno} and dano in (select dano from tbl_pay where paystatus = 'PAID')
  	</select>
  	
  	<!-- 해당 플랫폼에서 기부된 전체 금액 -->
  	<select id="findTotalAmount" resultType="long">
- 		select sum(amount)
+ 		select coalesce(sum(amount), 0)
  		from tbl_donate_action
+ 		where dano in (select dano from tbl_pay where paystatus = 'PAID')
  	</select>
  	
  	<!-- 해당 플랫폼에 기부한 전체금액 -->
  	<select id="findMyTotalAmount" resultType="long">
- 		select sum(amount)
+ 		select coalesce(sum(amount), 0)
  		from tbl_donate_action
- 		where mno = #{mno}
+ 		where mno = #{mno} and dano in (select dano from tbl_pay where paystatus = 'PAID')
  	</select>
  	
- 	
+ 	<!-- 어드민 actionlist -->
+ 	<select id="adminActionlist" resultType="donateAction">
+ 		
+ 	</select>
 </mapper>

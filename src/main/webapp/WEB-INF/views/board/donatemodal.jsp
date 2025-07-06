@@ -69,50 +69,62 @@
     }
 	
     async function requestPayment(donate) {
-	  const paymentId = 'payment-' + crypto.randomUUID();
-	  console.log(paymentId);
-	  
-      const result = await PortOne.requestPayment({
-        storeId: donate.storeId,
-        channelKey: donate.channelKey,
-        paymentId: paymentId,
-        orderName: donate.board.title,
-        totalAmount: amount / 1000,
-        currency: "CURRENCY_KRW",
-        payMethod: "CARD",
-        customData: {
-          mno: "${member.mno}",
-          drno: donate.board.round.drno
-        }
-      });
+		const paymentId = 'payment-' + crypto.randomUUID();
+		console.log(paymentId);
+		  
+	    const result = await PortOne.requestPayment({
+	        storeId: donate.storeId,
+	        channelKey: donate.channelKey,
+	        paymentId: paymentId,
+	        orderName: donate.board.title,
+	        totalAmount: amount / 1000,
+	        currency: "CURRENCY_KRW",
+	        payMethod: "CARD",
+	        customData: {
+	          mno: "${member.mno}",
+	          drno: donate.board.round.drno
+	        }
+	      });
+	
+	    if (result.code !== undefined) {
+	    	  if (result.paymentId) {
+	    	    await fetch("${cp}/api/payment/complete", {
+	    	      method: "POST",
+	    	      headers: {
+	    	        "Content-Type": "application/json"
+	    	      },
+	    	      body: JSON.stringify({ paymentId: result.paymentId })
+	    	    });
+	    	  }
 
-      if (result.code !== undefined) {
-        alert("결제 실패사유: " + result.message);
-        return;
-      }
-
-      const complete = await fetch("${cp}/api/payment/complete", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ paymentId: result.paymentId })
-      });
-
-      if (complete.ok) {
-        const json = await complete.json();
-        if (json.status === "PAID") {
-          alert("결제가 완료되었습니다.");
-          location.reload();
-        } else {
-          alert("결제가 완료되었습니다.");
-          location.reload();
-        }
-      } else {
-        alert("서버 검증에 실패하였습니다.");
-      }
-    }
-    
+	    	  alert("결제 실패사유: " + result.message);
+	    	  return;
+	    	}
+	
+	      const complete = await fetch("${cp}/api/payment/complete", {
+	        method: "POST",
+	        headers: {
+	          "Content-Type": "application/json"
+	        },
+	        body: JSON.stringify({ paymentId: result.paymentId })
+	      });
+	
+	      if (complete.ok) {
+	        const json = await complete.json();
+	        if (json.status === "PAID") {
+	       	  alert("결제가 완료되었습니다."  + result.message);
+	       	} else if (json.status === "CANCELED") {
+	       	  alert("결제가 취소되었습니다."  + result.message);
+	       	} else if (json.status === "FAILED" ) {
+	       	  alert("결제가 실패했습니다."  + result.message);
+	       	} else if (json.status === "REFUND") {
+	       	  alert("결제가 환불 처리되었습니다."  + result.message);
+	       	} else {
+	       	  alert("결제 상태를 확인할 수 없습니다."  + result.message);
+	       	}
+      	  location.reload();
+	  }
+	}
 
 
     $("#checkOutBtn").on("click", async() => {

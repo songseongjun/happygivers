@@ -77,60 +77,86 @@ public class PaymentCompleteServlet extends HttpServlet{
             conn.setRequestProperty("Authorization", "Bearer " + token);
 
             int responseCode = conn.getResponseCode();
-
+            
+            JsonObject result = null;
             if (responseCode == 200) {
-                JsonObject result = JsonParser.parseReader(new InputStreamReader(conn.getInputStream())).getAsJsonObject();
+                result = JsonParser.parseReader(new InputStreamReader(conn.getInputStream())).getAsJsonObject();
                 log.info("{}",result);
                 
                 String status = result.get("status").getAsString(); // 예: PAID, FAILED
                 log.info("{}",status);
-                // 결제 성공 시
-                
-                if(status.equals("PAID")) {
-                	// 커스텀 데이터 파싱
-                	String customDataRaw = result.get("customData").getAsString();
-                	JsonObject customData = JsonParser.parseString(customDataRaw).getAsJsonObject();
-                	// donateaction 인스턴스 생성
-                	long drno = customData.get("drno").getAsLong();
-                	long mno = customData.get("mno").getAsLong();
-                	int realAmount = Integer.parseInt(result.get("amount").getAsJsonObject().get("total").getAsString().split("\\.")[0]);
-                	int amount = realAmount * 1000;
-                	DonateAction action = DonateAction.builder().drno(drno).mno(mno).amount(amount).build();
                 	
-                	// pay 인스턴스 생성
-                	String paytype = result.get("method").getAsJsonObject().get("provider").getAsString();
-                	List<String> useTypes = new ArrayList<String>(List.of("CARD", "TOSSPAY", "KAKAOPAY", "TRANSFER")); 
-                	if(!useTypes.contains(paytype)) {
-                		paytype = "ETC";
-                	}
-                	String receipt = result.get("receiptUrl").getAsString();
-                	String uuid = result.get("id").getAsString();
-                	Pay pay = Pay.builder().mno(mno).payamount(amount).paytype(PayType.valueOf(paytype)).paystatus(PayStatus.valueOf(status)).receipt(receipt).uuid(uuid).build();
-                	
-                	// paylog 인스턴스 생성
-                	String pgResponseRaw = result.get("pgResponse").getAsString();
-                	JsonObject pgResponse = JsonParser.parseString(pgResponseRaw).getAsJsonObject();
-                	String resultMsg = pgResponse.get("ResultMsg").getAsString();
-                	PayLog paylog = PayLog.builder().paystatus(PayStatus.valueOf(status)).result(resultMsg).build();
-                	
-                	
-                	log.info("{} :: {} :: {}", action, pay, paylog);
-                	
-                	PayService payService = new PayService();
-                	payService.register(action, pay, paylog);
-                }
-                
-                
-                // Object o = map;
-                Gson gson = new Gson();
-                Type type = new TypeToken<Map<String, Object>>(){}.getType();
-                Map<String, Object> fullMap = gson.fromJson(result, type);
-                // 4. 응답 JSON 전송
-
-                JsonRespUtil.writeJson(resp, fullMap);
-            } else {
-                JsonRespUtil.writeJson(resp, Map.of("msg", "결제 조회 실패"), 500);
+            	// 커스텀 데이터 파싱
+            	String customDataRaw = result.get("customData").getAsString();
+            	
+            	JsonObject customData = JsonParser.parseString(customDataRaw).getAsJsonObject();
+            	
+            	// donateaction 인스턴스 생성
+            	long drno = customData.get("drno").getAsLong();
+            	long mno = customData.get("mno").getAsLong();
+            	
+            	int realAmount = 0;
+            	if (result.has("amount") && result.get("amount").isJsonObject()) {
+            	    JsonObject amountObj = result.getAsJsonObject("amount");
+            	    if (amountObj.has("total") && !amountObj.get("total").isJsonNull()) {
+            	        String totalStr = amountObj.get("total").getAsString().split("\\.")[0];
+            	        realAmount = Integer.parseInt(totalStr);
+            	    }
+            	}
+            	int amount = realAmount * 1000;
+            	DonateAction action = DonateAction.builder().drno(drno).mno(mno).amount(amount).build();
+            	
+            	
+            	// pay 인스턴스 생성
+            	String paytype = "ETC";
+            	if(result.get("method") != null) {
+            		if(result.get("method").getAsJsonObject().get("provider") != null) {
+            			paytype = result.get("method").getAsJsonObject().get("provider").getAsString();
+            		}
+            	}
+            			
+            		
+            		
+            	List<String> useTypes = new ArrayList<String>(List.of("CARD", "TOSSPAY", "KAKAOPAY", "TRANSFER")); 
+            	if(!useTypes.contains(paytype)) {
+            		paytype = "ETC";
+            	}
+            	// 영수증 없으면 널값
+            	String receipt = ""; 
+            	if(result.get("receiptUrl") != null) {
+            		receipt = result.get("receiptUrl").getAsString();
+            	}
+            	
+            	String uuid = result.get("id").getAsString();
+            	Pay pay = Pay.builder().mno(mno).payamount(amount).paytype(PayType.valueOf(paytype)).paystatus(PayStatus.valueOf(status)).receipt(receipt).uuid(uuid).build();
+            	log.info("{}", pay);
+            	// paylog 인스턴스 생성
+            	String pgResponseRaw = "";
+            	String resultMsg = "";
+            	if(result.get("pgResponse") != null) {
+            		pgResponseRaw = result.get("pgResponse").getAsString();
+            		JsonObject pgResponse = JsonParser.parseString(pgResponseRaw).getAsJsonObject();
+            		resultMsg = pgResponse.get("ResultMsg").getAsString();
+            	}
+            		
+            	PayLog paylog = PayLog.builder().paystatus(PayStatus.valueOf(status)).result(resultMsg).build();
+            	
+            	
+            	log.info("{} :: {} :: {}", action, pay, paylog);
+            	
+            	PayService payService = new PayService();
+            	payService.register(action, pay, paylog);
             }
+            
+            
+            // Object o = map;
+            Gson gson = new Gson();
+            Type type = new TypeToken<Map<String, Object>>(){}.getType();
+            Map<String, Object> fullMap = gson.fromJson(result, type);
+            // 4. 응답 JSON 전송
+
+            JsonRespUtil.writeJson(resp, fullMap);
+           
 
         } catch (Exception e) {
             e.printStackTrace();
