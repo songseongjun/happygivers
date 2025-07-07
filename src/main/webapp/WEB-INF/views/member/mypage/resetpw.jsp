@@ -18,9 +18,9 @@
         <div class="alert alert-warning">인증 시간이 만료되었습니다. 다시 시도해주세요.</div>
     </c:if>
 
-    <form action="${cp}/member/resetpw" method="post" class="d-flex flex-column gap-3">
+   <form action="<c:url value='/member/resetpw' />" method="post" class="d-flex flex-column gap-3">
         <!-- 숨겨진 uuid -->
-        <input type="hidden" name="uuid" value="${param.uuid}">
+        <input type="hidden" name="uuid" value="${uuid}">
 
         <div class="form-floating">
             <input type="password" class="form-control" name="pw" id="pw" placeholder="새 비밀번호" required>
@@ -36,6 +36,6 @@
     </form>
 </div>
 
-<%@ include file="../../common/footer.jsp" %>
 </body>
+ <%@ include file="../../common/footer.jsp" %> 
 </html>

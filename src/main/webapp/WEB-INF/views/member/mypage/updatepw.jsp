@@ -9,7 +9,7 @@
 <%@ include file="../../common/header.jsp" %>
 
 <div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
-  <div class="border rounded-4 p-5 shadow" style="width: 100%; max-width: 500px; background-color: #fff;">
+  <div class="border rounded-4 p-5 shadow" style="width: 100%; max-width: 677px; background-color: #fff;">
     <h3 class="text-center mb-4">비밀번호 변경</h3>
 
     <form action="${cp}/mypage/updatepw" method="post" class="d-flex flex-column gap-3">
@@ -40,6 +40,5 @@
   </div>
 </div>
 
-<%@ include file="../../common/footer.jsp" %>
 </body>
 </html>

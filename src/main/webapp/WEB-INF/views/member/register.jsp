@@ -72,6 +72,9 @@
           <button type="submit" class="btn btn-primary btn-lg btn-block">회원가입</button>
         </div>
       </div>
+      <c:if test="${mtype == 'ORG' }">
+      	<input type="hidden" name="status" value="READY">
+      </c:if>
     </form>
   </main>
 </div>

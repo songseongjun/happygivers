@@ -19,6 +19,11 @@
                 <c:when test="${param.page == 'update-info'}">
                     <jsp:include page="mypage/updateinfo.jsp" />
                 </c:when>
+                
+                 <c:when test="${param.page == 'update-password'}">
+			        <jsp:include page="mypage/updatepw.jsp" />
+			    </c:when>
+                
                 <c:otherwise>
                     <!-- 기본 메인 화면 구성 -->
                     <div class="border rounded-4 bg-white p-4 shadow-sm d-flex justify-content-between align-items-start" style="min-height: 180px;">
