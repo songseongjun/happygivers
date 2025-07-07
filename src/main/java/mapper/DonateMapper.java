@@ -1,5 +1,7 @@
 package mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import domain.Donate;
@@ -23,6 +25,7 @@ public interface DonateMapper {
 	void insertAction(DonateAction action);
 	void deleteAction(Long dano);
 	void updateAction(DonateAction action);
+	List<DonateAction> adminActionList();
 	DonateAction selectOneAction(Long dano);
 	long findMyAmount(@Param("drno") Long drno,@Param("mno") Long mno);
 	long findMyTotalAmount(Long mno);
