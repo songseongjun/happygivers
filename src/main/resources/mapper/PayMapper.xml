@@ -14,6 +14,10 @@
 	
 	<!-- 결제 수정 -->
 	<update id="update">
+		update tbl_pay
+ 		set paystatus = #{paystatus},
+ 			voiddate = now()
+ 		where pno = #{pno}
 	</update>
 	
 	
@@ -35,6 +39,7 @@
 	<select id="adminPayList" resultType="pay">
 		select p.*, (select name from tbl_member m where m.mno = p.mno) name
 		from tbl_pay p
+		order by coalesce(p.voiddate, p.regdate) desc
 	</select>
 	
 	<!-- 결제 한개 선택 -->
@@ -43,21 +48,20 @@
 		from tbl_pay
 		where pno = #{pno}
 	</select>
+
+	<!-- 결제 한개 선택 -->
+	<select id="findByUuid" resultType="pay">
+		select *
+		from tbl_pay
+		where uuid = #{uuid}
+	</select>
 	
 	<!-- 결제로그 생성 -->
 	<insert id="insertLog">
-		insert into tbl_pay_log(pno, paystatus, result) values (#{pno}, #{paystatus}, #{result})
+		insert into tbl_pay_log(pno, paystatus, result, mtype) values (#{pno}, #{paystatus}, #{result}, #{mtype})
 	</insert>
 	
 	
-	<!-- 결제로그 수정 -->
-	<update id="updateLog">
-	</update>
-	
-	
-	<!-- 결제로그 삭제 -->
-	<delete id="deleteLog">
-	</delete>
 	
 	
 	<!-- 결제로그 리스트 -->

@@ -19,6 +19,7 @@ public interface PayMapper {
 	List<Pay> adminPayList();
 	
 	Pay selectOne(Long pno);
+	Pay findByUuid(String uuid);
 
 	void insertLog(PayLog log);
 	void deleteLog(Long plno);
