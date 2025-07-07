@@ -87,7 +87,7 @@
                         </div>
                         <div class="d-flex flex-column gap-2">
 	                        <button type="button" class="btn btn-primary form-control py-2" data-bs-toggle="modal" data-bs-target="#donatePay">기부하기</button>
-	                        <c:if test="${(member.mno == board.mno or member.mtype == ADMIN) and not empty member}">
+	                        <c:if test="${not empty member and (member.mno == board.mno or member.mtype == 'ADMIN')}">
 	                        <a href="${cp }/board/modify?bno=${board.bno}" class="btn btn-outline-primary form-control py-2" >수정하기</a>
 	                        </c:if>
                         </div>
