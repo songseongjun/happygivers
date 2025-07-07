@@ -34,5 +34,6 @@ public class Board {
 	private String cname; // 카테고리명
 	private String name; // 작성자 이름
 	private String nickname; // 작성자 닉네임
-
+	
+	private Attach attach; // 첨부파일 - 썸네일 제작시 사용
 }

@@ -219,7 +219,8 @@
                     
                 </div>
                 <!-- 후원처 -->
-                <!-- <div class="border rounded-3 mt-4 p-4">
+                <c:if test="${member.mtype == 'ORG' && member.emailcheck == true && member.status == 'ACTIVE' }">
+                <div class="border rounded-3 mt-4 p-4">
                     <div class="d-flex justify-content-between">
                         <p class="fs-6 fw-semibold m-0" style="color: var(--col-6);">현재 등록된 내 모금함</p>
                         <a class="small text-decoration-none" style="color: var(--col-4);">더보기 <i class="fa-solid fa-chevron-right" style="color: var(--col-4);"></i></a>
@@ -246,8 +247,9 @@
                             </a>
                         </li>
                     </ul>
-                    <a href="#" class="btn btn-primary form-control fs-6 mt-4 py-2">모금 글 작성하기</a>
-                </div> -->
+                    <a href="${cp }/board/write" class="btn btn-primary form-control fs-6 mt-4 py-2">모금 글 작성하기</a>
+                </div>
+                </c:if>
                 <!-- 공지사항 -->
                 <div class="border rounded-3 mt-4 p-4">
                     <div class="d-flex justify-content-between">

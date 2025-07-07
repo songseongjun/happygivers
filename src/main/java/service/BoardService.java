@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 import org.apache.ibatis.session.SqlSession;
 
+import domain.Attach;
 import domain.Board;
 import domain.Category;
 import domain.Donate;
@@ -14,6 +15,7 @@ import domain.DonateRound;
 import domain.Member;
 import domain.dto.Criteria;
 import domain.en.Status;
+import mapper.AttachMapper;
 import mapper.BoardMapper;
 import mapper.CategoryMapper;
 import mapper.DonateMapper;
@@ -24,12 +26,24 @@ import util.MybatisUtil;
 public class BoardService {
 	// 게시글 생성
 	public void write(Board board) {
-		try(SqlSession session = MybatisUtil.getSqlSession()) {
+		SqlSession session = MybatisUtil.getSqlSession(false);
+		try {
 			BoardMapper mapper = session.getMapper(BoardMapper.class); 
+			AttachMapper attachMapper = session.getMapper(AttachMapper.class);
 			mapper.insert(board);
+			if(board.getAttach() != null) {
+				Attach attach = board.getAttach();
+				attach.setBno(board.getBno());
+				attachMapper.insert(attach);
+			}
+			session.commit();
 		}
 		catch (Exception e){
+			session.rollback();
 			e.printStackTrace();
+		}
+		finally {
+			session.close();
 		}
 	}
 	
@@ -38,7 +52,8 @@ public class BoardService {
 		SqlSession session = MybatisUtil.getSqlSession(false);
 		try {
 			DonateMapper donateMapper = session.getMapper(DonateMapper.class);
-			BoardMapper boardmapper = session.getMapper(BoardMapper.class);
+			BoardMapper boardMapper = session.getMapper(BoardMapper.class);
+			AttachMapper attachMapper = session.getMapper(AttachMapper.class);
 			if(donate.getDno() == null) {
 				// 1. 모금함 생성 - 첫회차일때
 				donateMapper.insert(donate);
@@ -54,7 +69,15 @@ public class BoardService {
 			
 			// 3. 생성된 회차번호를 게시글에 넣고 게시글 생성
 			board.setDrno(round.getDrno());
-			boardmapper.insert(board);
+			boardMapper.insert(board);
+			
+			
+			// 4. 첨부파일에 bno 넣고 첨부파일 생성
+			if(board.getAttach() != null) {
+				Attach attach = board.getAttach();
+				attach.setBno(board.getBno());
+				attachMapper.insert(attach);
+			}
 			session.commit();
 		}
 		catch (Exception e){

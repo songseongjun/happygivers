@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-
+import domain.Attach;
 import domain.Board;
 import domain.Donate;
 import domain.DonateRound;
@@ -64,6 +64,12 @@ public class Write extends HttpServlet{
 		Donate donate = ParamUtil.get(req, Donate.class);
 		DonateRound round = ParamUtil.get(req, DonateRound.class);		
 		Board board = ParamUtil.get(req, Board.class); 
+		Attach attach = null ;
+		if(ParamUtil.get(req, Attach.class) != null) {
+			attach = ParamUtil.get(req, Attach.class);
+			attach.setMno(null);
+			board.setAttach(attach);
+		}
 		log.info("{}", board);
 		
 
