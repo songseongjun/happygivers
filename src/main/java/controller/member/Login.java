@@ -13,11 +13,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import domain.AutoLogin;
 import domain.Member;
 import domain.dto.Criteria;
 import lombok.extern.slf4j.Slf4j;
+import mapper.AutoLoginMapper;
 import service.MemberService;
 import util.AlertUtil;
+import util.MybatisUtil;
 import util.ParamUtil;
 
 @WebServlet("/member/login")
@@ -69,10 +72,17 @@ public class Login extends HttpServlet {
 		                cookie.setMaxAge(60 * 60 * 24 * 7);
 		                resp.addCookie(cookie);
 
+		                AutoLogin al = AutoLogin.builder()
+		                .mno(loginMember.getMno())
+		                .token(token)
+		                .voiddate(expireDate)
+		                .build();
 		                // DB 저장
-		               
-
-		            }
+						try (var session2 = MybatisUtil.getSqlSession()) { //리소스 누수 방지
+							session2.getMapper(AutoLoginMapper.class).insert(al);
+							session2.commit(); 
+						}
+					}
 
 
 		            if (!loginMember.isEmailcheck()) {
@@ -89,12 +99,12 @@ public class Login extends HttpServlet {
 		                resp.sendRedirect(decodedUrl + "?" + cri.getQs2());
 		            }
 		        } else {
-		            resp.sendRedirect("login?msg=fail");
-		        }
-		    } catch (IllegalArgumentException e) {
-		        // mtype 값이 enum에 없을 경우 예외 처리
-		        resp.sendRedirect("login?msg=invalidtype");
-		    }
+					log.warn("로그인 실패 - 아이디: {}, 타입: {}", id, mtypeStr); 
+					resp.sendRedirect("login?msg=fail");
+				}
+			} catch (IllegalArgumentException e) {
+				log.warn("mtype 변환 실패 - 잘못된 mtype: {}", mtypeStr);
+				resp.sendRedirect("login?msg=invalidtype");
+			}
 		}
-
-}
+	}

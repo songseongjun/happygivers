@@ -39,19 +39,19 @@ public class EmailCheckService {
         try {
             MemberMapper mapper = session.getMapper(MemberMapper.class);
 
-            // 1. uuid로 이메일 꺼냄
+            //  uuid로 이메일 꺼냄
             String email = RedisUtil.get(uuid);
             if (email == null) return false;
 
-            // 2. tbl_member.emailcheck = 1
+            // tbl_member.emailcheck = 1
             mapper.updateEmailCheckByEmail(email);
 
-            // 3. tbl_email_check.check = 1
+            // tbl_email_check.check = 1
             mapper.verifyEmail(uuid);
 
             session.commit();
 
-            // 4. Redis 인증 토큰 삭제
+            //  Redis 인증 토큰 삭제
             RedisUtil.remove(uuid);
             System.out.println("인증 시작 - uuid: " + uuid);
             System.out.println("이메일 인증 처리 - email: " + email);
@@ -77,6 +77,9 @@ public class EmailCheckService {
             session.close();
         }
     }
+    
+    
+    
     public void resendAuthEmail(String email) {
         UUID uuid = UUID.randomUUID();
         RedisUtil.set("email:" + uuid, email, 300);

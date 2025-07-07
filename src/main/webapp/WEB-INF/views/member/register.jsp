@@ -64,9 +64,21 @@
 
         <div class="form-floating input-group my-2">
           <input type="email" class="form-control" name="email" id="email" placeholder="이메일" required>
-          <label for="email" style="z-index: 10;">이메일</label>
-         
+          <label for="email" style="z-index: 10;">이메일</label>  
         </div>
+        <!-- 일반회원: 닉네임 자동 생성 (서버에서 처리, 클라이언트는 hidden) -->
+			  <c:if test="${mtype == 'USER'}">
+			    <input type="hidden" name="nickname" value="" id="nickname-hidden" />
+			  </c:if>
+			
+			  <!-- 기관회원: 기관명 입력 필드 -->
+			  <c:if test="${mtype == 'ORG'}">
+			    <div class="form-floating my-2">
+			      <input type="text" class="form-control" name="orgname" id="orgname" placeholder="기관명" required>
+			      <label for="orgname">기관명</label>
+			    </div>
+			  </c:if>
+
 
         <div class="d-grid">
           <button type="submit" class="btn btn-primary btn-lg btn-block">회원가입</button>

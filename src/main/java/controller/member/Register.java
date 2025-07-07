@@ -36,6 +36,32 @@ public class Register extends HttpServlet {
         if (member.getName() == null) {
             member.setName("이름없음");
         }
+        
+        //mtype에 따른 닉네임 처리 추가
+        String mtype = req.getParameter("mtype");
+
+        if ("USER".equalsIgnoreCase(mtype)) {
+            // 일반회원 > 닉네임 자동 생성
+            String rand = String.valueOf((int)(Math.random() * 900000) + 100000);
+            member.setNickname("기부천사" + rand);
+        } else if ("ORG".equalsIgnoreCase(mtype)) {
+            // 기관회원 >기관명 필수
+            String orgname = req.getParameter("orgname");
+            if (orgname == null || orgname.trim().isEmpty()) {
+                resp.setContentType("text/html; charset=UTF-8");
+                resp.getWriter().println(
+                    "<script>" +
+                        "alert('기관명은 필수입니다.');" +
+                        "history.back();" +
+                    "</script>"
+                );
+                return;
+            }
+            member.setNickname(orgname); // 기관명 > 닉네임으로 저장
+        }
+        
+        
+        
 
         // 3. 아이디 및 이메일 중복 확인
         MemberService memberService = new MemberService();

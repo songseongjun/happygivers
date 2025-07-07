@@ -26,17 +26,17 @@ public class EmailCheck extends HttpServlet {
         EmailCheckService service = new EmailCheckService();
 
         if (service.isVerified(uuid)) {
-        	  // 1. 먼저 email 꺼내기
+        	  //  먼저 email 꺼내기
             String email = service.getEmail(uuid);
 
-            // 2. 인증 처리 (emailcheck = 1, check = 1, Redis 삭제)
+            //  인증 처리 (emailcheck = 1, check = 1, Redis 삭제)
             service.verifyEmail(uuid);
 
-            // 3. 세션 등록
+            // 세션 등록
             Member member = service.getMemberByEmail(email);
             req.getSession().setAttribute("member", member);
 
-            // 4. 메인 페이지 이동
+            //  메인 페이지 이동
             req.setAttribute("msg", "이메일 인증이 완료되었습니다!");
             req.getRequestDispatcher("/WEB-INF/views/index.jsp").forward(req, resp);
         } else {
