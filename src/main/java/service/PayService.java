@@ -121,7 +121,16 @@ public class PayService {
 		}
 	}
 	
-	
-	
+	// 결제 로그 리스트 (환불)
+	public List<PayLog> payLogList() {
+		try(SqlSession session = MybatisUtil.getSqlSession()) {
+			PayMapper mapper = session.getMapper(PayMapper.class);
+			return mapper.listLog();
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 }
