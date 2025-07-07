@@ -30,5 +30,5 @@ public class Pay {
 	private String voiddate;
 	private String moddate;
 	
-	
+	private String name;
 }

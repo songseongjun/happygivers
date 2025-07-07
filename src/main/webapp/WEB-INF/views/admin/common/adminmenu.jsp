@@ -23,8 +23,8 @@
                         </div>
                         <ul class="p-0 d-flex flex-column mt-2 mb-0">
                             <li><a href="${cp }/admin/donate/roundlist?ctype=DONATE" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">모금함 조회</a></li>
-                            <li><a href="#" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">기부내역 조회</a></li>
-                            <li><a href="#" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">결제내역 조회</a></li>
+                            <li><a href="${cp }/admin/donate/actionlist" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">기부내역 조회</a></li>
+                            <li><a href="${cp }/admin/donate/paylist" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">결제내역 조회</a></li>
                             <li><a href="#" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">환불 관리</a></li>
                         </ul>
                     </div>

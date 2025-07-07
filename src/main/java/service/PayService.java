@@ -28,6 +28,7 @@ public class PayService {
 		return null;
 	}
 	
+	// 모금회차 하나의 리스트
 	public List<Pay> list(Long drno) {
 		try(SqlSession session = MybatisUtil.getSqlSession()) {
 			PayMapper mapper = session.getMapper(PayMapper.class);
@@ -40,6 +41,22 @@ public class PayService {
 		}
 		return null;
 	}
+
+	// 전체의 리스트 (admin)
+	public List<Pay> allPayList() {
+		try(SqlSession session = MybatisUtil.getSqlSession()) {
+			PayMapper mapper = session.getMapper(PayMapper.class);
+			List<Pay> list = mapper.adminPayList();
+			
+			return list;
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
 	
 	
 	// 결제 성공시 등록

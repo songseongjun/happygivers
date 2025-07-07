@@ -24,21 +24,27 @@
 				<ul class="list-group small">
 				<li class="list-group-item ">
 					<div class="row my-0 align-items-center">
-					<span class="col-2 text-center fw-bold">기부자 명</span>
-					<span class="col-2 text-center fw-bold">후원기관 명</span>
-					<span class="col text-center fw-bold">기부한 게시글</span>
-					<span class="col-2 text-center fw-bold">기부 금액</span>
-					<span class="col-2 text-center fw-bold">기부일</span>
+					<span class="col-2 text-center fw-bold">결제자 명</span>
+					<span class="col-2 text-center fw-bold">결제수단</span>
+					<span class="col text-center fw-bold">금액</span>
+					<span class="col-2 text-center fw-bold">결제 생성 / 마감일</span>
+					<span class="col-2 text-center fw-bold">상태</span>
+					<span class="col-1 text-center fw-bold">관리</span>
 					</div>
 				</li>
-				<c:forEach items="${actions }" var="a">
+				<c:forEach items="${pays }" var="p">
 				<li class="list-group-item">
 					<div class="row my-0 align-items-center">
-						<span class="col-2 text-center">${a.name }</span>
-						<span class="col-2 text-center">${a.orgname }</span>
-						<span class="col text-center text-truncate"><a href="${cp }/board/view?bno=${a.bno}" class="text-black" target="_black">${a.title }</a></span>
-						<span class="col-2 text-center"><fmt:formatNumber value="${a.amount}" />원</span>
-						<span class="col-2 text-center">${a.regdate }</span>
+						<span class="col-2 text-center">${p.name }</span>
+						<span class="col-2 text-center">${p.paytype }</span>
+						<span class="col text-center"><fmt:formatNumber value="${p.payamount}" />원</span>
+						<span class="col-2 text-center">${p.voiddate != null ? p.voiddate : p.regdate}</span>
+						<span class="col-2 text-center">${p.paystatus }</span>
+						<div class="btn-group btn-group-sm col-1">
+							<c:if test="${p.paystatus == 'PAID' }">
+							<a href="#" class="btn btn-outline-secondary" data-uuid="${p.uuid }">환불</a>
+							</c:if>
+						</div>
 					</div>
 				</li>
 				</c:forEach>
@@ -58,14 +64,6 @@
                
         <%@ include file="../../common/footer.jsp" %>
         
-<script>
-	$("#categorySelect").change(function(){
-		const cno = $(this).val();
-		console.log(cno);
-		const targetUrl = cno === 'all' ? `${cp}/admin/board/list`  : `${cp}/admin/board/list?cno=` + cno;
-		location.href = targetUrl;
-	})
-</script>
 <script>
 $('#deleteBtn').on('click', function () {
 	  const checkedValues = $('.checkItem:checked').map(function () {

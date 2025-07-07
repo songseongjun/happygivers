@@ -12,9 +12,12 @@ public interface PayMapper {
 	void delete(Long pno);
 	void update(Pay pay);
 	
-	
+	// 모금회차 하나의 결제정보
 	List<Pay> list(Long drno);
-
+	
+	// 전체 결제 정보
+	List<Pay> adminPayList();
+	
 	Pay selectOne(Long pno);
 
 	void insertLog(PayLog log);

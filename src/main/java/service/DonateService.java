@@ -1,8 +1,10 @@
 package service;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 
-
+import domain.DonateAction;
 import domain.DonateRound;
 import mapper.DonateMapper;
 import util.MybatisUtil;
@@ -68,5 +70,18 @@ public class DonateService {
 		}
 		return 0;
 	}
+	
+	// 기부 상태가 paid인 모든 기부내역 가져오기
+	public List<DonateAction> actionList() {
+		try(SqlSession session = MybatisUtil.getSqlSession()) {
+			DonateMapper mapper = session.getMapper(DonateMapper.class); 
+			return mapper.adminActionList();
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	
 }
