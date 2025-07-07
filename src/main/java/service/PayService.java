@@ -27,6 +27,17 @@ public class PayService {
 		}
 		return null;
 	}
+
+	public Pay findByUuid(String uuid) {
+		try(SqlSession session = MybatisUtil.getSqlSession()) {
+			PayMapper mapper = session.getMapper(PayMapper.class);
+			return mapper.findByUuid(uuid);
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 	// 모금회차 하나의 리스트
 	public List<Pay> list(Long drno) {
@@ -59,7 +70,7 @@ public class PayService {
 	
 	
 	
-	// 결제 성공시 등록
+	// 결제시 등록
 	public void register(DonateAction action, Pay pay, PayLog log) {
 		SqlSession session = MybatisUtil.getSqlSession(false);
 		try {
@@ -83,19 +94,21 @@ public class PayService {
 	}
 	
 	
-	
-	
-	
-	
-	public void modify(Pay pay) {
-		try(SqlSession session = MybatisUtil.getSqlSession()) {
+	public void modify(Pay pay, PayLog log) {
+		SqlSession session = MybatisUtil.getSqlSession(false);
+		try {
 			PayMapper mapper = session.getMapper(PayMapper.class);
 			mapper.update(pay);
+			mapper.insertLog(log);
+			session.commit();
 		}
 		catch (Exception e){
+			session.rollback();
 			e.printStackTrace();
 		}
-		
+		finally {
+			session.close();
+		}
 	}
 	
 	public void remove(Long pno) {
@@ -107,4 +120,8 @@ public class PayService {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	
+	
 }

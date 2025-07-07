@@ -35,8 +35,8 @@ import lombok.extern.slf4j.Slf4j;
 import service.PayService;
 import util.JsonRespUtil;
 @Slf4j
-@WebServlet("/api/payment/complete")
-public class PaymentCompleteServlet extends HttpServlet{
+@WebServlet("/api/payment/refund")
+public class PaymentRefundServlet extends HttpServlet{
 	private static final String API_SECRET;
 	static {
 	Properties props = new Properties();
@@ -59,23 +59,42 @@ public class PaymentCompleteServlet extends HttpServlet{
 	
     static class PaymentRequest {
         public String paymentId;
+        public String amount;
     }
     
     @Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     	PaymentRequest data = JsonRespUtil.readJson(req, PaymentRequest.class);
     	String paymentId = data.paymentId;
+    	int amount = 0; 
+    	if(data.amount != null) {
+    		amount = Integer.valueOf(data.amount) / 1000;
+    	}
+    	log.info("환불 요청 ID: {}, 금액: {}", paymentId, amount);
     	
     	try {
             // 2. 토큰 발급
             String token = getAccessToken();
             
-
-            // 3. PortOne 결제 조회 API 호출
-            URL url = new URL("https://api.portone.io/payments/" + paymentId);
+            // 3. PortOne 환불API 요청
+            URL url = new URL("https://api.portone.io/payments/" + paymentId + "/cancel");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
+            conn.setRequestMethod("POST");
             conn.setRequestProperty("Authorization", "Bearer " + token);
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setDoOutput(true);
+            
+            JsonObject refundBody = new JsonObject();
+            refundBody.addProperty("reason", "관리자 요청");
+            refundBody.addProperty("storeId", "store-f1ff113e-a12f-48a2-ad88-1a67d77bd7ad");
+            refundBody.addProperty("amount", amount);
+            refundBody.addProperty("requester", "ADMIN");
+            
+            try (OutputStream os = conn.getOutputStream()) {
+                os.write(refundBody.toString().getBytes(StandardCharsets.UTF_8));
+                os.flush();
+            }
+
 
             int responseCode = conn.getResponseCode();
             
@@ -84,69 +103,25 @@ public class PaymentCompleteServlet extends HttpServlet{
                 result = JsonParser.parseReader(new InputStreamReader(conn.getInputStream())).getAsJsonObject();
                 log.info("{}",result);
                 
-                String status = result.get("status").getAsString(); // 예: PAID, FAILED
-                log.info("{}",status);
-                	
-            	// 커스텀 데이터 파싱
-            	String customDataRaw = result.get("customData").getAsString();
-            	
-            	JsonObject customData = JsonParser.parseString(customDataRaw).getAsJsonObject();
-            	
-            	// donateaction 인스턴스 생성
-            	long drno = customData.get("drno").getAsLong();
-            	long mno = customData.get("mno").getAsLong();
-            	
-            	int realAmount = 0;
-            	if (result.has("amount") && result.get("amount").isJsonObject()) {
-            	    JsonObject amountObj = result.getAsJsonObject("amount");
-            	    if (amountObj.has("total") && !amountObj.get("total").isJsonNull()) {
-            	        String totalStr = amountObj.get("total").getAsString().split("\\.")[0];
-            	        realAmount = Integer.parseInt(totalStr);
-            	    }
-            	}
-            	int amount = realAmount * 1000;
-            	DonateAction action = DonateAction.builder().drno(drno).mno(mno).amount(amount).build();
-            	
-            	
-            	// pay 인스턴스 생성
-            	String paytype = "ETC";
-            	if(result.get("method") != null) {
-            		if(result.get("method").getAsJsonObject().get("provider") != null) {
-            			paytype = result.get("method").getAsJsonObject().get("provider").getAsString();
-            		}
-            	}
-            			
-            		
-            		
-            	List<String> useTypes = new ArrayList<String>(List.of("CARD", "TOSSPAY", "KAKAOPAY", "TRANSFER")); 
-            	if(!useTypes.contains(paytype)) {
-            		paytype = "ETC";
-            	}
-            	// 영수증 없으면 널값
-            	String receipt = ""; 
-            	if(result.get("receiptUrl") != null) {
-            		receipt = result.get("receiptUrl").getAsString();
-            	}
-            	
-            	String uuid = result.get("id").getAsString();
-            	Pay pay = Pay.builder().mno(mno).payamount(amount).paytype(PayType.valueOf(paytype)).paystatus(PayStatus.valueOf(status)).receipt(receipt).uuid(uuid).build();
-            	log.info("{}", pay);
-            	// paylog 인스턴스 생성
-            	String pgResponseRaw = "";
-            	String resultMsg = "";
-            	if(result.get("pgResponse") != null) {
-            		pgResponseRaw = result.get("pgResponse").getAsString();
-            		JsonObject pgResponse = JsonParser.parseString(pgResponseRaw).getAsJsonObject();
-            		resultMsg = pgResponse.get("ResultMsg").getAsString();
-            	}
-            		
-            	PayLog paylog = PayLog.builder().paystatus(PayStatus.valueOf(status)).result(resultMsg).mtype(Mtype.USER).build();
-            	
-            	
-            	log.info("{} :: {} :: {}", action, pay, paylog);
-            	
-            	PayService payService = new PayService();
-            	payService.register(action, pay, paylog);
+                String status = "";
+                String cancelId = "";
+                String reason = "";
+                PayService payService = new PayService();
+                if (result.has("cancellation") && result.get("cancellation").isJsonObject()) {
+                    JsonObject cancellation = result.getAsJsonObject("cancellation");
+                    
+                    // 취소 uuid로 pay개체 가져와서 status 변경 후 업데이트,
+                    Pay pay = payService.findByUuid(paymentId);
+                    pay.setPaystatus(PayStatus.REFUND);
+                    
+                    reason = cancellation.get("reason").getAsString();
+                    // pay로그 인스턴트 생성
+                    PayLog log = PayLog.builder().pno(pay.getPno()).paystatus(pay.getPaystatus()).result(reason).mtype(Mtype.ADMIN).build();
+                    
+                    
+                    payService.modify(pay, log); 
+                }
+                
             }
             
             
@@ -179,16 +154,15 @@ public class PaymentCompleteServlet extends HttpServlet{
         // 3. 요청 바디 구성
         JsonObject json = new JsonObject();
         json.addProperty("apiSecret", API_SECRET);
-        log.info("3 :: {}", json);
         // 4. 요청 전송
         try (OutputStream os = conn.getOutputStream()) {
             os.write(json.toString().getBytes(StandardCharsets.UTF_8));
         }
-        log.info("4");
+
         // 5. 응답 코드 확인 후 InputStream 선택
         int code = conn.getResponseCode();
         InputStream input = (code >= 200 && code < 300) ? conn.getInputStream() : conn.getErrorStream();
-        log.info("{}", code);
+        
         // 6. 응답 JSON 파싱 및 access_token 추출
         try (InputStreamReader isr = new InputStreamReader(input, StandardCharsets.UTF_8)) {
             JsonObject response = JsonParser.parseReader(isr).getAsJsonObject();

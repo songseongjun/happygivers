@@ -42,7 +42,7 @@
 						<span class="col-2 text-center">${p.paystatus }</span>
 						<div class="btn-group btn-group-sm col-1">
 							<c:if test="${p.paystatus == 'PAID' }">
-							<a href="#" class="btn btn-outline-secondary" data-uuid="${p.uuid }">환불</a>
+							<button  class="btn btn-outline-secondary btnRefund" data-uuid="${p.uuid }" data-amount="${p.payamount }">환불</button>
 							</c:if>
 						</div>
 					</div>
@@ -65,33 +65,30 @@
         <%@ include file="../../common/footer.jsp" %>
         
 <script>
-$('#deleteBtn').on('click', function () {
-	  const checkedValues = $('.checkItem:checked').map(function () {
-	    return $(this).val();
-	  }).get();
+$(".btnRefund").on("click", function () {
+    const paymentId = $(this).data("uuid");
+    const amount = $(this).data("amount");
 
-	  if (checkedValues.length === 0) {
-	    alert('삭제할 항목을 선택하세요.');
-	    return;
-	  }
+    if (!confirm("정말로 이 결제를 환불하시겠습니까?")) return;
 
-	  if (!confirm('정말 삭제하시겠습니까?')) return;
-
-	  // 삭제 요청 전송
-	  $.ajax({
-	    url: `${cp}/admin/board/delete`,
-	    method: 'POST',
-	    traditional: true, // 배열을 bno=1&bno=2 형태로 전송
-	    data: { bno: checkedValues },
-	    success: function (res) {
-	      alert('삭제되었습니다.');
-	      location.reload();
-	    },
-	    error: function () {
-	      alert('삭제 실패');
-	    }
-	  });
-	});
+    $.ajax({
+      url: "${cp}/api/payment/refund",
+      type: "POST",
+      contentType: "application/json",
+      data: JSON.stringify({ 
+    	  paymentId: paymentId,
+    	  amount: amount
+      }),
+      success: function (res) {
+        alert(res.msg || "환불이 완료되었습니다.");
+        location.reload();
+      },
+      error: function (xhr) {
+        const msg = xhr.responseJSON?.msg || "환불 요청에 실패했습니다.";
+        alert("오류: " + msg);
+      }
+    });
+  });
 
 </script>
 </body>
