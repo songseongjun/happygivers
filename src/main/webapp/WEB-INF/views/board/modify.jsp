@@ -37,12 +37,28 @@
               <label for="voiddate">마감일</label>
             </div>
           </div>
+          <div class="d-flex border rounded-1 list-group p-3 gap-3 flex-row mt-2">
+            <div class="form-floating rounded-2 overflow-hidden">
+              <img src="${board.thumbnail != null ? cp.concat(board.thumbnail) : 'https://placehold.co/250x250?text=No+img' }" alt="썸네일" id="thumbnailImg" style="height: 58px; object-fit: cover;">
+            </div>
+            <div class="form-floating d-flex flex-grow-1 position-relative">
+			  <input type="text" class="form-control pe-5" id="thumbnailName" placeholder="썸네일" value="${board.attach.origin}" readonly>
+			  <label for="thumbnailName" style="z-index: 10;">썸네일</label>
+			  <input type="file" id="thumbnailFile" class="d-none" accept=".jpg, .jpeg, .png, .bmp, .gif, .webp">
+			  <button type="button" class="btn btn-outline-primary position-absolute top-50 end-0 translate-middle-y me-2" id="uploadThumbnailBtn">썸네일 등록</button>
+			</div>
+          </div>
           
           <!-- 히든으로 값 전달 -->
           <input type="hidden" name="content" id="content">
-          <input type="hidden" name="mno" value="${board.mno}">
-          <input type="hidden" name="status" value="${board.status}">
+          <input type="hidden" name="mno" value="${board.mno }">
+          <input type="hidden" name="uuid" id="uuid" value="${board.attach.uuid }">
+		  <input type="hidden" name="path" id="path" value="${board.attach.path }">
+		  <input type="hidden" name="origin" id="origin" value="${board.attach.origin }">
+		  <input type="hidden" name="image" value="true" >
           <input type="hidden" name="drno" value="${board.drno}">
+          <input type="hidden" name="status" value="${board.status}">
+          
           
           
           
@@ -111,12 +127,78 @@
           }
 
           // 음수 방지
-          if (value < 0) {
-            e.target.value = 0;
+          if (value < 1000000) {
+            e.target.value = 1000000;
           }
         })
       
+        $('#uploadThumbnailBtn').on('click', function () {
+    	    $('#thumbnailFile').click();
+    	  });
+    	
+    	 $('#thumbnailFile').on('change', function () {
+    	    const fileName = $(this)[0].files[0]?.name || '';
+    	    $('#thumbnailName').val(fileName);
+    	  });
+        
     })
   </script>
+  <script type="text/javascript">
+  const cp = '${pageContext.request.contextPath}';
+  // 썸네일 파일 변경시 사이즈, 확장자 체크
+  $('#thumbnailFile').on('change', function (e) {
+	  event.preventDefault();
+	  const file = this.files[0];
+	  if (!file) return;
+
+	  const MAX_FILE_SIZE = 1 * 1024 * 1024;
+	  const ONLY_EXT = ['jpg', 'jpeg', 'png', 'bmp', 'gif', 'webp'];
+	  const ext = file.name.split(".").pop().toLowerCase();
+
+	  if (!ONLY_EXT.includes(ext) || file.size > MAX_FILE_SIZE) {
+	    alert("썸네일은 이미지 파일(jpg, jpeg, png, bmp, gif, webp)만 등록 가능하며 최대 1MB입니다.");
+	    $(this).val("");
+	    $("#thumbnailName").val("");
+	    return;
+	  }
+		
+		const formData = new FormData();
+		formData.append("uploadFile", file);
+		
+			
+		$.ajax({
+			url : '${cp}/upload',
+			method : 'POST',
+			data : formData,
+			processData : false, // data를 queryString으로 쓰지 않겠다.
+			contentType : false, // multipart/form-data; 이후에 나오게될 브라우저 정보도 포함시킨다, 즉 기본 브라우저 설정을 따르는 옵션.
+			success : function(data) {
+				if(Array.isArray(data) && data.length > 0){
+					const a = data[0];
+					const imageUrl = cp + '/display?uuid=' + a.uuid + '&path=' + a.path;
+					if(a.image){
+						$('#thumbnailName').val(a.origin);
+						$('#uuid').val(a.uuid);
+				        $('#path').val(a.path);
+				        $('#origin').val(a.origin);
+				        console.log($('#thumbnailImg'));
+				        $('#thumbnailImg').attr("src", imageUrl);
+				     
+					}
+				}
+				else {
+					alert('썸네일이 없습니다.');
+				}
+			},
+			error: function () {
+				alert('썸네일 업로드 실패');
+			}
+		});
+	});
+
+    
+	
+
+</script>
 </body>
 </html>

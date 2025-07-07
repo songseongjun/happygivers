@@ -33,9 +33,7 @@ public class FeedList extends HttpServlet{
 		List<Board> feeds = boardService.list(cri);
 		for(Board f : feeds) {
 			String content = f.getContent();
-			f.setThumbnail(boardService.findThumbnail(content));
-			
-			f.setContent(boardService.removeImgContent(content));
+			f.setThumbnail(boardService.findThumbnail(f.getBno()));
 			log.info("{}", f);
 		}
 		

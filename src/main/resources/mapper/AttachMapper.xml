@@ -8,6 +8,26 @@
 	 	insert into tbl_attach(uuid , origin, path, image, odr, bno, mno) values (#{uuid} , #{origin}, #{path}, #{image}, #{odr}, #{bno}, #{mno})
  	</insert>
  	
+ 	<update id="update">
+ 		update tbl_attach
+ 		set uuid = #{uuid},
+ 			origin = #{origin},
+ 			path = #{path}
+		<where>
+			<choose>
+			<when test="bno != null">
+			bno = #{bno}
+			</when>
+			<when test="mno != null">
+			mno = #{mno}
+			</when>
+			<otherwise>
+				1 = 2
+			</otherwise>
+			</choose>
+		</where>
+ 	</update>
+ 	
  	
  	<!-- 첨부파일 삭제 -->
  	<delete id="delete">
@@ -34,6 +54,21 @@
 		where path = date_FORMAT(NOW() - INTERVAL 1 DAY, '%Y/%m%/%d');
  	</select>
  	
- 	
+ 	<!-- 게시판 썸네일 이미지 -->
+	<select id="getBoardThumbnail" resultType="string">
+	<![CDATA[
+		select concat("/display?uuid=", uuid, "&path=", path) 
+		from tbl_attach 
+		where bno = #{bno}
+  	]]>
+	</select> 	
+	
+	<!-- 유저 프로필 이미지 -->
+	<select id="getMemberProfile" resultType="string">
+	<![CDATA[
+		select concat("/display?uuid=", uuid, "&path=", path)  
+		from tbl_attach where mno = #{mno}
+		]]>
+	</select> 	
  	
  </mapper>
