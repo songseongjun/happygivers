@@ -25,8 +25,7 @@ public class DonateGiveServlet extends HttpServlet{
 		BoardService boardService = new BoardService();
 		// bno를 받아와서 board 객체 생성 - 썸네일, 모금회차 정보 받아옴
 		Board board = boardService.findByBno(Long.valueOf(req.getParameter("bno")));
-		board.setRound(boardService.findRound(board.getDrno())); 
-		board.setThumbnail(boardService.findThumbnail(board.getContent()));
+
 		
 		
 		donate.put("storeId", "store-f1ff113e-a12f-48a2-ad88-1a67d77bd7ad");

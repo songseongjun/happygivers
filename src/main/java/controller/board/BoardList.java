@@ -41,13 +41,6 @@ public class BoardList extends HttpServlet{
 			
 			List<Board> boards = boardService.list(cri);
 			
-			for (Board b : boards) {
-				b.setThumbnail(boardService.findThumbnail(b.getContent())); // 썸네일 추출
-				b.setRound(boardService.findRound(b.getDrno())); // 모금정보 추출
-				b.setCname(boardService.findCname(b.getCno())); // 카테고리명 추출
-				b.setName(boardService.findName(b.getMno())); // 작성자 이름 추출
-			}
-			
 			
 			req.setAttribute("pageDto", new PageDto(cri, boardService.getCount(cri)));
 			log.info("{}", req.getAttribute("pageDto"));
@@ -60,10 +53,6 @@ public class BoardList extends HttpServlet{
 			
 			List<Board> boards = boardService.list(cri);
 			
-			for (Board b : boards) {
-				b.setThumbnail(boardService.findThumbnail(b.getContent())); // 썸네일 추출
-				b.setNickname(boardService.findNickname(b.getMno())); // 작성자 닉네임
-			}
 			
 			req.setAttribute("pageDto", new PageDto(cri, boardService.getCount(cri)));
 			log.info("{}", req.getAttribute("pageDto"));

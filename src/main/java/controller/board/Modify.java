@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-
+import domain.Attach;
 import domain.Board;
 import domain.Donate;
 import domain.DonateRound;
@@ -66,6 +66,9 @@ public class Modify extends HttpServlet{
 			
 		Board modifyBoard = ParamUtil.get(req, Board.class);
 		DonateRound round = ParamUtil.get(req, DonateRound.class);
+		Attach attach = ParamUtil.get(req, Attach.class);
+		attach.setMno(null);
+		modifyBoard.setAttach(attach);
 //		round.setDrno(modifyBoard.getDrno());
 		DonateService donateService = new DonateService();
 		log.info("{}", modifyBoard.getDrno());

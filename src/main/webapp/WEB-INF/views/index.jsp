@@ -91,6 +91,7 @@
                     </ul>
                 </div>
                 <!-- 컨텐츠 1 -->
+                <c:if test="${deadlineBoard != null }">
                 <div class="border p-4 rounded-4 mt-4">
                     <p class="fs-5 fw-semibold mb-1">소중한 기부자를 찾고 있어요.</p>
                     <p class="fs-6 small" style="color: var(--col-3);">마감일까지 얼마 남지 않았어요!</p>
@@ -101,7 +102,7 @@
                                 <p class="text-white m-2"><fmt:formatNumber value="${deadlineBoard.round.goalamount - deadlineBoard.round.nowamount }" /><span class="ms-2" style="color: var(--col-2);">원</span></p>
                             </div>
                             <div>
-                                <img src="${deadlineBoard.thumbnail != null ? deadlineBoard.thumbnail : 'https://placehold.co/300x250?text=No+img' }" class="rounded-bottom-3" alt="img1" style="width: 280px; height:128px; object-fit: cover;  ">
+                                <img src="${deadlineBoard.thumbnail != null ? cp.concat(deadlineBoard.thumbnail) : 'https://placehold.co/300x250?text=No+img' }" class="rounded-bottom-3" alt="img1" style="width: 280px; height:128px; object-fit: cover;  ">
                             </div>
                         </div>
                         <div class="d-flex flex-column justify-content-between ms-4 flex-grow-1">
@@ -123,7 +124,9 @@
                         </div>
                     </div>
                 </div>
+                </c:if>
                 <!-- 컨텐츠 2 -->
+                <c:if test="${newBoards != null }">
                 <div class="border p-4 rounded-4 mt-4">
                     <p class="fs-5 fw-semibold mb-1">관심이 필요한 신규 모금함</p>
                     <p class="fs-6 small" style="color: var(--col-3);">당신의 따뜻한 관심이 필요해요!</p>
@@ -132,7 +135,7 @@
                         <li style="width: 31%;">
                             <a href="${cp }/board/view?bno=${b.bno}" class="text-decoration-none">
                                 <div class="card-body">
-                                    <img src="${b.thumbnail == null ? 'https://placehold.co/200x150?text=No+img' : b.thumbnail}" class="rounded-3" alt="이미지1" style="width:200px; height:140px; object-fit: cover;">
+                                    <img src="${b.thumbnail == null ? 'https://placehold.co/200x150?text=No+img' : cp.concat(b.thumbnail)}" class="rounded-3" alt="이미지1" style="width:200px; height:140px; object-fit: cover;">
                                     <p class="post-title my-2 fw-medium fs-6" style="color: var(--col-6);">${b.title }</p>
                                     <p class="post-meta mb-2 small" style="color: var(--col-3);">${b.name }</p>
                                     <div class="progress my-2" style="height: 3px;">
@@ -150,6 +153,7 @@
                     </ul>
                 </div>
             </div>
+            </c:if>
             <div class="col-lg-4 px-0" style="max-width: 360px;">
                 <!-- 로그인 전-->
                 <c:if test="${empty member}">
@@ -191,34 +195,7 @@
                     </div>
                 </div>
                 </c:if> 
-               
-				                
-				                
-
-                <!-- 기부금 -->
-                <div class="border rounded-3 mt-4">
-                    <div class="p-4">
-                        <div class="d-flex justify-content-between">
-                            <p class="fs-6 fw-semibold" style="color: var(--col-6);">전체 기부금</p>
-                            <p class="small" style="color: var(--col-4);"><span class="today">2025.06.20</span> 기준</p>
-                        </div>
-                        <div class="rounded-3 py-2" style="background-color: var(--col-1);">
-                            <p class="text-center fw-semibold fs-5 m-0"><fmt:formatNumber value="${totalAmount}" /><span>원</span></p>
-                        </div>
-                    </div>
-                    <div class="p-4" style="background-color: var(--col-1);">
-                        <div class="d-flex justify-content-between">
-                            <p class="fs-6 fw-semibold" style="color: var(--col-6);">내 기부금</p>
-                            <p class="small" style="color: var(--col-4);"><span class="today">2025.06.20</span> 기준</p>
-                        </div>
-                        <div class="rounded-3 py-2" style="background-color: var(--col-0);" >
-                            <p class="text-center fw-semibold fs-5 m-0"><fmt:formatNumber value="${myTotalAmount}" /><span>원</span></p>
-                        </div>
-                    </div>
-                    
-                    
-                </div>
-                <!-- 후원처 -->
+               <!-- 후원처 -->
                 <c:if test="${member.mtype == 'ORG' && member.emailcheck == true && member.status == 'ACTIVE' }">
                 <div class="border rounded-3 mt-4 p-4">
                     <div class="d-flex justify-content-between">
@@ -250,6 +227,33 @@
                     <a href="${cp }/board/write" class="btn btn-primary form-control fs-6 mt-4 py-2">모금 글 작성하기</a>
                 </div>
                 </c:if>
+				                
+				                
+
+                <!-- 기부금 -->
+                <div class="border rounded-3 mt-4">
+                    <div class="p-4">
+                        <div class="d-flex justify-content-between">
+                            <p class="fs-6 fw-semibold" style="color: var(--col-6);">전체 기부금</p>
+                            <p class="small" style="color: var(--col-4);"><span class="today">2025.06.20</span> 기준</p>
+                        </div>
+                        <div class="rounded-3 py-2" style="background-color: var(--col-1);">
+                            <p class="text-center fw-semibold fs-5 m-0"><fmt:formatNumber value="${totalAmount}" /><span>원</span></p>
+                        </div>
+                    </div>
+                    <div class="p-4" style="background-color: var(--col-1);">
+                        <div class="d-flex justify-content-between">
+                            <p class="fs-6 fw-semibold" style="color: var(--col-6);">내 기부금</p>
+                            <p class="small" style="color: var(--col-4);"><span class="today">2025.06.20</span> 기준</p>
+                        </div>
+                        <div class="rounded-3 py-2" style="background-color: var(--col-0);" >
+                            <p class="text-center fw-semibold fs-5 m-0"><fmt:formatNumber value="${myTotalAmount}" /><span>원</span></p>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+                
                 <!-- 공지사항 -->
                 <div class="border rounded-3 mt-4 p-4">
                     <div class="d-flex justify-content-between">

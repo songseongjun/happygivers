@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import domain.Attach;
 import domain.Board;
 import domain.Donate;
 import domain.DonateRound;
@@ -48,7 +49,11 @@ public class FeedWrite extends HttpServlet{
 		}
 		
 		// board 인스턴스 생성	
-		Board board = ParamUtil.get(req, Board.class); 
+		Board board = ParamUtil.get(req, Board.class);
+		Attach attach = ParamUtil.get(req, Attach.class);
+		attach.setMno(null);
+		board.setAttach(attach);
+		
 		log.info("{}", board);
 
 		BoardService boardService = new BoardService();

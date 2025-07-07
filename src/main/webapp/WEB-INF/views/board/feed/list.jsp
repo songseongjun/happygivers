@@ -31,7 +31,7 @@
 	          <div class="grid-item col-6 col-md-4 col-lg-3 mt-3">
 	            <div class="card" data-bs-toggle="modal" data-bs-target="#postModal1" style="cursor: pointer;">
 	              <div>
-	                <img src="${f.thumbnail != null ? f.thumbnail : 'https://placehold.co/300x250?text=No+img' }" class="card-img-top" alt="img">
+	                <img src="${f.thumbnail != null ? cp.concat(f.thumbnail) : 'https://placehold.co/300x250?text=No+img' }" class="card-img-top" alt="img">
 	              </div>
 	              <div class="card-body">
 	                <p class="card-text text-truncate fw-medium mb-2">${f.content }</p>
@@ -50,6 +50,7 @@
 
     </div>
 
+<%@ include file="feedmodal.jsp" %>
 <%@ include file="../../common/footer.jsp" %>
 <script type="text/javascript">
 	dayjs.extend(window.dayjs_plugin_relativeTime);

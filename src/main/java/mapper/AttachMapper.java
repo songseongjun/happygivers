@@ -7,10 +7,12 @@ import domain.Attach;
 
 public interface AttachMapper {
 	void insert(Attach attach);
-	List<Attach> list(Long bno);
-	Attach selectOne(String uuid);
+	void update(Attach attach);
+	Attach selectOne(Long bno);
 	void delete(String uuid);
 	void deleteByBno(Long bno);
 	
 	List<Attach> selectYesterdayList();
+	
+	String getBoardThumbnail(Long Bno);
 }

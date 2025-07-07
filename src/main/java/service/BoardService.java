@@ -1,9 +1,8 @@
 package service;
 
-import java.util.Iterator;
+
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -91,16 +90,18 @@ public class BoardService {
 	
 	
 	
-	// 수정하는데 기부회차 정보가 있으면, 회차정보도 상태 동일하게 수정
+	// 수정하는데 기부회차 정보가 있으면, 회차정보도 상태 동일하게 수정, 썸네일도 수정
 	public void modify(Board board) {
 		SqlSession session = MybatisUtil.getSqlSession(false);
 		try{
 			BoardMapper mapper = session.getMapper(BoardMapper.class);
 			if(board.getDrno() != null) {
 				DonateMapper donateMapper = session.getMapper(DonateMapper.class);
+				AttachMapper attachMapper = session.getMapper(AttachMapper.class);
 				DonateRound round = findRound(board.getDrno());
 				round.setStatus(board.getStatus());
 				donateMapper.updateRound(round);
+				attachMapper.update(board.getAttach());
 			}
 			mapper.update(board);
 			session.commit();
@@ -122,11 +123,15 @@ public class BoardService {
 		try {
 			BoardMapper mapper = session.getMapper(BoardMapper.class);
 			DonateMapper donateMapper = session.getMapper(DonateMapper.class);
+			AttachMapper attachMapper = session.getMapper(AttachMapper.class);
 			Board board = findByBno(bno);
 			if(board.getDrno() != null) {
 				DonateRound round = donateMapper.selectOneRound(board.getDrno());
 				round.setStatus(Status.DELETE);
 				donateMapper.updateRound(round);
+			}
+			if(findAttach(bno) != null) {
+				attachMapper.deleteByBno(bno);
 			}
 			board.setStatus(Status.DELETE);
 			mapper.update(board);
@@ -145,12 +150,16 @@ public class BoardService {
 	public List<Board> list(Criteria cri) {
 		try(SqlSession session = MybatisUtil.getSqlSession()) {
 			BoardMapper mapper = session.getMapper(BoardMapper.class); 
+
 			List<Board> list = mapper.list(cri);
-			BoardService service = new BoardService();
 			for(Board b : list) {
 				if(b.getDrno() != null) {
-					b.setRound(service.findRound(b.getDrno()));
-					b.setName(service.findName(b.getMno()));
+					b.setRound(findRound(b.getDrno()));
+					b.setCname(findCname(b.getCno()));
+					b.setNickname(findNickname(b.getMno()));
+					b.setName(findName(b.getMno()));
+					b.setThumbnail(findThumbnail(b.getBno()));
+					b.setAttach(findAttach(b.getBno()));
 				}
 			}
 			
@@ -182,8 +191,16 @@ public class BoardService {
 	// bno로 게시글 가져오기
 	public Board findByBno(Long bno) {
 		try(SqlSession session = MybatisUtil.getSqlSession()) {
-			BoardMapper mapper = session.getMapper(BoardMapper.class); 
-			return mapper.selectOne(bno);
+			BoardMapper mapper = session.getMapper(BoardMapper.class);
+
+			Board board = mapper.selectOne(bno);
+			board.setThumbnail(findThumbnail(bno));
+			board.setAttach(findAttach(bno));
+			if(board.getDrno() != null) {
+				board.setRound(findRound(bno));
+			}
+			
+			return board;
 		}
 		catch (Exception e){
 			e.printStackTrace();
@@ -193,12 +210,38 @@ public class BoardService {
 	
 	
 	// 썸네일 가져오기
-	public String findThumbnail(String content) {
-	    if (content == null) return null;
-	    String regex = "!\\[\\]\\((data:image\\/[^;]+;base64,[^)]+)\\)";
-	    Matcher matcher = Pattern.compile(regex).matcher(content);
-	    if (matcher.find()) return matcher.group(1);
-	    return null;
+	public String findThumbnail(Long bno) {
+		try(SqlSession session = MybatisUtil.getSqlSession()){
+			if (bno == null) return null;
+		    
+			AttachMapper mapper = session.getMapper(AttachMapper.class);
+		    String thumbnail = mapper.getBoardThumbnail(bno);
+			return thumbnail;
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	// 첨부파일 가져오기
+	public Attach findAttach(Long bno) {
+		try(SqlSession session = MybatisUtil.getSqlSession()){
+			if (bno == null) return null;
+			
+			AttachMapper mapper = session.getMapper(AttachMapper.class);
+			
+			Attach attach = null; 
+			if(mapper.selectOne(bno) != null) {
+				attach = mapper.selectOne(bno); 
+			}
+					
+			return attach;
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	
@@ -286,9 +329,10 @@ public class BoardService {
 		public Board findByDeadline() {
 			try(SqlSession session = MybatisUtil.getSqlSession()) {
 				BoardMapper mapper = session.getMapper(BoardMapper.class); 
+
 				Board board = mapper.selectOneDeadline();
 				board.setRound(findRound(board.getDrno()));
-				board.setThumbnail(findThumbnail(board.getContent()));
+				board.setThumbnail(findThumbnail(board.getBno()));
 				board.setName(findName(board.getMno()));
 				
 				return board;
@@ -307,7 +351,7 @@ public class BoardService {
 				for(Board b : newBoards) {
 					b.setRound(findRound(b.getDrno()));
 					b.setName(findName(b.getMno()));
-					b.setThumbnail(findThumbnail(b.getContent()));
+					b.setThumbnail(findThumbnail(b.getBno()));
 				}
 				
 				return newBoards;
