@@ -26,7 +26,7 @@ public interface PayMapper {
 	void updateLog(PayLog log);
 	
 	
-	List<PayLog> listLog(Long plno);
+	List<PayLog> listLog();
 	
 	PayLog selectOneLog(Long plno);
 }
