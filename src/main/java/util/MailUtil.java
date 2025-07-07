@@ -100,5 +100,9 @@ public class MailUtil {
                 throw new RuntimeException("메일 전송 실패: " + e.getMessage());
             }
         }
+        public static void main(String[] args) {
+            MailUtil.sendEmail("thdtjdwns@gmail.com", "테스트 제목", "테스트 본문<br>이건 HTML입니다.");
+        }
+
         
     }

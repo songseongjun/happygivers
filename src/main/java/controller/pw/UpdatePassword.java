@@ -33,20 +33,20 @@ public class UpdatePassword extends HttpServlet {
         String newPw = request.getParameter("newPw");
         String newPw2 = request.getParameter("newPw2");
 
-        // 현재 비밀번호 확인
+        //
         boolean pwMatch = PasswordEncoder.matches(currentPw, member.getPw());
 
-        // 새 비밀번호 확인 일치 여부 + 현재 비밀번호 맞는지 확인
+        // 
         if (!pwMatch || !newPw.equals(newPw2)) {
             response.sendRedirect(request.getContextPath() + "/mypage/updatepw?error=1");
             return;
         }
 
-        // 변경
+        // 
         MemberService service = new MemberService();
         service.updatePassword(member.getId(), newPw);
 
-        //성공 메시지
+        //
         response.sendRedirect(request.getContextPath() + "/mypage/updatepw?success=1");
     }
     }

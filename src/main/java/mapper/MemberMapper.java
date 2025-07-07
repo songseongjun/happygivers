@@ -14,7 +14,7 @@ public interface MemberMapper {
     // 2. 아이디로 회원 조회
     Member findById(String id);
 
-    // 3. 회원번호로 조회
+    // 3. 회원번호로 조회  /자동로그인
     Member findByMno(Long mno);
 
     // 4. 이메일과 이름으로 아이디 찾기
@@ -41,6 +41,7 @@ public interface MemberMapper {
 
     			//비밀번호 변경
     int updatePasswordByUuid(@Param("uuid") String uuid, @Param("pw") String pw);
+ 
 
 
 }

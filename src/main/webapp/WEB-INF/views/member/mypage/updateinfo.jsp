@@ -17,14 +17,28 @@
 				<div class="d-flex border rounded-3 list-group p-3 gap-3">
 					
 					<form action="${cp}/mypage/updateinfo" method="post" class="d-flex flex-column gap-3" id="updateinfo">
-    					<div class="form-floating">
-				            <input type="text" class="form-control" placeholder="이름" name="name" id="name" value="${member.name}">
-				            <label for="name">이름</label>
-			            </div>
-    					<div class="form-floating">
-				            <input type="text" class="form-control" placeholder="닉네임" name="nickname" id="nickname" value="${member.nickname}">
-				            <label for="nickname">닉네임</label>
-			            </div>
+					
+    					<!-- 일반회원일 경우 -->
+						<c:if test="${member.mtype != 'ORG'}">
+						  <div class="form-floating">
+						    <input type="text" class="form-control" placeholder="이름" name="name" id="name" value="${member.name}">
+						    <label for="name">이름</label>
+						  </div>
+						  <div class="form-floating">
+						    <input type="text" class="form-control" placeholder="닉네임" name="nickname" id="nickname" value="${member.nickname}">
+						    <label for="nickname">닉네임</label>
+						  </div>
+						</c:if>
+						
+						<!-- 기관회원일 경우 -->
+						<c:if test="${member.mtype == 'ORG'}">
+						  <div class="form-floating">
+						    <input type="text" class="form-control" placeholder="기관명" name="name" id="name" value="${member.name}">
+						    <label for="name">기관명</label>
+						  </div>
+						</c:if>
+            
+			            
     					<div class="form-floating">
 				            <input type="text" class="form-control" placeholder="전화번호" name="tel" id="tel" value="${member.tel}">
 				            <label for="tel">전화번호</label>

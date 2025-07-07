@@ -18,6 +18,8 @@ public class MypageController extends HttpServlet {
             return;
         }
         
+        req.setAttribute("cp", req.getContextPath());
+        
         // mypage.jsp로 이동
         req.setAttribute("member", member);
         req.getRequestDispatcher("/WEB-INF/views/member/realmypage.jsp").forward(req, resp);
