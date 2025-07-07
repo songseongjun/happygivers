@@ -85,6 +85,32 @@
         initialEditType: 'markdown',  // 'wysiwyg' 또는 'markdown'
         previewStyle: 'vertical',     // 'vertical' 또는 'tab'
         initialValue: content,
+        hooks: {
+      	  addImageBlobHook: (blob, callback) => {
+      	    const formData = new FormData();
+      	    formData.append('uploadFile', blob);
+
+      	    fetch(cp + '/upload', {
+      	      method: 'POST',
+      	      body: formData
+      	    })
+      	    .then(res => res.json())
+      	    .then(data => {
+      	      if (Array.isArray(data) && data.length > 0) {
+      	        const file = data[0];
+      	        console.log(file);
+      	        const imageUrl = cp + '/display?uuid=' + file.uuid + '&path=' + file.path;
+      	        callback(imageUrl, file.origin);
+      	      } else {
+      	        alert("이미지 업로드 실패");
+      	      }
+      	    })
+      	    .catch(err => {
+      	      console.error(err);
+      	      alert("이미지 업로드 오류 발생");
+      	    });
+      	  }
+      	}
       });
 
       flatpickr("#voiddate", {

@@ -95,14 +95,23 @@ public class BoardService {
 		SqlSession session = MybatisUtil.getSqlSession(false);
 		try{
 			BoardMapper mapper = session.getMapper(BoardMapper.class);
+			AttachMapper attachMapper = session.getMapper(AttachMapper.class);
 			if(board.getDrno() != null) {
 				DonateMapper donateMapper = session.getMapper(DonateMapper.class);
-				AttachMapper attachMapper = session.getMapper(AttachMapper.class);
 				DonateRound round = findRound(board.getDrno());
 				round.setStatus(board.getStatus());
 				donateMapper.updateRound(round);
-				attachMapper.update(board.getAttach());
+				
 			}
+			if(board.getAttach() != null) {
+				if(attachMapper.selectOne(board.getBno()) != null) {
+					attachMapper.update(board.getAttach());
+				}
+				else {
+					attachMapper.insert(board.getAttach());
+				}				
+			}
+				
 			mapper.update(board);
 			session.commit();
 		}
