@@ -4,29 +4,37 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 
 import domain.Member;
 import lombok.extern.slf4j.Slf4j;
-import service.MemberService;
 
 @WebServlet("/member/logout")
 @Slf4j
 public class Logout extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		HttpSession session = req.getSession(false); //현재세션가져오기
-		if(session !=null) {
+		HttpSession session = req.getSession(false); // 현재 세션 가져오기
+
+		if (session != null) {
+
+			//자동 로그인 쿠키 삭제
+			Cookie cookie = new Cookie("remember-me", null);
+			cookie.setMaxAge(0); // 쿠키 즉시 삭제
+			cookie.setPath("/");
+			resp.addCookie(cookie);
+
+			//DB에서 자동 로그인 토큰 삭제
+			Member member = (Member) session.getAttribute("member");
+			if (member != null) {
+//				new domain.dao.AutoLoginDAO().deleteToken(member.getMno());
+			}
+
+			//세션 무효화
 			session.invalidate();
 		}
-//		req.getSession().invalidate();
-		
-//		session.setAttribute("loginUser", member);//로그인한 사용자 객체 저장
-		resp.sendRedirect(req.getContextPath()+ "/index");
+
+		//메인 페이지로 리디렉션
+		resp.sendRedirect(req.getContextPath() + "/index");
 	}
-
-
 }

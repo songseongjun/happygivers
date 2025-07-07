@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import domain.Member;
-import domain.dao.AutoLoginDAO;
 import domain.dto.Criteria;
 import lombok.extern.slf4j.Slf4j;
 import service.MemberService;
@@ -59,16 +58,22 @@ public class Login extends HttpServlet {
 		            
 		            
 		            // 자동로그인기능임
-		            if ("yes".equals(req.getParameter("autologin"))) {
+		            if (req.getParameter("autologin") != null) {
 		                String token = UUID.randomUUID().toString();
-		                Cookie cookie = new Cookie("remember-me", token);
+		                
+		                LocalDateTime expireDate = LocalDateTime.now().plusDays(7);
+
+		                // 쿠키 생성
+		                Cookie cookie = new Cookie("autologin", token);
 		                cookie.setPath("/");
 		                cookie.setMaxAge(60 * 60 * 24 * 7);
-		                cookie.setHttpOnly(true);
 		                resp.addCookie(cookie);
 
-		                new AutoLoginDAO().saveToken(0, token, null);
+		                // DB 저장
+		               
+
 		            }
+
 
 		            if (!loginMember.isEmailcheck()) {
 		                AlertUtil.alert("이메일 미인증 상태입니다. 인증을 완료해주세요.", "/mypage", req, resp);
