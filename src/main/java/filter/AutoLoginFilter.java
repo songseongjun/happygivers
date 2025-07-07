@@ -23,19 +23,20 @@ public class AutoLoginFilter implements Filter {
 
         HttpSession session = req.getSession(false);
 
-        log.info("[AutoLoginFilter] 세션 상태: {}", (session == null ? "없음" : "존재")); 
+        log.info("[AutoLoginFilter] 세션 상태: {}", (session == null ? "없음" : "존재"));
 
+        // 이미 로그인된 상태면 필터 통과
         if (session != null && session.getAttribute("member") != null) {
-            log.info("[AutoLoginFilter] 이미 로그인된 상태입니다. 자동 로그인 생략"); 
+            log.info("[AutoLoginFilter] 이미 로그인된 상태입니다. 자동 로그인 생략");
             chain.doFilter(request, response);
             return;
         }
 
         Cookie[] cookies = req.getCookies();
         if (cookies != null) {
-            log.info("[AutoLoginFilter] 쿠키 검사 시작"); 
+            log.info("[AutoLoginFilter] 쿠키 검사 시작");
             for (Cookie c : cookies) {
-                log.info(" [AutoLoginFilter] 쿠키: {} = {}", c.getName(), c.getValue()); 
+                log.info("[AutoLoginFilter] 쿠키: {} = {}", c.getName(), c.getValue());
                 if ("autologin".equals(c.getName())) {
                     String token = c.getValue();
                     log.info("[AutoLoginFilter] autologin 토큰 발견: {}", token);
@@ -49,16 +50,16 @@ public class AutoLoginFilter implements Filter {
                             HttpSession newSession = req.getSession();
                             newSession.setAttribute("member", member);
                             newSession.setMaxInactiveInterval(60 * 60);
-                            log.info("[AutoLoginFilter] 자동 로그인 완료! 세션에 member 등록"); 
+                            log.info("[AutoLoginFilter] 자동 로그인 완료! 세션에 member 등록");
                         } else {
-                            log.warn("[AutoLoginFilter] 유효하지 않거나 만료된 토큰");  
+                            log.warn("[AutoLoginFilter] 유효하지 않거나 만료된 토큰");
                         }
                     }
                     break;
                 }
             }
         } else {
-            log.info("[AutoLoginFilter] 쿠키가 존재하지 않습니다."); 
+            log.info("[AutoLoginFilter] 쿠키가 존재하지 않습니다.");
         }
 
         chain.doFilter(request, response);
