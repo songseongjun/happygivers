@@ -29,15 +29,15 @@
 	          
 	          <c:forEach items="${feeds }" var="f">
 	          <div class="grid-item col-6 col-md-4 col-lg-3 mt-3">
-	            <div class="card" data-bs-toggle="modal" data-bs-target="#postModal1" style="cursor: pointer;">
-	              <div>
-	                <img src="${f.thumbnail != null ? cp.concat(f.thumbnail) : 'https://placehold.co/300x250?text=No+img' }" class="card-img-top" alt="img">
+	            <a href="#" class="card text-decoration-none" data-bs-toggle="modal" data-bs-target="#feedModal" data-bno="${f.bno}">
+	              <div class="overflow-hidden rounded-top-1">
+	                <img src="${f.thumbnail != null ? f.thumbnail : 'https://placehold.co/300x250?text=No+img' }" class="card-img-top img-zoom" alt="img">
 	              </div>
 	              <div class="card-body">
 	                <p class="card-text text-truncate fw-medium mb-2">${f.content }</p>
 	                <p class="card-text text-truncate text-muted my-0 small" data-regdate="${f.regdate }"></p>
 	              </div>
-	            </div>
+	            </a>
 	          </div>
 	          </c:forEach>
 	          

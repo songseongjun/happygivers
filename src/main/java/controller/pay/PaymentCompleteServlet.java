@@ -34,23 +34,13 @@ import domain.en.PayType;
 import lombok.extern.slf4j.Slf4j;
 import service.PayService;
 import util.JsonRespUtil;
+import util.PropsLoaderUtil;
 @Slf4j
 @WebServlet("/api/payment/complete")
 public class PaymentCompleteServlet extends HttpServlet{
 	private static final String API_SECRET;
 	static {
-	Properties props = new Properties();
-	
-	try(InputStream is = Thread.currentThread()
-			.getContextClassLoader()
-			.getResourceAsStream("secret/portone.properties")){
-		if(is == null) {
-			throw new FileNotFoundException("Cannot find portone.properties in classpath");
-			}
-			props.load(is);
-			} catch (IOException e) {
-			e.printStackTrace();
-			}
+	Properties props = PropsLoaderUtil.getProperties("secret/portone.properties");
 
 	 API_SECRET = props.getProperty("portone.secret");
 	 
