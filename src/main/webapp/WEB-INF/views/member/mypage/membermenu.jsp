@@ -7,7 +7,7 @@
                 <div class="border rounded-3">
                     <div class="p-4 d-flex align-items-center gap-3 border-bottom">
                         <div class="overflow-hidden rounded-circle" style="width: 64px; height: 64px; border: 2px solid var(--border-1);">
-                            <img src="${member.profile}" class="object-fit-cover" alt="프로필사진" style="width: 64px; height: 64px;">
+                            <img src="${member.profile}" class="object-fit-cover" alt="프로필사진" style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block;">
                         </div>
                         <p class="fw-semibold fs-6 mb-0 flex-grow-1 text-truncate" style="color: var(--col-4);"><span style="color: var(--col-6);">${member.name }</span> 님</p>
                         

@@ -98,6 +98,15 @@
 		SET m.pw = #{pw}
 		WHERE e.uuid = #{uuid}
 	</update>
+	
+			<!-- 프로필 이미지 경로 업데이트 -->
+	<update id="updateProfileImage" parameterType="domain.Member">
+    UPDATE tbl_member
+    SET profile = #{profile}
+    WHERE mno = #{mno}
+	</update>
+
+			
   
 
 </mapper>

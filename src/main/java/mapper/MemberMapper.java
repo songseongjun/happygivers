@@ -41,6 +41,12 @@ public interface MemberMapper {
 
     			//비밀번호 변경
     int updatePasswordByUuid(@Param("uuid") String uuid, @Param("pw") String pw);
+    
+    //프로필사진 업데이트
+    void updateProfileImage(Member member); 
+
+    
+
  
 
 

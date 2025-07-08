@@ -2,14 +2,24 @@ package controller.member;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
+import org.apache.ibatis.session.SqlSession;
+import mapper.MemberMapper;
 import domain.Member;
+import util.MybatisUtil;
+
 
 @WebServlet("/mypage/editprofile")
 @MultipartConfig(
@@ -25,29 +35,37 @@ public class MypageEditProfile extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    	  Part filePart = req.getPart("profileImage");
-          String fileName = filePart.getSubmittedFileName();
+    	 Part filePart = req.getPart("profileImage");
+    	    String fileName = filePart.getSubmittedFileName();
 
-          if (fileName != null && !fileName.isEmpty()) {
-              //경로변환 (webapp/upload 폴더)
-              String realPath = req.getServletContext().getRealPath("/upload");
-              File uploadDir = new File(realPath);
-              if (!uploadDir.exists()) uploadDir.mkdirs();
+    	    if (fileName != null && !fileName.isEmpty()) {
+    	        String uploadPath = req.getServletContext().getRealPath("/upload");
+    	        File uploadDir = new File(uploadPath);
+    	        if (!uploadDir.exists()) uploadDir.mkdirs();
+    	        
+    	        		//중복되지않는파일만들기위해
+    	        String uuid = UUID.randomUUID().toString();
+    	        String saveName = uuid + "_" + fileName;
+    	        filePart.write(uploadPath + File.separator + saveName);
 
-              String saveName = UUID.randomUUID() + "_" + fileName;
-              filePart.write(realPath + File.separator + saveName);
+    	        String webPath = req.getContextPath() + "/upload/" + saveName;
 
-              //웹 브라우저에서 접근 가능한 경로
-              String webPath = req.getContextPath() + "/upload/" + saveName;
+    	        HttpSession session = req.getSession();
+    	        Member member = (Member) session.getAttribute("member");
 
-              HttpSession session = req.getSession();
-              Member member = (Member) session.getAttribute("member");
-              if (member != null) {
-                  member.setProfile(webPath);
-                  session.setAttribute("member", member);
-              }
-          }
+    	        if (member != null) {
+    	            member.setProfile(webPath);  // 세팅
 
-          resp.sendRedirect(req.getContextPath() + "/mypage/editprofile");
-      }
-  }
+    	            SqlSession sqlSession = MybatisUtil.getSqlSession();
+    	            MemberMapper mapper = sqlSession.getMapper(MemberMapper.class);
+    	            mapper.updateProfileImage(member);
+    	            sqlSession.commit();
+    	            sqlSession.close();
+
+    	            session.setAttribute("member", member); // 세션 갱신
+    	        }
+    	    }
+
+    	    resp.sendRedirect(req.getContextPath() + "/mypage/editprofile");
+    	}
+}

@@ -7,6 +7,7 @@
 </head>
 <body>
 <%@ include file="../../common/header.jsp" %>
+
 <div class="container px-0">
     <main class="row justify-content-between mx-0">
         <div class="col-lg-8 px-0" style="max-width: 700px;">
@@ -16,7 +17,7 @@
                 <div class="mb-3">
                     <label class="form-label">현재 프로필 사진</label><br/>
                     <img src="${member.profile}" alt="현재 프로필" style="width:100px;height:100px;border-radius:50%;border:1px solid var(--border-1);">
-                </div>s
+                </div>
 
                 <div class="mb-3">
                     <label for="profileImage" class="form-label">새 프로필 사진 선택</label>
@@ -32,9 +33,20 @@
 </div>
 
 <script>
-
+  // 이미지 미리보기
+  document.getElementById("profileImage").addEventListener("change", function(e) {
+    const preview = document.querySelector("img[alt='현재 프로필']");
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        preview.src = evt.target.result;
+      }
+      reader.readAsDataURL(file);
+    }
+  });
 </script>
+
 <%@ include file="../../common/footer.jsp" %>
 </body>
-         
 </html>
