@@ -30,10 +30,10 @@
             <!-- 댓글 -->
             <div class="mb-3">
               <ul class="d-flex flex-column gap-2 m-0 p-0" id="replys" style="max-height: 200px; overflow-y: auto;">
-                  <li class="small m-0 d-flex justify-content-between" data-rno="\${r.rno}">
-                    <div><strong class="me-2">\${r.nickname}</strong> \${r.content}</div>
+                  <li class="small m-0 d-flex justify-content-between reply" data-rno="\${r.rno}">
+                    <div class="d-flex gap-2 content-wrap"><strong>\${r.nickname}</strong> <p class="m-0 reply-content">\${r.content}</p></div>
                     <div class="dropdown float-end">
-                      <label class="d-block dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis-vertical small text-muted" style="width: 20px; height: 20px;" ></i>
+                      <label class="d-block" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis-vertical small text-muted" style="width: 20px; height: 20px;" ></i>
                       </label>
                       <ul class="dropdown-menu dropdown-menu-end">
                         <li><a class="dropdown-item btn-edit" href="#">수정</a></li>
@@ -60,7 +60,7 @@
     </div>
   </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <script>
   $("#masonry-container").on("click", ".card", function(){
@@ -79,17 +79,17 @@
         let replyStr = "";
         
         for(let r of data.replys){
-          replyStr += `<li class="small m-0 d-flex justify-content-between" data-rno="\${r.rno}">
-                    <div><strong class="me-2">\${r.nickname}</strong> \${r.content}</div>
-                    <div class="dropdown">
-                      <label class="d-block" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis-vertical small text-muted" style="width: 20px; height: 20px;" ></i>
-                      </label>
-                      <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item btn-edit" href="#">수정</a></li>
-                        <li><a class="dropdown-item btn-delete" href="#">삭제</a></li>
-                      </ul>
-                    </div>
-                  </li>`;
+          replyStr += `<li class="small m-0 d-flex justify-content-between reply" data-rno="\${r.rno}">
+              <div class="d-flex gap-2 content-wrap"><strong>\${r.nickname}</strong> <p class="reply-content m-0">\${r.content}</p></div>
+              <div class="dropdown float-end">
+                <label class="d-block" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis-vertical small text-muted" style="width: 20px; height: 20px;" ></i>
+                </label>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li><a class="dropdown-item btn-edit" href="#">수정</a></li>
+                  <li><a class="dropdown-item btn-delete" href="#">삭제</a></li>
+                </ul>
+              </div>
+            </li>`;
         }
 
         
@@ -118,17 +118,17 @@
 
     
     function makeReplyLi(r) {
-      return `<li class="small m-0 d-flex justify-content-between" data-rno="\${r.rno}">
-                    <div><strong class="me-2">\${r.nickname}</strong> \${r.content}</div>
-                    <div class="dropdown">
-                      <label class="d-block" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis-vertical small text-muted" style="width: 20px; height: 20px;" ></i>
-                      </label>
-                      <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item btn-edit" href="#">수정</a></li>
-                        <li><a class="dropdown-item btn-delete" href="#">삭제</a></li>
-                      </ul>
-                    </div>
-                  </li>`;
+      return `<li class="small m-0 d-flex justify-content-between reply" data-rno="\${r.rno}">
+		      <div class="d-flex gap-2 content-wrap"><strong>\${r.nickname}</strong> <p class="reply-content m-0">\${r.content}</p></div>
+		      <div class="dropdown float-end">
+		        <label class="d-block" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis-vertical small text-muted" style="width: 20px; height: 20px;" ></i>
+		        </label>
+		        <ul class="dropdown-menu dropdown-menu-end">
+		          <li><a class="dropdown-item btn-edit" href="#">수정</a></li>
+		          <li><a class="dropdown-item btn-delete" href="#">삭제</a></li>
+		        </ul>
+		      </div>
+		    </li>`;
     }
     
     function list(bno, lastRno) {
@@ -243,12 +243,12 @@
         console.log("글수정 전송");
     })
 
-    // 글 삭제 버튼 이벤트 btn-remove-submit
-    $(".reviews").on("click",".btn-remove-submit",function() {
+    // 글 삭제 버튼 이벤트 btn-delete
+    $("#feedModal").on("click",".btn-delete",function() {
         const result = confirm("삭제하시겠습니까?");
         if(!result) return;
         
-        const $li = $(this).closest("li");
+        const $li = $(this).closest(".reply");
         const rno = $li.data("rno");
         console.log("글 삭제 전송");
         $.ajax({
@@ -279,22 +279,17 @@
     });
 
 
-    $("#replys").on('click', '.btn-edit', function(e) {
+    $("#feedModal").on('click', '.btn-edit', function(e) {
       e.preventDefault();
+	
+      const li = $(this).closest('.reply');
+      const rno = li.data('rno');
+      const content = li.find('.reply-content').text().trim();
 
-      const $li = $(this).closest('li');
-      const rno = $li.data('rno');
-      const content = $li.find('.reply-content').text().trim();
-
-      // 기존 내용 백업
-      $li.data('original', content);
-
-      // 수정폼으로 교체
-      $li.find('.content-wrap').html(`
-        <strong class="me-2">${$li.find('strong').text()}</strong>
-        <input type="text" class="form-control d-inline-block w-75 me-2 edit-input" value="${content}">
-        <button class="btn btn-sm btn-primary btn-confirm-edit me-1">수정</button>
-        <button class="btn btn-sm btn-secondary btn-cancel-edit">취소</button>
-      `);
+      console.log(li);
+      console.log(rno);
+      console.log(content);
+	
+     
     });
 </script>
