@@ -57,7 +57,7 @@
  	<!-- 게시판 썸네일 이미지 -->
 	<select id="getBoardThumbnail" resultType="string">
 	<![CDATA[
-		select concat("/display?uuid=", uuid, "&path=", path) 
+		select concat("https://happygivers-bucket.s3.ap-northeast-2.amazonaws.com/upload/", path, "/", uuid) 
 		from tbl_attach 
 		where bno = #{bno}
   	]]>

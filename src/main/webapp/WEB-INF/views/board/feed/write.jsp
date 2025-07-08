@@ -124,7 +124,7 @@ $('#uploadThumbnailBtn').on('click', function () {
 			success : function(data) {
 				if(Array.isArray(data) && data.length > 0){
 					const a = data[0];
-					const imageUrl = cp + '/display?uuid=' + a.uuid + '&path=' + a.path;
+					const imageUrl = 'https://happygivers-bucket.s3.ap-northeast-2.amazonaws.com/upload/' + a.path + '/' +  a.uuid;
 					if(a.image){
 						$('#thumbnailName').val(a.origin);
 						$('#uuid').val(a.uuid);

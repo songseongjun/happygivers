@@ -71,7 +71,7 @@
                      <div class="col">
 		                <a href="${cp}/board/view?bno=${b.bno}" class="card post-card h-100 border-0 text-decoration-none">
 		                	<div class="overflow-hidden rounded-3">
-		                    	<img src="${b.thumbnail != null ? cp.concat(b.thumbnail) : 'https://placehold.co/300x250?text=No+img' }" class="card-img-top img-zoom" alt="Post Image">
+		                    	<img src="${b.thumbnail != null ? b.thumbnail : 'https://placehold.co/300x250?text=No+img' }" class="card-img-top img-zoom " alt="Post Image">
 		                	</div>
 		                    <div class="card-body d-flex flex-column px-0 pt-2">
 		                        <p class="post-title my-2 fw-medium fs-6" style="color: var(--col-6);">${b.title }</p>

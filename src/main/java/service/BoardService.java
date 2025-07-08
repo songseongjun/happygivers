@@ -205,6 +205,8 @@ public class BoardService {
 			Board board = mapper.selectOne(bno);
 			board.setThumbnail(findThumbnail(bno));
 			board.setAttach(findAttach(bno));
+			board.setNickname(findNickname(board.getMno()));
+			board.setName(findName(board.getMno()));
 			if(board.getDrno() != null) {
 				board.setRound(findRound(bno));
 			}

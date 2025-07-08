@@ -71,8 +71,11 @@ public class ReplyServlet extends HttpServlet{
 		req.setCharacterEncoding("utf-8");
 		
 		Reply reply = JsonRespUtil.readJson(req, Reply.class);
-		new ReplyService().register(reply);
-		JsonRespUtil.writeJson(resp, Map.of("result", true, "reply", reply));
+		ReplyService service = new ReplyService();
+		service.register(reply);
+		Reply resultReply = service.findBy(reply.getRno()); 
+		
+		JsonRespUtil.writeJson(resp, Map.of("result", true, "reply", resultReply));
 		
 	}
 
