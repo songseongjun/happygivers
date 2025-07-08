@@ -27,7 +27,7 @@
 
 /* 전체 적용 */
 * {font-family: 'SUIT Variable'; list-style: none; text-decoration: none; color: var(--col-6); letter-spacing: -0.03em;}
-.container {max-width: 1120px;}
+.container {max-width: 1120px !important;}
 main{min-height: calc(100vh - 200px); padding: 120px 0;}
 
 /* 헤더 네비 */
@@ -76,6 +76,14 @@ nav a:hover {color: var(--col-main);}
   object-fit : cover;
 }
 a:hover .img-zoom {
+  transform: scale(1.05);
+}   
+
+.img-zoomin {
+  transition: transform 0.3s ease;
+  object-fit : cover;
+}
+a:hover .img-zoomin {
   transform: scale(1.05);
 }   
         
