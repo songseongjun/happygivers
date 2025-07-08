@@ -15,9 +15,9 @@ public class UpdateProfileController extends HttpServlet {
     	req.getRequestDispatcher("/WEB-INF/views/member/mypage/updateinfo.jsp").forward(req, resp);
 	}
 
-	@Override
+	@Override         //회원정보 수정 기능
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {
-        // 1. 파라미터 가져오기
+        //  파라미터 가져오기
     	String name = req.getParameter("name");
         String nickname = req.getParameter("nickname");
         String tel = req.getParameter("tel");
@@ -26,19 +26,19 @@ public class UpdateProfileController extends HttpServlet {
         HttpSession session = req.getSession();
         Member member = (Member) session.getAttribute("member");
 
-        // 2. 정보 설정
+        // 정보 설정
         member.setName(name);
         member.setNickname(nickname);
         member.setTel(tel);
         member.setLocation(location);
 
-        // 3. DB 업데이트
+        //  DB 업데이트
         new MemberService().updateProfile(member);
 
-        // 4. 세션 갱신
+        //  세션 갱신
         session.setAttribute("member", member);
 
-        // 5. 리다이렉트
+        //  리다이렉트
         resp.sendRedirect(req.getContextPath() + "/mypage");
     }
 }

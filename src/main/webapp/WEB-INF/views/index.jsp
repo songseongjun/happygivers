@@ -178,7 +178,17 @@
                 <div class="border rounded-3">
                     <div class="p-4 d-flex align-items-center gap-3 border-bottom">
                         <div class="overflow-hidden rounded-circle" style="width: 64px; height: 64px; border: 2px solid var(--border-1);">
-                            <img src="${cp }/img/img1.png" class="object-fit-cover" alt="프로필사진" style="width: 64px; height: 64px;">
+                        
+                        <!-- 프로필자동값부여 있으면 그이미지로 없으면 기본이미지 -->
+                          <c:choose>
+							  <c:when test="${not empty member.profile}">
+							    <img src="${member.profile}" class="object-fit-cover" alt="프로필사진" style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block;;">
+							  </c:when>
+							  <c:otherwise>
+							    <img src="${cp}/img/default-profile.png" class="object-fit-cover" alt="기본프로필" style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block;">
+							  </c:otherwise>
+							</c:choose>
+
                         </div>
                         <p class="fw-semibold fs-6 mb-0 flex-grow-1 text-truncate" style="color: var(--col-4);"><span style="color: var(--col-6);">${member.name }</span> 님</p>
                         
@@ -189,7 +199,7 @@
                     </div>
                     <div class="p-3" style="background-color: var(--col-1);">
                         <div class="d-flex justify-content-around">
-                            <a href="${cp}/mypage/profile" class="text-decoration-none fw-medium small" style="color: var(--col-5);">프로필 수정</a>
+                            <a href="${cp}/mypage/editprofile" class="text-decoration-none fw-medium small" style="color: var(--col-5);">프로필 수정</a>
                              <a href="${cp}/mypage"class="text-decoration-none fw-medium small"style="color: var(--col-5);">마이페이지</a>
                         </div>
                     </div>

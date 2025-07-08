@@ -21,7 +21,7 @@ public class ResetMailSendController extends HttpServlet {
 	
 	}
 
-	@Override
+	@Override           //이메일 아이디 받아서 비밀번호찾기
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {
 		
 		   req.setCharacterEncoding("UTF-8");
