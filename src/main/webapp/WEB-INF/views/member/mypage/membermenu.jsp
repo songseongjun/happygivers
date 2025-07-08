@@ -7,7 +7,7 @@
                 <div class="border rounded-3">
                     <div class="p-4 d-flex align-items-center gap-3 border-bottom">
                         <div class="overflow-hidden rounded-circle" style="width: 64px; height: 64px; border: 2px solid var(--border-1);">
-                            <img src="${cp }/img/img1.png" class="object-fit-cover" alt="프로필사진" style="width: 64px; height: 64px;">
+                            <img src="${member.profile}" class="object-fit-cover" alt="프로필사진" style="width: 64px; height: 64px;">
                         </div>
                         <p class="fw-semibold fs-6 mb-0 flex-grow-1 text-truncate" style="color: var(--col-4);"><span style="color: var(--col-6);">${member.name }</span> 님</p>
                         
@@ -24,7 +24,7 @@
 	                    </c:if>
                     	<c:if test="${member.emailcheck == false}">
 	                        <span class=" small p-4" style="white-space: nowrap;">
-	                            <a href="${cp }/mypage/profile" class="text-danger"><i class="fa-solid fa-triangle-exclamation" style="color: orange;"></i> 이메일 인증이 필요합니다.</a>
+	                            <a href="${cp}/mypage/email-verify" class="text-danger"><i class="fa-solid fa-triangle-exclamation" style="color: orange;"></i> 이메일 인증이 필요합니다.</a>
 	                        </span>
 	                    </c:if>
                     </div>
@@ -37,7 +37,7 @@
                             <p class="fs-5 fw-semibold m-0" style="color: var(--col-6);">회원</p>
                         </div>
                         <ul class="p-0 d-flex flex-column mt-2 mb-0">
-                            <li><a href="${cp}/mypage/profile" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">프로필 수정</a></li>
+                            <li><a href="${cp}/mypage/editprofile"class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">프로필 수정</a></li>
                          <li>
 							 <a href="${cp}/mypage/updateinfo"
 								 class="text-decoration-none text-truncate py-2 d-block"

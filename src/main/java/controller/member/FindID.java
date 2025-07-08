@@ -20,7 +20,7 @@ public class FindID extends HttpServlet {
 	    req.getRequestDispatcher("/WEB-INF/views/member/findId.jsp").forward(req, resp);
 	}
 
-	@Override
+	@Override    //아이디찾기
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String email = req.getParameter("email");
 		String name = req.getParameter("name");
