@@ -102,7 +102,7 @@
                                 <p class="text-white m-2"><fmt:formatNumber value="${deadlineBoard.round.goalamount - deadlineBoard.round.nowamount }" /><span class="ms-2" style="color: var(--col-2);">원</span></p>
                             </div>
                             <div>
-                                <img src="${deadlineBoard.thumbnail != null ? cp.concat(deadlineBoard.thumbnail) : 'https://placehold.co/300x250?text=No+img' }" class="rounded-bottom-3" alt="img1" style="width: 280px; height:128px; object-fit: cover;  ">
+                                <img src="${deadlineBoard.thumbnail != null ? deadlineBoard.thumbnail : 'https://placehold.co/300x250?text=No+img' }" class="rounded-bottom-3" alt="img1" style="width: 280px; height:128px; object-fit: cover;  ">
                             </div>
                         </div>
                         <div class="d-flex flex-column justify-content-between ms-4 flex-grow-1">
@@ -135,7 +135,7 @@
                         <li style="width: 31%;">
                             <a href="${cp }/board/view?bno=${b.bno}" class="text-decoration-none">
                                 <div class="card-body">
-                                    <img src="${b.thumbnail == null ? 'https://placehold.co/200x150?text=No+img' : cp.concat(b.thumbnail)}" class="rounded-3" alt="이미지1" style="width:200px; height:140px; object-fit: cover;">
+                                    <img src="${b.thumbnail == null ? 'https://placehold.co/200x150?text=No+img' : b.thumbnail}" class="rounded-3" alt="이미지1" style="width:200px; height:140px; object-fit: cover;">
                                     <p class="post-title my-2 fw-medium fs-6" style="color: var(--col-6);">${b.title }</p>
                                     <p class="post-meta mb-2 small" style="color: var(--col-3);">${b.name }</p>
                                     <div class="progress my-2" style="height: 3px;">
@@ -185,7 +185,7 @@
 							    <img src="${member.profile}" class="object-fit-cover" alt="프로필사진" style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block;;">
 							  </c:when>
 							  <c:otherwise>
-							    <img src="${cp}/img/default-profile.png" class="object-fit-cover" alt="기본프로필" style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block;">
+							    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQm38aJRuNJH9z0qvbVUWR9rDQ2N7DoUWDXSA&s" class="object-fit-cover" alt="기본프로필" style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block;">
 							  </c:otherwise>
 							</c:choose>
 
