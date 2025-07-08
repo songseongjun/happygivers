@@ -26,24 +26,24 @@
 
             <!-- 게시글 내용 -->
             <div id="viewer" class="flex-grow-1 mb-3"></div>
-
+            
             <!-- 댓글 -->
             <div class="mb-3">
-              <ul class="d-flex flex-column gap-2 m-0 p-0" id="replys" style="max-height: 200px; overflow-y: auto;">
-                  <li class="small m-0 d-flex justify-content-between reply" data-rno="\${r.rno}">
-                    <div class="d-flex gap-2 content-wrap"><strong>\${r.nickname}</strong> <p class="m-0 reply-content">\${r.content}</p></div>
-                    <div class="dropdown float-end">
-                      <label class="d-block" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis-vertical small text-muted" style="width: 20px; height: 20px;" ></i>
-                      </label>
-                      <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item btn-edit" href="#">수정</a></li>
-                        <li><a class="dropdown-item btn-delete" href="#">삭제</a></li>
-                      </ul>
-                    </div>
-                  </li>
+              <ul class="d-flex flex-column gap-1 m-0 p-0 pb-2" id="replys" style="max-height: 300px; overflow-y: auto;">
+                  <li class="small m-0 d-flex justify-content-between reply align-items-center" data-rno="\${r.rno}" data-mno="\${r.mno}">
+				      <div class="d-flex gap-2 content-wrap align-items-center flex-grow-1"><strong>\${r.nickname}</strong> <div class="m-0 reply-content w-75 d-flex align-items-center">\${r.content}</div></div>
+				      <div class="dropdown float-end">
+				        <button class="d-block btn btn-outline-light btn-sm" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis-vertical small text-muted" style="width: 20px; height: 20px;" ></i>
+				        </button>
+				        <ul class="dropdown-menu dropdown-menu-end">
+				          <li><a class="dropdown-item btn-edit" href="#">수정</a></li>
+				          <li><a class="dropdown-item btn-delete" href="#">삭제</a></li>
+				        </ul>
+				      </div>
+				    </li>
               </ul>
             </div>
-
+                
             <!-- 입력 -->
              <c:if test="${not empty member}">
             <form class="d-flex border-top pt-2">
@@ -60,13 +60,14 @@
     </div>
   </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <script>
   $("#masonry-container").on("click", ".card", function(){
     event.preventDefault();
     const bno = $(this).data("bno");
     const cp = '${pageContext.request.contextPath}';
+    const loginUserMno = ${member.mno != null ? member.mno : 'null'};
     $.ajax({
       url: cp + '/api/feed/view?bno=' + bno,
       method: "GET",
@@ -79,17 +80,22 @@
         let replyStr = "";
         
         for(let r of data.replys){
-          replyStr += `<li class="small m-0 d-flex justify-content-between reply" data-rno="\${r.rno}">
-              <div class="d-flex gap-2 content-wrap"><strong>\${r.nickname}</strong> <p class="reply-content m-0">\${r.content}</p></div>
-              <div class="dropdown float-end">
-                <label class="d-block" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis-vertical small text-muted" style="width: 20px; height: 20px;" ></i>
-                </label>
-                <ul class="dropdown-menu dropdown-menu-end">
-                  <li><a class="dropdown-item btn-edit" href="#">수정</a></li>
-                  <li><a class="dropdown-item btn-delete" href="#">삭제</a></li>
-                </ul>
-              </div>
-            </li>`;
+       		const isOwner = loginUserMno === r.mno;
+       		console.log(isOwner);
+          replyStr += `<li class="small m-0 d-flex justify-content-between reply align-items-center" style="height: 35px;" data-rno="\${r.rno}" data-mno="\${r.mno}">
+		      <div class="d-flex gap-2 content-wrap align-items-center flex-grow-1"><strong>\${r.nickname}</strong> <div class="m-0 reply-content w-75 d-flex align-items-center">\${r.content}</div></div>
+		      <div class="dropdown float-end">
+		      \${isOwner ? `
+		        <button class="d-block btn btn-outline-light btn-sm" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis-vertical small text-muted" style="width: 20px; height: 20px;" ></i>
+		        </button>
+		        <ul class="dropdown-menu dropdown-menu-end">
+		          <li><a class="dropdown-item btn-edit" href="#">수정</a></li>
+		          <li><a class="dropdown-item btn-delete" href="#">삭제</a></li>
+		        </ul>
+		        ` : ''
+                }
+		      </div>
+		    </li>`;
         }
 
         
@@ -118,11 +124,11 @@
 
     
     function makeReplyLi(r) {
-      return `<li class="small m-0 d-flex justify-content-between reply" data-rno="\${r.rno}">
-		      <div class="d-flex gap-2 content-wrap"><strong>\${r.nickname}</strong> <p class="reply-content m-0">\${r.content}</p></div>
+      return `<li class="small m-0 d-flex justify-content-between reply align-items-center" style="height: 35px;" data-rno="\${r.rno}" data-mno="\${r.mno}">
+		      <div class="d-flex gap-2 content-wrap align-items-center flex-grow-1"><strong>\${r.nickname}</strong> <div class="m-0 reply-content w-75 d-flex align-items-center">\${r.content}</div></div>
 		      <div class="dropdown float-end">
-		        <label class="d-block" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis-vertical small text-muted" style="width: 20px; height: 20px;" ></i>
-		        </label>
+		        <button class="d-block btn btn-outline-light btn-sm" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis-vertical small text-muted" style="width: 20px; height: 20px;" ></i>
+		        </button>
 		        <ul class="dropdown-menu dropdown-menu-end">
 		          <li><a class="dropdown-item btn-edit" href="#">수정</a></li>
 		          <li><a class="dropdown-item btn-delete" href="#">삭제</a></li>
@@ -190,29 +196,19 @@
         })
     })
     
-    // 글수정 폼 활성화 btn-modify-form
-    $(".reviews").on("click",".btn-modify-form",function() {
-        console.log("글수정 폼");
-        const rno = $(this).closest("li").data("rno");
-        $.getJSON(url + rno, function(data){
-            $("#reviewModal .modal-footer button").show().eq(0).hide();
-            $("#content").val(data.content);
-            $("#writer").val(data.mno);
-            $("#reviewModal").data("rno", rno);
-            console.log(data);
-            modal.show();
-        })
-    })
 
     // 글 수정 버튼 이벤트 btn-modify-submit
-    $(".btn-modify-submit").click(function() {
+    $("#feedModal").on("click", ".btn-modify-submit", function() {
         const result = confirm("수정하시겠습니까?");
         if(!result) return;
         
-        const rno = $("#reviewModal").data("rno");
+        const li = $(this).closest('.reply');
+        const rno = li.data('rno');
+        const target = li.find('.reply-content').find("input");
+        
         console.log(rno);
         
-        const content = $("#content").val().trim();
+        const content = $(target).val().trim();
         const mno = $("#writer").val().trim();
     
         
@@ -224,17 +220,17 @@
             data : JSON.stringify(obj),
             success : function(data) {
                 if(data.result){
-                    modal.hide();
                     // 재호출 (get)
                     $.getJSON(url + rno, function(data){
                       console.log(data);
                       // 문자열 생성
                       const strLi = makeReplyLi(data);
                       // rno를 가지고 수정할 li를 탐색
-                      const $li = $(`.reviews li[data-rno=\${rno}]`);
-                      console.log($li.html());
+                      
+                      const li = $(`#replys li[data-rno=\${data.rno}]`);
+                      
                       // replaceWith 내용교체
-                      $li.replaceWith(strLi);
+                      li.replaceWith(strLi);
                     })
                 }
             }
@@ -265,7 +261,7 @@
     // 댓글 더보기 버튼 이벤트
     $(".btn-reply-more").click(_ => {
       // 현재 댓글 목록 중 마지막 댓글 번호를 가져오기
-      const lastRno = $("#reviews p:last").data("rno");
+      const lastRno = $("#reviews div:last").data("rno");
       console.log(lastRno);
       
       list(bno, lastRno);
@@ -278,18 +274,35 @@
       document.activeElement.blur(); // 포커스 날려서 경고 제거
     });
 
+    
+    const dropdownElements = document.querySelectorAll('#replys [data-bs-toggle="dropdown"]');
+    dropdownElements.forEach(el => new bootstrap.Dropdown(el));
 
     $("#feedModal").on('click', '.btn-edit', function(e) {
       e.preventDefault();
 	
       const li = $(this).closest('.reply');
       const rno = li.data('rno');
-      const content = li.find('.reply-content').text().trim();
+      const target = li.find('.reply-content');
+      const content = target.text().trim();
+      target.data("original", content);
+
 
       console.log(li);
       console.log(rno);
       console.log(content);
-	
-     
+      let modifyStr = `<div class="input-group">
+    	  <input type="text" class="form-control modifyReply" value="\${content}">
+    	  <button class="btn btn-secondary btn-modify-submit" type="button">수정</button>
+    	  <button class="btn btn-outline-secondary cancleBtn" type="button">취소</button>
+    	</div>`;
+      $(target).html(modifyStr);
     });
+    
+    $("#feedModal").on("click", ".cancleBtn", function(){
+      const target = $(this).closest('.reply-content')
+      const original = target.data("original");
+      target.html(original);
+    })
+     
 </script>
