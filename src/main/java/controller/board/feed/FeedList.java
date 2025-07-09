@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import domain.Board;
 import domain.dto.Criteria;
+import domain.dto.PageDto;
 import domain.en.Ctype;
 import domain.en.Status;
 import lombok.extern.slf4j.Slf4j;
@@ -31,13 +32,11 @@ public class FeedList extends HttpServlet{
 		cri.setStatus(Status.ACTIVE);
 		cri.setCtype(Ctype.FEED);
 		List<Board> feeds = boardService.list(cri);
-		for(Board f : feeds) {
-			String content = f.getContent();
-			f.setThumbnail(boardService.findThumbnail(f.getBno()));
-			log.info("{}", f);
-		}
-		
+
+		req.setAttribute("pageDto", new PageDto(cri, boardService.getCount(cri)));
 		req.setAttribute("feeds", feeds);
+		log.info("{}", cri);
+		log.info("{}", req.getAttribute("pageDto"));
 		req.getRequestDispatcher("/WEB-INF/views/board/feed/list.jsp").forward(req, resp);
 	}
 	

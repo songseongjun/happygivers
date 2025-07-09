@@ -20,6 +20,8 @@ import domain.Donate;
 import domain.DonateRound;
 import domain.Member;
 import domain.dto.Criteria;
+import domain.dto.PageDto;
+import domain.en.Ctype;
 import domain.en.Mtype;
 import domain.en.Status;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +32,7 @@ import util.ParamUtil;
 
 
 @Slf4j
-@WebServlet("/board/write")
+@WebServlet(urlPatterns = {"/board/write", "/notice/write", "/qna/write"})
 public class Write extends HttpServlet{
 	
 	@Override
@@ -39,11 +41,37 @@ public class Write extends HttpServlet{
 		HttpSession session = req.getSession();
 		Member member = (Member) session.getAttribute("member");
 
-		if(member == null || !(member.getStatus().equals(Status.ACTIVE) && member.getMtype().equals(Mtype.ORG) || member.getMtype().equals(Mtype.ADMIN))) {
-			AlertUtil.alert("접근 권한이 없습니다.", "/board/list", req, resp);
+		String path = req.getServletPath();
+		Criteria cri = ParamUtil.get(req, Criteria.class);
+		if (cri == null) {
+			cri = new Criteria();
 		}
-		
-		
+
+		// 기부 게시글 작성
+		if ("/board/write".equals(path)) {
+			if(member == null || !(member.getStatus().equals(Status.ACTIVE) && member.getMtype().equals(Mtype.ORG) || member.getMtype().equals(Mtype.ADMIN))) {
+				AlertUtil.alert("접근 권한이 없습니다.", "/board/list", req, resp);
+			}
+			cri.setCtype(Ctype.DONATE);
+		}
+
+		// 공지 게시글 작성
+		else if ("/notice/write".equals(path)) {
+			if(member == null || !(member.getStatus().equals(Status.ACTIVE) && member.getMtype().equals(Mtype.MANAGER) || member.getMtype().equals(Mtype.ADMIN))) {
+				AlertUtil.alert("접근 권한이 없습니다.", "/notice/list", req, resp);
+			}
+			cri.setCtype(Ctype.NOTICE);
+		}
+
+		// QNA 게시글 작성
+		else if ("/qna/write".equals(path)) {
+			if(member == null || !(member.getStatus().equals(Status.ACTIVE) && member.getMtype().equals(Mtype.MANAGER) || member.getMtype().equals(Mtype.ADMIN))) {
+				AlertUtil.alert("접근 권한이 없습니다.", "/qna/list", req, resp);
+			}
+			cri.setCtype(Ctype.QNA);
+		}
+
+		req.setAttribute("cri", cri);
 		req.getRequestDispatcher("/WEB-INF/views/board/write.jsp").forward(req, resp);
 	}
 	
@@ -52,20 +80,39 @@ public class Write extends HttpServlet{
 		// 권한 확인		
 		HttpSession session = req.getSession();
 		Member member = (Member) session.getAttribute("member");
-
-		if(member == null || !(member.getStatus().equals(Status.ACTIVE) && member.getMtype().equals(Mtype.ORG) || member.getMtype().equals(Mtype.ADMIN))) {
-			AlertUtil.alert("접근 권한이 없습니다.", "/board/list", req, resp);
+		String path = req.getServletPath();
+		Criteria cri = ParamUtil.get(req, Criteria.class);
+		if (cri == null) {
+			cri = new Criteria();
 		}
-		
-		
 
-		// board 인스턴스 생성
-		// donate 인스턴스 생성
+		if ("/board/write".equals(path)) {
+			if(member == null || !(member.getStatus().equals(Status.ACTIVE) && member.getMtype().equals(Mtype.ORG) || member.getMtype().equals(Mtype.ADMIN))) {
+				AlertUtil.alert("접근 권한이 없습니다.", "/board/list", req, resp);
+			}
+		}
+		// 공지 게시글 작성
+		else if ("/notice/write".equals(path)) {
+			if(member == null || !(member.getStatus().equals(Status.ACTIVE) && member.getMtype().equals(Mtype.MANAGER) || member.getMtype().equals(Mtype.ADMIN))) {
+				AlertUtil.alert("접근 권한이 없습니다.", "/notice/list", req, resp);
+			}
+		}
+
+		// QNA 게시글 작성
+		else if ("/QNA/write".equals(path)) {
+			if(member == null || !(member.getStatus().equals(Status.ACTIVE) && member.getMtype().equals(Mtype.MANAGER) || member.getMtype().equals(Mtype.ADMIN))) {
+				AlertUtil.alert("접근 권한이 없습니다.", "/qna/list", req, resp);
+			}
+		}
+
+
 		Donate donate = ParamUtil.get(req, Donate.class);
 		DonateRound round = ParamUtil.get(req, DonateRound.class);		
-		Board board = ParamUtil.get(req, Board.class); 
+
+
+		Board board = ParamUtil.get(req, Board.class);
 		Attach attach = null ;
-		if(ParamUtil.get(req, Attach.class) != null) {
+		if(ParamUtil.get(req, Attach.class).getUuid() != null) {
 			attach = ParamUtil.get(req, Attach.class);
 			attach.setMno(null);
 			board.setAttach(attach);
@@ -83,14 +130,14 @@ public class Write extends HttpServlet{
 		
 
 		BoardService boardService = new BoardService();
-		
-			
+
+		if ("/board/write".equals(path)) {
 		boardService.write(board, donate, round);
-			
-	
-		
-		
-		
 		AlertUtil.alert("글이 등록되었습니다.", "/board/list?cno=" + board.getCno(), req, resp);
+		}
+		else {
+			boardService.write(board);
+			AlertUtil.alert("글이 등록되었습니다.", "/index", req, resp);
+		}
 	}
 }

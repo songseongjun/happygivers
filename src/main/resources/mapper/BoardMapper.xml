@@ -103,6 +103,7 @@
  		from tbl_board b
  		<include refid="criteria"/>
  		order by bno DESC
+		limit #{amount} offset #{offset}
  	</select>
  	
  	

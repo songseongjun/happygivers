@@ -40,6 +40,12 @@ public class BoardService {
 				attach.setBno(board.getBno());
 				attachMapper.insert(attach);
 			}
+			if (board.getImages() != null){
+				for(Attach i : board.getImages()){
+					i.setViewbno(board.getBno());
+					attachMapper.insert(i);
+				}
+			}
 			session.commit();
 		}
 		catch (Exception e){
@@ -208,14 +214,14 @@ public class BoardService {
 
 			List<Board> list = mapper.list(cri);
 			for(Board b : list) {
+				b.setCtype(categoryMapper.selectOne(b.getCno()).getCtype());
+				b.setCname(findCname(b.getCno()));
+				b.setNickname(findNickname(b.getMno()));
+				b.setName(findName(b.getMno()));
+				b.setThumbnail(findThumbnail(b.getBno()));
+				b.setAttach(findAttach(b.getBno()));
 				if(b.getDrno() != null) {
-					b.setCtype(categoryMapper.selectOne(b.getCno()).getCtype());
 					b.setRound(findRound(b.getDrno()));
-					b.setCname(findCname(b.getCno()));
-					b.setNickname(findNickname(b.getMno()));
-					b.setName(findName(b.getMno()));
-					b.setThumbnail(findThumbnail(b.getBno()));
-					b.setAttach(findAttach(b.getBno()));
 				}
 			}
 			
