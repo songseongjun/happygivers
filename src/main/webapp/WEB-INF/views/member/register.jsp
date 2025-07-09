@@ -26,31 +26,70 @@
     <form action="/happygivers/member/register" method="post" class="d-flex flex-column mx-auto my-5 gap-4" style="max-width: 460px;">
       <input type="hidden" name="mtype" value="${mtype}">
 
-      <!-- Step 1: 약관동의 -->
-      <div class="border rounded-3 list-group p-3 gap-3 collapse show" id="tosForm">
-        <div class="form-check mb-2">
-          <input class="form-check-input" type="checkbox" id="agreeAll" name="agreeAll">
-          <label class="form-check-label fw-bold" for="agreeAll">모두 동의</label>
-        </div>
+    <!-- Step 1: 약관동의 -->
+				<div class="border rounded-3 list-group p-4 collapse show"
+					id="tosForm">
 
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="tos" name="tos" required>
-          <label class="form-check-label" for="tos">
-            <span class="text-primary fw-bold me-1">[필수]</span> <a href="#" target="_blank" style="color: var(--col-5);">이용약관 동의</a>
-          </label>
-        </div>
+					<!-- 모두 동의 -->
+					<div class="form-check mb-3">
+						<input class="form-check-input" type="checkbox" id="agreeAll" />
+						<label class="form-check-label fw-bold" for="agreeAll">모두
+							동의</label>
+					</div>
 
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="privacy" name="privacy" required>
-          <label class="form-check-label" for="privacy">
-            <span class="text-primary fw-bold me-1">[필수]</span> <a href="#" target="_blank" style="color: var(--col-5);">개인정보 수집 및 이용 동의</a>
-          </label>
-        </div>
+					<!-- 이용약관 -->
+					<div class="mb-4">
+						<h5 class="fw-bold mb-2">이용약관</h5>
+						<div
+							style="height: 200px; overflow-y: auto; background: #fff; border: 1px solid var(--border-5); padding: 12px; border-radius: 8px;">
+							 <p>
+							    회원 탈퇴 시, 관련 법령 및 개인정보처리방침에 따라 해피기버즈가 해당 회원 정보를 일정 기간 보관할 수 있는 경우를 제외하고, 
+							    해당 회원 계정과 연결된 게시물(기부 내역, 댓글, 피드 등)을 포함한 모든 데이터는 삭제되며 복구할 수 없습니다. 단, 타 사용자가 저장하거나 공유한 콘텐츠는 그대로 유지됩니다. 
+							    <br /><br />
+							    해피기버즈는 무료로 다양한 기부/후원 서비스를 제공하며, 일부 화면에 후원 배너 또는 공익 광고가 포함될 수 있습니다. 
+							    서비스를 이용하면서 발생하는 데이터 통신료는 이용자의 이동통신 계약에 따라 별도로 부과될 수 있으며, 광고 열람으로 발생하는 추가 비용도 이용자의 부담입니다.
+							    <br /><br />
+							    해피기버즈는 불편함을 최소화하면서도 더 나은 서비스를 제공할 수 있도록 항상 개선을 고민하고 연구합니다.
+							  </p>
+						</div>
+						<div class="form-check mt-2">
+							<input class="form-check-input" type="checkbox" id="tos"
+								name="tos" required /> <label class="form-check-label"
+								for="tos">[필수] 이용약관에 동의합니다.</label>
+						</div>
+					</div>
 
-        <button class="btn btn-primary mt-3" type="button" onclick="goNextStep()">다음</button>
-      </div>
+					<!-- 개인정보 수집 및 이용 -->
+					<div class="mb-4">
+						<h5 class="fw-bold mb-2">개인정보 수집 및 이용</h5>
+						<div
+							style="height: 200px; overflow-y: auto; background: #fff; border: 1px solid var(--border-5); padding: 12px; border-radius: 8px;">
+							 <p>
+							    해피기버즈는 회원가입 및 서비스 제공을 위해 아래와 같은 개인정보를 수집합니다.<br /><br />
+							
+							    수집 항목: 아이디, 비밀번호, 이메일, 이름, 휴대전화 번호, 주소 등<br />
+							    수집 목적: 회원 식별, 후원 참여 내역 확인, 마이페이지 제공, 서비스 개선<br />
+							    보유 기간: 회원 탈퇴 후 5년까지 보관하며, 이후 안전하게 파기됩니다.
+							    <br /><br />
+							    자세한 사항은 개인정보처리방침을 참고해 주세요.
+							  </p>
+							</div>
+						<div class="form-check mt-2">
+							<input class="form-check-input" type="checkbox" id="privacy"
+								name="privacy" required /> <label class="form-check-label"
+								for="privacy">[필수] 개인정보 수집 및 이용에 동의합니다.</label>
+						</div>
+					</div>
 
-      <!-- Step 2: 아이디, 비밀번호, 이메일 -->
+					<!-- 다음 버튼 -->
+					<div class="d-grid">
+						<button class="btn btn-primary" type="button"
+							onclick="goNextStep()">다음</button>
+					</div>
+				</div>
+
+
+				<!-- Step 2: 아이디, 비밀번호, 이메일 -->
       <div class="border rounded-3 list-group p-3 gap-3 collapse" id="step2_account">
         <div class="form-floating my-2">
           <input type="text" class="form-control" placeholder="아이디" name="id" id="id" required>
