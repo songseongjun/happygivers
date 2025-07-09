@@ -1,10 +1,6 @@
-12:51:08.373 [main] INFO  sqltiming - select * 
- 		from tbl_board
-
- 		 WHERE cno = 4
-
-		 		and status = 'ACTIVE' 
-
- 		order by bno DESC
- {executed in 9 msec}
-12:51:08.398 [main] INFO  BoardMapperTest - []
+19:46:59.992 [main] INFO  sqltiming - SELECT * FROM tbl_member WHERE mtype = 'ORG' AND status = 0
+ {executed in 8 msec}
+19:47:29.373 [main] INFO  sqltiming - SELECT * FROM tbl_member WHERE mtype = 'ORG' AND status = 2
+ {executed in 11 msec}
+19:48:15.474 [main] INFO  sqltiming - SELECT * FROM tbl_member WHERE mtype = 'ORG' AND status = 0
+ {executed in 8 msec}
