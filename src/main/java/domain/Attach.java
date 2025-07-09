@@ -42,8 +42,7 @@ public class Attach {
 		return new File(UploadFile.UPLOAD_PATH + "/" + path, uuid);
 	}
 	
-	public Attach toThumb() {
-		return Attach.builder().bno(bno).image(image).uuid("t_" + uuid).path(path).origin(origin).odr(odr).size(size).build();
-				
+	public String getS3Key() {
+	    return "upload/" + this.path + "/" + this.uuid;
 	}
 }

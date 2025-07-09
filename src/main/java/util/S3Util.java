@@ -5,7 +5,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.util.List;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.Part;
 
@@ -15,7 +17,12 @@ import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
+import software.amazon.awssdk.services.s3.model.HeadObjectRequest;
+import software.amazon.awssdk.services.s3.model.ListObjectsV2Request;
+import software.amazon.awssdk.services.s3.model.ListObjectsV2Response;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
+import software.amazon.awssdk.services.s3.model.S3Object;
 
 @Slf4j
 public class S3Util {
@@ -77,4 +84,59 @@ public class S3Util {
 			throw new RuntimeException("S3 업로드 중 오류", e);
 		}
 	}
+	
+
+	public static void remove(String key) {
+		try { DeleteObjectRequest deleteReq = DeleteObjectRequest.builder()
+					.bucket(props.getProperty("bucket-name"))
+					.key(key)
+					.build();
+	
+			s3.deleteObject(deleteReq);
+			
+		} catch (Exception e) {
+			
+			throw new RuntimeException("S3 삭제 중 오류", e);
+		}
+	}
+	
+	public static int removeAll(List<String> keys) {
+	    int deletedCount = 0;
+
+	    for (String key : keys) {
+	        try {
+	            DeleteObjectRequest deleteReq = DeleteObjectRequest.builder()
+	                    .bucket(props.getProperty("bucket-name"))
+	                    .key(key)
+	                    .build();
+	            s3.deleteObject(deleteReq);
+	            deletedCount++;
+	            log.info("[S3 DELETE] {}", key);
+	        } catch (Exception e) {
+	            log.warn("S3 삭제 실패: {}", key, e);
+	        }
+	    }
+
+	    return deletedCount;
+	}
+	
+	
+	public static List<String> listObjects(String prefix) {
+	    ListObjectsV2Request req = ListObjectsV2Request.builder()
+	            .bucket(props.getProperty("bucket-name"))
+	            .prefix(prefix) // 예: "upload/2025/07/08/"
+	            .build();
+
+	    ListObjectsV2Response res = s3.listObjectsV2(req);
+	    return res.contents().stream()
+	            .map(S3Object::key)
+	            .collect(Collectors.toList());
+	}
+	
+	
+	
+	
+	
+	
+	
 }
