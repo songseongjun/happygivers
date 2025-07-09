@@ -21,6 +21,10 @@ public class MemberService {
 			member.setPw(PasswordEncoder.encode(member.getPw()));
 			int result = mapper.insert(member);
 		    session.commit();
+		    Member saved = mapper.findById(member.getId());
+	        if (saved != null) {
+	            member.setMno(saved.getMno());
+	        }
 			return result;
 		} catch (Exception e) {
 			e.printStackTrace();

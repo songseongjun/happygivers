@@ -52,6 +52,7 @@ public class MypageEditProfile extends HttpServlet {
 
     	        HttpSession session = req.getSession();
     	        Member member = (Member) session.getAttribute("member");
+    	       
 
     	        if (member != null) {
     	            member.setProfile(webPath);  // 세팅

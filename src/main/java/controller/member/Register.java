@@ -10,9 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import domain.Member;
+import domain.Tos;
 import lombok.extern.slf4j.Slf4j;
 import service.EmailCheckService;
 import service.MemberService;
+import service.TosService;
 import util.MailUtil;
 import util.ParamUtil;
 
@@ -37,6 +39,18 @@ public class Register extends HttpServlet {
             member.setName("이름없음");
         }
         
+        		//이용약관동의
+        String agreeTerms = req.getParameter("tos");
+        String agreePrivacy = req.getParameter("privacy");
+
+        if (agreeTerms == null || agreePrivacy == null) {
+            req.setAttribute("msg", "필수 약관에 모두 동의해야 가입할 수 있습니다.");
+            req.setAttribute("url", "/member/register.jsp");
+            req.getRequestDispatcher("/WEB-INF/views/common/alert.jsp").forward(req, resp);
+            return;
+        }
+
+         
         //mtype에 따른 닉네임 처리 추가
         String mtype = req.getParameter("mtype");
 
@@ -98,6 +112,32 @@ public class Register extends HttpServlet {
 
         //  회원 정보 등록 (DB 저장)
         memberService.register(member);
+        
+        
+     // 약관 동의 정보 저장
+        TosService tosService = new TosService();
+
+        Tos terms = Tos.builder()
+            .mno(member.getMno())
+            .tosver("v1.0")
+            .agrcheck(true)
+            .type("TERMS")
+            .regadmin("user")
+            .withdrawn(false)
+            .build();
+
+        Tos privacy = Tos.builder()
+            .mno(member.getMno())
+            .tosver("v1.0")
+            .agrcheck(true)
+            .type("PRIVACY")
+            .regadmin("user")
+            .withdrawn(false)
+            .build();
+
+        tosService.save(terms);
+        tosService.save(privacy);
+
 
         // 이메일 인증을 위한 UUID 생성 및 Redis 저장
         String uuid = UUID.randomUUID().toString();
