@@ -46,7 +46,6 @@
 						  <div class="form-floating" style="max-width: 200px;">
 							  <select class="form-select" id="type" name="type">
 							    <option value="TCN">전체</option>
-		                        <option value="T">제목</option>
 		                        <option value="C">내용</option>
 		                        <option value="N">작성자</option>
 							  </select>

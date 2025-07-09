@@ -12,9 +12,19 @@
 <%@ include file="../common/header.jsp" %>
 	<div class="container">
         <main>
+        <c:if test="${cri.ctype == 'DONATE'}">
         <h2 class="text-center my-5">기부 글 작성</h2>
+        </c:if>
+          <c:if test="${cri.ctype == 'NOTICE'}">
+        <h2 class="text-center my-5">공지사항 작성</h2>
+        </c:if>
+        <c:if test="${cri.ctype == 'QNA'}">
+
+        <h2 class="text-center my-5">Q&A 작성</h2>
+        </c:if>
         <form class="my-4" id="writeForm" method="post">
           <div class="form-control d-flex gap-2 mb-2">
+            <c:if test="${cri.ctype == 'DONATE'}">
             <div>
               <select class="form-select" style="min-width: 200px;" name="cno">
                 <option value="3">청소년</option>
@@ -26,9 +36,11 @@
                 <option value="9">사회</option>
               </select>
             </div>
+            </c:if>
             <input type="text" class="form-control" placeholder="제목" name="title" required>
           </div>
           <div id="editor"></div>
+          <c:if test="${cri.ctype == 'DONATE'}">
           <div class="d-flex border rounded-1 list-group p-3 gap-3 flex-row mt-2">
             <div class="form-floating flex-grow-1">
               <input type="number" class="form-control" placeholder="모금 목표 금액(최대 1억)" name="goalamount" id="goalamount" min="1000000" max="100000000" value="1000000" required>
@@ -40,6 +52,8 @@
               <label for="voiddate">마감일</label>
             </div>
           </div>
+          </c:if>
+          <c:if test="${cri.ctype == 'DONATE'}">
           <div class="d-flex border rounded-1 list-group p-3 gap-3 flex-row mt-2">
             <div class="form-floating rounded-2 overflow-hidden">
               <img src="https://placehold.co/250x250?text=No+img" alt="썸네일" id="thumbnailImg" style="height: 58px; object-fit: cover;">
@@ -51,20 +65,43 @@
 			  <button type="button" class="btn btn-outline-primary position-absolute top-50 end-0 translate-middle-y me-2" id="uploadThumbnailBtn">썸네일 등록</button>
 			</div>
           </div>
-          
+          </c:if>
           <!-- 히든으로 값 전달 -->
           <input type="hidden" name="content" id="content">
           <input type="hidden" name="mno" value="${member.mno }">
+          <c:if test="${cri.ctype == 'DONATE'}">
           <input type="hidden" name="status" value="READY">
           <input type="hidden" name="uuid" id="uuid">
-		  <input type="hidden" name="path" id="path">
-		  <input type="hidden" name="origin" id="origin">
-		  <input type="hidden" name="image" value="true">
+          <input type="hidden" name="path" id="path">
+          <input type="hidden" name="origin" id="origin">
+          <input type="hidden" name="image" value="true">
+          </c:if>
+          <c:if test="${cri.ctype != 'DONATE'}">
+            <input type="hidden" name="status" value="ACTIVE">
+          </c:if>
+          <c:if test="${cri.ctype == 'NOTICE'}">
+            <input type="hidden" name="cno" value="1">
+          </c:if>
+          <c:if test="${cri.ctype == 'QNA'}">
+            <input type="hidden" name="cno" value="2">
+          </c:if>
           <input type="hidden" name="imgList" id="imgList">
           
           <div class="float-end mt-4">
+            <c:if test="${cri.ctype == 'DONATE'}">
             <a href="${cp }/board/list" class="btn btn-outline-primary me-2">취소</a>
             <button class="btn btn-primary me-2">승인요청</button>
+            </c:if>
+            <c:if test="${cri.ctype == 'NOTICE'}">
+              <a href="${cp }/notice/list" class="btn btn-outline-primary me-2">취소</a>
+            </c:if>
+            <c:if test="${cri.ctype == 'QNA'}">
+              <a href="${cp }/qna/list" class="btn btn-outline-primary me-2">취소</a>
+            </c:if>
+
+            <c:if test="${cri.ctype != 'DONATE'}">
+            <button class="btn btn-primary me-2">글 작성</button>
+            </c:if>
           </div>
         	
         </form>
@@ -126,10 +163,12 @@
       
       $('#writeForm').on('submit', function () {
     	  event.preventDefault();
+          <c:if test="${cri.ctype == 'DONATE'}">
     	  if($("#voiddate").val().trim() === ""){
     		  alert("마감일을 선택해주세요.");
     		  return;
     	  }
+        </c:if>
     	  const markdown = editor.getMarkdown(); // 또는 editor.getHTML();
     	  console.log(markdown);
     	  $('#content').val(markdown);
