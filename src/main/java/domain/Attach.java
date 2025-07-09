@@ -40,10 +40,7 @@ public class Attach {
 
 
 	}
-	
-	public File toFile() {
-		return new File(UploadFile.UPLOAD_PATH + "/" + path, uuid);
-	}
+
 	
 	public String getS3Key() {
 	    return "upload/" + this.path + "/" + this.uuid;
