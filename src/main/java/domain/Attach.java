@@ -25,6 +25,8 @@ public class Attach {
 	private int odr;
 	
 	private long size;
+	
+	private Long viewbno;
 	public Attach(String uuid, String path, boolean image, String origin, Long bno, int odr, long size) {
 
 		this.uuid = uuid;

@@ -57,7 +57,7 @@ public class Write extends HttpServlet{
 			AlertUtil.alert("접근 권한이 없습니다.", "/board/list", req, resp);
 		}
 		
-
+		
 
 		// board 인스턴스 생성
 		// donate 인스턴스 생성
@@ -71,6 +71,15 @@ public class Write extends HttpServlet{
 			board.setAttach(attach);
 		}
 		log.info("{}", board);
+		List<Attach> images = null;
+		String imgListJson = req.getParameter("imgList"); 
+		if(imgListJson != null && !imgListJson.trim().isEmpty()) {
+			Gson gson = new Gson();
+		    Type listType = new TypeToken<List<Attach>>(){}.getType();
+		    images = gson.fromJson(imgListJson, listType);
+			
+		    board.setImages(images);
+		}
 		
 
 		BoardService boardService = new BoardService();

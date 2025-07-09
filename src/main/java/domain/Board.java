@@ -3,6 +3,8 @@ package domain;
 
 
 
+import java.util.List;
+
 import org.apache.ibatis.type.Alias;
 
 import domain.en.Status;
@@ -36,4 +38,5 @@ public class Board {
 	private String nickname; // 작성자 닉네임
 	
 	private Attach attach; // 첨부파일 - 썸네일 제작시 사용
+	private List<Attach> images; // 게시글 내부 이미지
 }

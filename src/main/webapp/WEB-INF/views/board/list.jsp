@@ -118,21 +118,31 @@
 				<li class="page-item"><a class="page-link" href="list?page=${pageDto.realEnd}&${pageDto.cri.qs}"><i class="fa-solid fa-angles-right"></i></a></li>
 				</c:if>
 			</ul>
-    
-            <div class="search-bar">
-                <form class="col input-group search-form">
-                    <select class="form-select form-select-sm" name="type">
-                        <option value="TCN">전체</option>
-                        <option value="T">제목</option>
-                        <option value="C">내용</option>
-                        <option value="N">작성자</option>
-                    </select>
-                    <input type="text" class="form-control form-control-sm w-75" placeholder="Search" name="keyword">
-                    <input type="hidden" name="page" value="1">
-                    <input type="hidden" name="amount" value="${pageDto.cri.amount}">
-                    <input type="hidden" name="cno" value="${pageDto.cri.cno}">
-                    <button class="btn btn-dark btn-sm" type="submit">검색</button>
-                </form>
+    		<div class="row p-0" style="max-height: 58px; ">
+					<form class="input-group col search-form">
+						  <div class="form-floating" style="max-width: 200px;">
+							  <select class="form-select" id="type" name="type">
+							    <option value="TCN">전체</option>
+		                        <option value="T">제목</option>
+		                        <option value="C">내용</option>
+		                        <option value="N">작성자</option>
+							  </select>
+						  		<label for="type" class="form-label">검색 범위</label>
+							</div>
+							<input type="hidden" name="page" value="1">
+                    		<input type="hidden" name="amount" value="${pageDto.cri.amount}">
+                    		<input type="hidden" name="cno" value="${pageDto.cri.cno}">
+							<div class="form-floating input-group bg-white rounded-2">
+					            <input type="text" class="form-control" placeholder="검색어 입력" name="keyword" id="keyword">
+					            <label for="keyword"" style="z-index: 10; max-height: 58px;">검색어 입력</label>
+					            <button class="btn btn-outline-primary px-4" type="submit" style="max-height: 58px;">검색</button>
+				          	</div>
+					</form>					
+					<c:if test="${not empty member && (member.mtype == 'ORG' || member.mtype == 'ADMIN')}">
+					<a href="${cp}/board/write" class="btn btn-primary col-1" style="max-height: 58px; line-height: 44px;">글쓰기</a>
+					</c:if>
+				</div>
+      
                 <script type="text/javascript">
             		$(".search-form").submit(function() {
             			event.preventDefault();
@@ -140,7 +150,6 @@
 						this.submit();          			
             		})
             	</script>
-            </div>
         </main>
 
     </div>

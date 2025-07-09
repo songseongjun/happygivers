@@ -74,7 +74,25 @@ public class Modify extends HttpServlet{
 		log.info("{}", modifyBoard.getDrno());
 		log.info("{}", round);
 		donateService.updateRound(round);
+		
+		List<Attach> images = null;
+		String imgListJson = req.getParameter("imgList"); 
+		log.info("{}", imgListJson);
+		if(imgListJson != null && !imgListJson.trim().isEmpty()) {
+			Gson gson = new Gson();
+		    Type listType = new TypeToken<List<Attach>>(){}.getType();
+		    images = gson.fromJson(imgListJson, listType);
+		    log.info("{}", images);
+		    modifyBoard.setImages(images);
+		}
+		
+		
+		
 		boardService.modify(modifyBoard);
+		
+		
+		
+		
 		
 		
 		AlertUtil.alert("글이 수정되었습니다.", "/board/view?bno=" + board.getBno(), req, resp);
