@@ -18,6 +18,7 @@ import domain.Attach;
 import lombok.extern.slf4j.Slf4j;
 import mapper.AttachMapper;
 import util.MybatisUtil;
+import util.S3Util;
 
 @Slf4j
 public class GhostFileCleanupJob implements Job{
@@ -28,6 +29,7 @@ public class GhostFileCleanupJob implements Job{
 		Long date = new Date().getTime() - 1000 * 60 * 60 * 24;
 		SimpleDateFormat formatter = new SimpleDateFormat("/yyyy/MM/dd");
 		String datefolder = formatter.format(date);
+		String s3Prefix = "upload" + datefolder + "/";
 		
 		File file = new File(UploadFile.UPLOAD_PATH, datefolder);
 		if(!file.exists() && !file.isDirectory()) {
@@ -37,40 +39,31 @@ public class GhostFileCleanupJob implements Job{
 
 		try (SqlSession session = MybatisUtil.getSqlSession()){
 			List<File> fsListFiles = new ArrayList<File>(Arrays.asList(file.listFiles()));
-			
 			List<Attach> attachs = new ArrayList<Attach>(session.getMapper(AttachMapper.class).selectYesterdayList());
-			
 			List<Attach> linked = attachs.stream().filter(a -> a.getBno() != null || a.getMno() != null || a.getViewbno() != null).collect(Collectors.toList());
-			
 			List<File> protectedFiles = linked.stream().map(Attach::toFile).toList();
-			
-			
-			
-			
 			fsListFiles.removeAll(protectedFiles);
-			log.info("{}", fsListFiles);
+			
 			fsListFiles.forEach(f -> f.delete());
+			
+			List<String> s3KeyList = S3Util.listObjects(s3Prefix);
+			
+			// 3. DB에 등록된 S3 key 리스트 만들기
+			List<String> dbKeyList = attachs.stream()
+			    .map(Attach::getS3Key) 
+			    .toList();
+			
+			s3KeyList.removeAll(dbKeyList);
+			
+			int deletedCount = S3Util.removeAll(s3KeyList);
+			
+			
 			session.close();
 			
-			 int deletedCount = 0;
-		        long totalSize = 0;
+			 
+			log.info("[정리 완료] 서버에서 삭제한 파일 수: {}개", deletedCount);
 
-		        for (File f : fsListFiles) {
-		            if (f.delete()) {
-		                deletedCount++;
-		                totalSize += f.length();
-		                log.info("[DELETE] {}", f.getAbsolutePath());
-		            } else {
-		                log.warn("[FAIL] 삭제 실패: {}", f.getAbsolutePath());
-		            }
-		        }
-
-		        // ✅ 최종 통계 출력
-		        double mb = totalSize / 1024.0 / 1024.0;
-		        log.info("[정리 완료] 삭제한 파일 수: {}개, 총 용량: {} MB", deletedCount, mb);
-			
-			
-			
+	        
 			
 		}
 		
@@ -79,7 +72,12 @@ public class GhostFileCleanupJob implements Job{
 		}
 		
 	}
+	
+	
 	public static void main(String[] args) throws JobExecutionException {
 		new GhostFileCleanupJob().execute(null);
 	}
+	
+	
+	
 }
