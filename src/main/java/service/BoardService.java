@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+import domain.en.Ctype;
 import org.apache.ibatis.session.SqlSession;
 
 import domain.Attach;
@@ -23,6 +24,7 @@ import mapper.DonateMapper;
 import mapper.MemberMapper;
 import mapper.ReplyMapper;
 import util.MybatisUtil;
+import util.S3Util;
 
 @Slf4j
 public class BoardService {
@@ -118,6 +120,8 @@ public class BoardService {
 			}
 			if(board.getAttach() != null) {
 				if(attachMapper.selectOne(board.getBno()) != null) {
+					String removeImg = attachMapper.selectOne(board.getBno()).getS3Key();
+					S3Util.remove(removeImg);
 					attachMapper.update(board.getAttach());
 				}
 				else {
@@ -128,7 +132,7 @@ public class BoardService {
 			}
 			
 			if(board.getImages() != null) {
-				List<Attach> modifyImgs = modifyViewImgList(board.getImages(), findViewUuidList(board.getBno()));
+				List<Attach> modifyImgs = modifyViewImgList(board.getImages(), attachMapper.findByViewBno(board.getBno()));
 				log.info("{}", modifyImgs);
 				for(Attach i : modifyImgs) {
 					i.setViewbno(board.getBno());
@@ -163,9 +167,26 @@ public class BoardService {
 				round.setStatus(Status.DELETE);
 				donateMapper.updateRound(round);
 			}
+			List<Attach> viewImgs = new ArrayList<>();
+
 			if(findAttach(bno) != null) {
+				viewImgs.add(findAttach(bno));
+			}
+			if(attachMapper.findByViewBno(bno) != null) {
+				viewImgs.addAll(attachMapper.findByViewBno(bno));
+			}
+
+			if(!viewImgs.isEmpty()) {
+				List<String> keys = viewImgs.stream()
+						.map(Attach::getS3Key)
+						.toList();
+
+				S3Util.removeAll(keys);
 				attachMapper.deleteByBno(bno);
 			}
+
+
+
 			board.setStatus(Status.DELETE);
 			mapper.update(board);
 			session.commit();
@@ -183,10 +204,12 @@ public class BoardService {
 	public List<Board> list(Criteria cri) {
 		try(SqlSession session = MybatisUtil.getSqlSession()) {
 			BoardMapper mapper = session.getMapper(BoardMapper.class); 
+			CategoryMapper categoryMapper = session.getMapper(CategoryMapper.class);
 
 			List<Board> list = mapper.list(cri);
 			for(Board b : list) {
 				if(b.getDrno() != null) {
+					b.setCtype(categoryMapper.selectOne(b.getCno()).getCtype());
 					b.setRound(findRound(b.getDrno()));
 					b.setCname(findCname(b.getCno()));
 					b.setNickname(findNickname(b.getMno()));
@@ -402,41 +425,29 @@ public class BoardService {
 			if (content == null) return "";
 		    return content.replaceAll("!\\[.*?\\]\\(.*?\\)", "");
 		}
-		
-	// 게시글 내부 이미지 uuid 리스트 가져오기
-		public List<String> findViewUuidList(Long bno){
-			try(SqlSession session = MybatisUtil.getSqlSession()) {
-				AttachMapper mapper = session.getMapper(AttachMapper.class); 
-				List<String> uuids = mapper.viewBnoUuidList(bno);
-				
-				return uuids;
-			}
-			catch (Exception e){
-				e.printStackTrace();
-			}
-			return null;
-		}
+
 		
 		
 	// 원본 게시글과 수정 게시글 비교하여 변경사항 삭제, 기존에 있던것은 리스트 유지
-		public List<Attach> modifyViewImgList(List<Attach> newImg, List<String> originUuids){
+		public List<Attach> modifyViewImgList(List<Attach> newList, List<Attach> originList){
 			try (SqlSession session = MybatisUtil.getSqlSession()){
 				AttachMapper attachMapper = session.getMapper(AttachMapper.class);
-				log.info("{}", newImg);
+				log.info("{}", newList);
 				List<Attach> modifyImgList = new ArrayList<Attach>();
-				List<String> uselist = new ArrayList<String>();
-				for(Attach i : newImg) {
-					if(!originUuids.contains(i.getUuid())) {
+				List<Attach> uselist = new ArrayList<>();
+				for(Attach i : newList) {
+					if(!originList.contains(i)) {
 						modifyImgList.add(i);
 					}else {
-						uselist.add(i.getUuid());
+						uselist.add(i);
 					}	
 				}
 				
-				originUuids.removeAll(uselist);
+				originList.removeAll(uselist);
 				
-				for(String u : originUuids) {
-					attachMapper.delete(u);
+				for(Attach a : originList) {
+					S3Util.remove(a.getS3Key());
+					attachMapper.delete(a.getUuid());
 				}
 				log.info("{}", modifyImgList);
 				

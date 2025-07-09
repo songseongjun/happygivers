@@ -29,27 +29,18 @@ public class Display extends HttpServlet{
 		String path = req.getParameter("path");
 		
 		log.info("{} :: {}", uuid, path);
-		
-		
-		// 물리적 위치에 있는 실제 파일을 origin의 네임으로 치환 후 다운로드
-		File file = new File(UploadFile.UPLOAD_PATH + "/" + path, uuid);
-		if(!file.exists()) {
-			resp.setContentType("text/html; charset=utf-8");
-			resp.getWriter().println("<h3>파일이 존재하지 않습니다</h3>");
+
+
+		if (uuid == null || path == null) {
+			resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "필수 파라미터 누락");
 			return;
 		}
-		
-		// 응답 헤더 설정
-		resp.setContentType(Files.probeContentType(file.toPath()));
-		BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
-		BufferedOutputStream bos = new BufferedOutputStream(resp.getOutputStream());
-		
-		byte[] bs = bis.readAllBytes();
-		log.info("{}", bs.length);
-		bos.write(bs);
-		
-		bis.close();
-		bos.close();
+
+		// S3 경로 구성
+		String s3Url = "https://happygivers-bucket.s3.ap-northeast-2.amazonaws.com/upload/" + path + "/" + uuid;
+
+		// 브라우저를 S3 URL로 리다이렉트
+		resp.sendRedirect(s3Url);
 	}
 	
 	

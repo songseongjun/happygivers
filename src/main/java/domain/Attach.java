@@ -1,6 +1,7 @@
 package domain;
 
 import java.io.File;
+import java.util.Objects;
 
 import org.apache.ibatis.type.Alias;
 
@@ -36,13 +37,25 @@ public class Attach {
 		this.bno = bno;
 		this.odr = odr;
 		this.size = size;
+
+
 	}
-	
-	public File toFile() {
-		return new File(UploadFile.UPLOAD_PATH + "/" + path, uuid);
-	}
+
 	
 	public String getS3Key() {
 	    return "upload/" + this.path + "/" + this.uuid;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) return true;
+		if (obj == null || getClass() != obj.getClass()) return false;
+		Attach that = (Attach) obj;
+		return Objects.equals(uuid, that.uuid); // uuid 기준으로만 비교
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(uuid);
 	}
 }

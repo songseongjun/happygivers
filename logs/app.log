@@ -1,6 +1,0 @@
-19:46:59.992 [main] INFO  sqltiming - SELECT * FROM tbl_member WHERE mtype = 'ORG' AND status = 0
- {executed in 8 msec}
-19:47:29.373 [main] INFO  sqltiming - SELECT * FROM tbl_member WHERE mtype = 'ORG' AND status = 2
- {executed in 11 msec}
-19:48:15.474 [main] INFO  sqltiming - SELECT * FROM tbl_member WHERE mtype = 'ORG' AND status = 0
- {executed in 8 msec}

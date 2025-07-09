@@ -28,15 +28,14 @@ import net.coobird.thumbnailator.Thumbnails;
 import util.S3Util;
 
 @WebServlet("/upload")
-@MultipartConfig(location = "c:/upload/tmp", 
-	maxRequestSize = 50 * 1024 * 1024, // 한번의 요청 당 최대 파일 크기
-	maxFileSize = 10 * 1024 * 1024, // 파일 하나당 최대 크기
-	fileSizeThreshold = 10 * 1024 * 1024) // 이 크기를 넘어가면 location위치에 buffer를 기록
-
+@MultipartConfig(
+		maxRequestSize = 50 * 1024 * 1024,
+		maxFileSize = 10 * 1024 * 1024,
+		fileSizeThreshold = 10 * 1024 * 1024
+)
 @Slf4j
 public class UploadFile extends HttpServlet{
-	public static final String UPLOAD_PATH = "c:/upload/files";
-
+	private static final String BUCKET_PATH = "https://happygivers-bucket.s3.ap-northeast-2.amazonaws.com/upload";
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// 업로드된 파일처리
@@ -48,10 +47,10 @@ public class UploadFile extends HttpServlet{
 			if(part.getSize() == 0) {
 				continue;
 			}
-			
-			Long fileSize = part.getSize();
+
 			String origin = part.getSubmittedFileName();
-			String contentType = part.getHeader("content-type");
+			String contentType = part.getContentType();
+			boolean image = contentType != null && contentType.startsWith("image");
 		
 			
 			// image/png, image/jpg, image/gif, image/webp, image/bmp, image/jpeg
@@ -61,44 +60,23 @@ public class UploadFile extends HttpServlet{
 			String ext = "";
 			if(idx >= 0) {
 				// 확장자가 존재하는 경우
-				ext = origin.substring(idx);
+				ext = origin.substring(idx).toLowerCase();
 			}
 			
 			UUID uuid = UUID.randomUUID();
 			String fileName = uuid + ext;
-			
-			boolean image = contentType.startsWith("image");
+
 			String path = genPath();
-			String realPath = UPLOAD_PATH + "/" + path + "/";
-			
-			File file = new File(realPath);
-			if(!file.exists()) {
-				file.mkdirs();
-			}
-			
-			part.write(realPath + fileName);
+
 			S3Util.upload(part, "upload/" + path + "/" + fileName);
 
-			// 썸네일 생성안함 주석처리
-			//			if(image) {
-//				try {
-//					// 이미지인 경우 추가처리 > 섬네일 생성
-//					Thumbnails.of(new File(realPath + fileName)).size(150, 150).toFile(realPath + "t_" + fileName);
-//				}
-//				catch (Exception e) {
-//					image = false;
-//				}
-//			}
 			
 			
-			
-			
-			log.info("{} :: {} :: {} :: {}", fileSize, origin, contentType, ext);
+			log.info("{} :: {} :: {}", origin, contentType, ext);
 			attachs.add(Attach.builder().uuid(fileName).origin(origin).image(image).path(path).odr(odr++).build());
 		}
 		resp.setContentType("application/json; charset=utf-8");
 		resp.getWriter().print(new Gson().toJson(attachs));
-//		resp.sendRedirect("upload");
 	}
 	
 	private String genPath() {
