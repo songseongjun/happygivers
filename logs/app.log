@@ -8,3 +8,8 @@
  		order by bno DESC
  {executed in 9 msec}
 12:51:08.398 [main] INFO  BoardMapperTest - []
+16:22:29.907 [main] INFO  sqltiming - select * from tbl_board where bno = 41
+ {executed in 9 msec}
+16:22:29.928 [main] INFO  BoardMapperTest - Board(bno=41, title=첨부파일 썸네일화 시키기, content=![avatars-52vhMMqgTyYgpZjv-xEhWzw-t240x240.jpg](https://happygivers-bucket.s3.ap-northeast-2.amazonaws.com/upload/2025/07/09/c1d6fb4b-7e34-4809-a143-37a76973df4e.jpg)
+
+![images.jpg](https://happygivers-bucket.s3.ap-northeast-2.amazonaws.com/upload/2025/07/09/5658eaaf-3207-4b8b-bed9-5f2f83205740.jpg), regdate=2025-07-07 21:22:25, moddate=2025-07-09 12:09:34, mno=1, cno=3, cnt=0, status=ACTIVE, drno=10, thumbnail=null, round=null, cname=null, name=null, nickname=null, attach=null, images=null)

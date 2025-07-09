@@ -11,8 +11,8 @@ public interface AttachMapper {
 	Attach selectOne(Long bno);
 	void delete(String uuid);
 	void deleteByBno(Long bno);
-	
+
+	List<Attach> findByViewBno(Long bno);
 	List<Attach> selectYesterdayList();
-	List<String> viewBnoUuidList(Long Bno);
 	String getBoardThumbnail(Long Bno);
 }

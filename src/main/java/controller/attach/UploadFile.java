@@ -69,28 +69,9 @@ public class UploadFile extends HttpServlet{
 			
 			boolean image = contentType.startsWith("image");
 			String path = genPath();
-			String realPath = UPLOAD_PATH + "/" + path + "/";
-			
-			File file = new File(realPath);
-			if(!file.exists()) {
-				file.mkdirs();
-			}
-			
-			part.write(realPath + fileName);
+
 			S3Util.upload(part, "upload/" + path + "/" + fileName);
 
-			// 썸네일 생성안함 주석처리
-			//			if(image) {
-//				try {
-//					// 이미지인 경우 추가처리 > 섬네일 생성
-//					Thumbnails.of(new File(realPath + fileName)).size(150, 150).toFile(realPath + "t_" + fileName);
-//				}
-//				catch (Exception e) {
-//					image = false;
-//				}
-//			}
-			
-			
 			
 			
 			log.info("{} :: {} :: {} :: {}", fileSize, origin, contentType, ext);
@@ -98,7 +79,6 @@ public class UploadFile extends HttpServlet{
 		}
 		resp.setContentType("application/json; charset=utf-8");
 		resp.getWriter().print(new Gson().toJson(attachs));
-//		resp.sendRedirect("upload");
 	}
 	
 	private String genPath() {
