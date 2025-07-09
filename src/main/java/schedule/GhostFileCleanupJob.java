@@ -30,29 +30,20 @@ public class GhostFileCleanupJob implements Job{
 		SimpleDateFormat formatter = new SimpleDateFormat("/yyyy/MM/dd");
 		String datefolder = formatter.format(date);
 		String s3Prefix = "upload" + datefolder + "/";
-		
-		File file = new File(UploadFile.UPLOAD_PATH, datefolder);
-		if(!file.exists() && !file.isDirectory()) {
-			return;
-		}
 
 
 		try (SqlSession session = MybatisUtil.getSqlSession()){
-			List<File> fsListFiles = new ArrayList<File>(Arrays.asList(file.listFiles()));
+
 			List<Attach> attachs = new ArrayList<Attach>(session.getMapper(AttachMapper.class).selectYesterdayList());
-			List<Attach> linked = attachs.stream().filter(a -> a.getBno() != null || a.getMno() != null || a.getViewbno() != null).collect(Collectors.toList());
-			List<File> protectedFiles = linked.stream().map(Attach::toFile).toList();
-			fsListFiles.removeAll(protectedFiles);
-			
-			fsListFiles.forEach(f -> f.delete());
-			
-			List<String> s3KeyList = S3Util.listObjects(s3Prefix);
-			
+
+
 			// 3. DB에 등록된 S3 key 리스트 만들기
 			List<String> dbKeyList = attachs.stream()
-			    .map(Attach::getS3Key) 
+			    .map(Attach::getS3Key)
 			    .toList();
-			
+
+			List<String> s3KeyList = S3Util.listObjects(s3Prefix);
+
 			s3KeyList.removeAll(dbKeyList);
 			
 			int deletedCount = S3Util.removeAll(s3KeyList);

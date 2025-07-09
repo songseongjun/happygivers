@@ -1,5 +1,6 @@
 package domain;
 
+import domain.en.Ctype;
 import org.apache.ibatis.type.Alias;
 
 import domain.en.Status;
@@ -19,4 +20,5 @@ public class Category {
 	private String regdate;
 	private Integer odr;
 	private Status status;
+	private Ctype ctype;
 }

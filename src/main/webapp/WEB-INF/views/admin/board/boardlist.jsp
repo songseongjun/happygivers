@@ -52,7 +52,13 @@
 						<input class="form-check-input col-1 mx-2 my-0 p-0 checkItem" type="checkbox" value="${b.bno }" style="width: 20px; height: 20px;">
 						<span class="col-1 text-center">${b.bno }</span>
 						<span class="col-2 text-center text-truncate">${b.title }</span>
-						<span class="col text-center text-truncate"><a href="${cp }/board/view?bno=${b.bno}" class="text-black" target="_black">${b.content }</a></span>
+						<c:if test="${b.cno != 10}">
+							<span class="col text-center text-truncate"><a href="${cp }/board/view?bno=${b.bno}" class="text-black" target="_black">${b.content }</a></span>
+						</c:if>
+						<c:if test="${b.cno == 10}">
+							<span class="col text-center text-truncate">${b.content }</span>
+						</c:if>
+
 						<span class="col-1 text-center">${b.name }</span>
 						<span class="col-2 text-center"><fmt:formatNumber value="${b.round.goalamount}" />원</span>
 						<span class="col-1 text-center">${b.regdate }</span>
