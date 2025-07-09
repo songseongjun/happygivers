@@ -5,7 +5,7 @@
  <mapper namespace="mapper.AttachMapper">
  	<!-- 첨부파일 추가 -->
  	<insert id="insert">
-	 	insert into tbl_attach(uuid , origin, path, image, odr, bno, mno) values (#{uuid} , #{origin}, #{path}, #{image}, #{odr}, #{bno}, #{mno})
+	 	insert into tbl_attach(uuid , origin, path, image, odr, bno, mno, viewbno) values (#{uuid} , #{origin}, #{path}, #{image}, #{odr}, #{bno}, #{mno}, #{viewbno})
  	</insert>
  	
  	<update id="update">
@@ -70,5 +70,12 @@
 		from tbl_attach where mno = #{mno}
 		]]>
 	</select> 	
+ 	
+ 	<!-- 게시글 포함 이미지 리스트 uuid -->
+ 	<select id="viewBnoUuidList" resultType="string">
+ 		select uuid
+ 		from tbl_attach
+ 		where viewbno = #{bno}
+ 	</select>
  	
  </mapper>

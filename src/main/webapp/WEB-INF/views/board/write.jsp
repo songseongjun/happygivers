@@ -60,7 +60,7 @@
 		  <input type="hidden" name="path" id="path">
 		  <input type="hidden" name="origin" id="origin">
 		  <input type="hidden" name="image" value="true">
-          
+          <input type="hidden" name="imgList" id="imgList">
           
           <div class="float-end mt-4">
             <a href="${cp }/board/list" class="btn btn-outline-primary me-2">취소</a>
@@ -133,6 +133,9 @@
     	  const markdown = editor.getMarkdown(); // 또는 editor.getHTML();
     	  console.log(markdown);
     	  $('#content').val(markdown);
+    	  const imgList = imgListFromMarkdown(markdown);
+    	  $('#imgList').val(JSON.stringify(imgList));
+    	  
     	  
     	  this.submit();
     	});
@@ -215,7 +218,21 @@
 		});
 	});
 
-    
+  function imgListFromMarkdown(markdown) {
+	  const regex = /!\[(.*?)\]\(https:\/\/happygivers-bucket\.s3\.ap-northeast-2\.amazonaws\.com\/upload\/([\d\/]+)\/([^)\s]+)\)/g;
+	  const result = [];
+	  let match;
+
+	  while ((match = regex.exec(markdown)) !== null) {
+	    result.push({
+	      origin: match[1],   
+	      path: match[2],     
+	      uuid: match[3]      
+	    });
+	  }
+
+	  return result;
+	}
 	
 
 </script>

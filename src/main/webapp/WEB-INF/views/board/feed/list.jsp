@@ -41,7 +41,7 @@
 	            </a>
 	          </div>
 	          </c:forEach>
-	          <div class="row p-0 position-fixed" style="max-height: 58px; max-width: 1120px; bottom: 200px; ">
+	          <div class="row p-0 position-fixed" style="max-height: 58px; max-width: 1120px; bottom: 60px; ">
 					<form class="input-group col search-form">
 						  <div class="form-floating" style="max-width: 200px;">
 							  <select class="form-select" id="type" name="type">

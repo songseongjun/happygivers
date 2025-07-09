@@ -39,7 +39,7 @@
           </div>
           <div class="d-flex border rounded-1 list-group p-3 gap-3 flex-row mt-2">
             <div class="form-floating rounded-2 overflow-hidden">
-              <img src="${board.thumbnail != null ? cp.concat(board.thumbnail) : 'https://placehold.co/250x250?text=No+img' }" alt="썸네일" id="thumbnailImg" style="height: 58px; object-fit: cover;">
+              <img src="${board.thumbnail != null ? board.thumbnail : 'https://placehold.co/250x250?text=No+img' }" alt="썸네일" id="thumbnailImg" style="height: 58px; object-fit: cover;">
             </div>
             <div class="form-floating d-flex flex-grow-1 position-relative">
 			  <input type="text" class="form-control pe-5" id="thumbnailName" placeholder="썸네일" value="${board.attach.origin}" readonly>
@@ -58,7 +58,7 @@
 		  <input type="hidden" name="image" value="true" >
           <input type="hidden" name="drno" value="${board.drno}">
           <input type="hidden" name="status" value="${board.status}">
-          
+          <input type="hidden" name="imgList" id="imgList">
           
           
           
@@ -99,7 +99,7 @@
       	      if (Array.isArray(data) && data.length > 0) {
       	        const file = data[0];
       	        console.log(file);
-      	        const imageUrl = cp + '/display?uuid=' + file.uuid + '&path=' + file.path;
+      	        const imageUrl = 'https://happygivers-bucket.s3.ap-northeast-2.amazonaws.com/upload/' + file.path + '/' +  file.uuid;
       	        callback(imageUrl, file.origin);
       	      } else {
       	        alert("이미지 업로드 실패");
@@ -134,6 +134,9 @@
     	  const markdown = editor.getMarkdown(); // 또는 editor.getHTML();
     	  console.log(markdown);
     	  $('#content').val(markdown);
+    	  
+    	  const imgList = imgListFromMarkdown(markdown);
+    	  $('#imgList').val(JSON.stringify(imgList));
     	  
     	  
     	  this.submit();
@@ -223,7 +226,21 @@
 	});
 
     
-	
+  function imgListFromMarkdown(markdown) {
+	  const regex = /!\[(.*?)\]\(https:\/\/happygivers-bucket\.s3\.ap-northeast-2\.amazonaws\.com\/upload\/([\d\/]+)\/([^)\s]+)\)/g;
+	  const result = [];
+	  let match;
+
+	  while ((match = regex.exec(markdown)) !== null) {
+	    result.push({
+	      origin: match[1],   
+	      path: match[2],     
+	      uuid: match[3]      
+	    });
+	  }
+
+	  return result;
+	}
 
 </script>
 </body>

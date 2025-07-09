@@ -1,6 +1,7 @@
 package service;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -14,6 +15,7 @@ import domain.DonateRound;
 import domain.Member;
 import domain.dto.Criteria;
 import domain.en.Status;
+import lombok.extern.slf4j.Slf4j;
 import mapper.AttachMapper;
 import mapper.BoardMapper;
 import mapper.CategoryMapper;
@@ -22,6 +24,7 @@ import mapper.MemberMapper;
 import mapper.ReplyMapper;
 import util.MybatisUtil;
 
+@Slf4j
 public class BoardService {
 	// 게시글 생성
 	public void write(Board board) {
@@ -77,6 +80,16 @@ public class BoardService {
 				attach.setBno(board.getBno());
 				attachMapper.insert(attach);
 			}
+			
+			// 게시글 내부 이미지에 bno 붙여주기
+			if(board.getImages() != null) {
+				for(Attach i : board.getImages()) {
+					i.setViewbno(board.getBno());
+					i.setImage(true);
+					attachMapper.insert(i);
+				}
+			}
+			
 			session.commit();
 		}
 		catch (Exception e){
@@ -108,8 +121,19 @@ public class BoardService {
 					attachMapper.update(board.getAttach());
 				}
 				else {
-					attachMapper.insert(board.getAttach());
+					Attach img = board.getAttach();
+					img.setBno(board.getBno());
+					attachMapper.insert(img);
 				}				
+			}
+			
+			if(board.getImages() != null) {
+				List<Attach> modifyImgs = modifyViewImgList(board.getImages(), findViewUuidList(board.getBno()));
+				log.info("{}", modifyImgs);
+				for(Attach i : modifyImgs) {
+					i.setViewbno(board.getBno());
+					attachMapper.insert(i);
+				}
 			}
 				
 			mapper.update(board);
@@ -379,5 +403,55 @@ public class BoardService {
 		    return content.replaceAll("!\\[.*?\\]\\(.*?\\)", "");
 		}
 		
+	// 게시글 내부 이미지 uuid 리스트 가져오기
+		public List<String> findViewUuidList(Long bno){
+			try(SqlSession session = MybatisUtil.getSqlSession()) {
+				AttachMapper mapper = session.getMapper(AttachMapper.class); 
+				List<String> uuids = mapper.viewBnoUuidList(bno);
+				
+				return uuids;
+			}
+			catch (Exception e){
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
+		
+	// 원본 게시글과 수정 게시글 비교하여 변경사항 삭제, 기존에 있던것은 리스트 유지
+		public List<Attach> modifyViewImgList(List<Attach> newImg, List<String> originUuids){
+			try (SqlSession session = MybatisUtil.getSqlSession()){
+				AttachMapper attachMapper = session.getMapper(AttachMapper.class);
+				log.info("{}", newImg);
+				List<Attach> modifyImgList = new ArrayList<Attach>();
+				List<String> uselist = new ArrayList<String>();
+				for(Attach i : newImg) {
+					if(!originUuids.contains(i.getUuid())) {
+						modifyImgList.add(i);
+					}else {
+						uselist.add(i.getUuid());
+					}	
+				}
+				
+				originUuids.removeAll(uselist);
+				
+				for(String u : originUuids) {
+					attachMapper.delete(u);
+				}
+				log.info("{}", modifyImgList);
+				
+				return modifyImgList;
+		
+			}
+			catch (Exception e){
+				e.printStackTrace();
+			}
+			return null;
+		}
 	
+		
+		
+		
+		
+		
 }
