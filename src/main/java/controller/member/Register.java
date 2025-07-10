@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import domain.Member;
 import domain.Tos;
+import domain.en.Status;
 import lombok.extern.slf4j.Slf4j;
 import service.EmailCheckService;
 import service.MemberService;
@@ -53,6 +54,8 @@ public class Register extends HttpServlet {
          
         //mtype에 따른 닉네임 처리 추가
         String mtype = req.getParameter("mtype");
+        
+        
 
         if ("USER".equalsIgnoreCase(mtype)) {
             // 일반회원 > 닉네임 자동 생성
@@ -60,6 +63,8 @@ public class Register extends HttpServlet {
             	String rand = String.valueOf((int)(Math.random() * 900000) + 100000);
             	member.setNickname("기부천사" + rand);
             }
+            
+            member.setStatus(Status.ACTIVE);//일반회원은 그대로 이상태
             
         } else if ("ORG".equalsIgnoreCase(mtype)) {
             // 기관회원 >기관명 필수
@@ -75,6 +80,7 @@ public class Register extends HttpServlet {
                 return;
             }
             member.setName(orgname); // 기관명 > 네임으로 저장
+            member.setStatus(Status.READY);//기관회원만 준비상태로변경
         }
         
         

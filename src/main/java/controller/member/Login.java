@@ -51,6 +51,11 @@ public class Login extends HttpServlet {
 
                 Member loginMember = new MemberService().findById(id);
                 session.setAttribute("member", loginMember);
+                	//관리자가 로그인했을때 로그권한줌
+                if (loginMember.getMtype() == domain.en.Mtype.ADMIN) {
+                    session.setAttribute("admno", loginMember.getMno()); //
+                }
+
 
                 // 자동로그인 기능 (MyBatis + autologin 쿠키 방식)
                 if (req.getParameter("autologin") != null) {
