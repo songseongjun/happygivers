@@ -20,7 +20,7 @@ import util.ParamUtil;
 
 
 @Slf4j
-@WebServlet("/board/list")
+@WebServlet(urlPatterns = {"/board/list", "/notice/list", "/qna/list"})
 public class BoardList extends HttpServlet{
 	
 	@Override
@@ -34,32 +34,39 @@ public class BoardList extends HttpServlet{
 		String path = req.getServletPath();
 		cri.setStatus(Status.ACTIVE);
 
-		
+		List<Board> boards = null;
 		// 기부 게시글 리스트 처리
 		if ("/board/list".equals(path)) { 
 			cri.setCtype(Ctype.DONATE);
 			
-			List<Board> boards = boardService.list(cri);
+			boards = boardService.list(cri);
 			
 			
-			req.setAttribute("pageDto", new PageDto(cri, boardService.getCount(cri)));
-			log.info("{}", req.getAttribute("pageDto"));
-			req.setAttribute("boards", boards);
+
 
 		}
-		// 피드 게시글 리스트 처리
-		else if ("/feed/list".equals(path)) { 
-			cri.setCtype(Ctype.FEED);
-			
-			List<Board> boards = boardService.list(cri);
-			
-			
-			req.setAttribute("pageDto", new PageDto(cri, boardService.getCount(cri)));
-			log.info("{}", req.getAttribute("pageDto"));
-			req.setAttribute("boards", boards);
+		// 공지 게시글 리스트 처리
+		else if ("/notice/list".equals(path)) {
+			cri.setCtype(Ctype.NOTICE);
+
+			boards = boardService.list(cri);
+
+
+
 		}
-		
+		// Q&A 게시글 리스트 처리
+		else if ("/qna/list".equals(path)) {
+			cri.setCtype(Ctype.QNA);
+
+			boards = boardService.list(cri);
+
+
+		}
+
+		req.setAttribute("pageDto", new PageDto(cri, boardService.getCount(cri)));
+		log.info("{}", req.getAttribute("pageDto"));
+		req.setAttribute("boards", boards);
 		log.info("{}", cri);
-		req.getRequestDispatcher("/WEB-INF/views" + path + ".jsp").forward(req, resp);
+		req.getRequestDispatcher("/WEB-INF/views/board/list.jsp").forward(req, resp);
 	}
 }
