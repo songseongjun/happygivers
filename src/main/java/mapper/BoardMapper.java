@@ -22,6 +22,11 @@ public interface BoardMapper {
 	Board selectOneDeadline();
 	
 	// 메인 - 신규 기부 게시글
-	List<Board> listNew(); 
-	
+	List<Board> listNew();
+
+	// 메인 - 공지사항
+	List<Board> listNotice();
+
+	// 메인 - Q&A
+	List<Board> listQna();
 }
