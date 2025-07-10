@@ -142,5 +142,23 @@
  		order by regdate desc
  		limit 3
  	</select>
+
+	<!-- 공지사항 최신 세개 -->
+	<select id="listNotice" resultMap="b">
+ 		select *
+ 		from tbl_board b
+ 		where status = 'ACTIVE' and cno in (select cno from tbl_category where ctype = 'NOTICE')
+ 		order by regdate desc
+ 		limit 3
+ 	</select>
+
+	<!-- 공지사항 최신 세개 -->
+	<select id="listQna" resultMap="b">
+ 		select *
+ 		from tbl_board b
+ 		where status = 'ACTIVE' and cno in (select cno from tbl_category where ctype = 'QNA')
+ 		order by regdate desc
+ 		limit 3
+ 	</select>
  	
  </mapper>
