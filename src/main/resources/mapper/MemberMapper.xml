@@ -6,7 +6,7 @@
 
 	<!-- 회원가입 -->
 	<insert id="insert" parameterType="Member">
-		INSERT INTO tbl_member (id, pw, name, email, tel, nickname, location, mtype, profile)
+		INSERT INTO tbl_member (id, pw, name, email, tel, nickname, location, mtype, profile,status)
 		VALUES (
 		#{id}, #{pw},
 		#{name, jdbcType=VARCHAR},
@@ -15,7 +15,8 @@
 		#{nickname, jdbcType=VARCHAR},
 		#{location, jdbcType=VARCHAR},
 		#{mtype},
-		#{profile, jdbcType=VARCHAR}
+		#{profile, jdbcType=VARCHAR},
+		#{status}
 		)
 	</insert>
 

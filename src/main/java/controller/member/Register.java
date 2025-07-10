@@ -128,7 +128,7 @@ public class Register extends HttpServlet {
             .tosver("v1.0")
             .agrcheck(true)
             .type("TERMS")
-            .regadmin("user")
+            .regadmin(mtype)
             .withdrawn(false)
             .build();
 
@@ -137,7 +137,7 @@ public class Register extends HttpServlet {
             .tosver("v1.0")
             .agrcheck(true)
             .type("PRIVACY")
-            .regadmin("user")
+            .regadmin(mtype)
             .withdrawn(false)
             .build();
 

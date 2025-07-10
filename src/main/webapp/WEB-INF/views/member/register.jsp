@@ -23,7 +23,7 @@
     </div>
 
     <!-- 회원가입 폼 -->
-    <form action="/happygivers/member/register" method="post" class="d-flex flex-column mx-auto my-5 gap-4" style="max-width: 460px;">
+    <form action="${cp}/member/register" method="post" class="d-flex flex-column mx-auto my-5 gap-4" style="max-width: 460px;">
       <input type="hidden" name="mtype" value="${mtype}">
 
     <!-- Step 1: 약관동의 -->
