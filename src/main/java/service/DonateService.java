@@ -1,7 +1,9 @@
 package service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import domain.Member;
 import org.apache.ibatis.session.SqlSession;
 
 import domain.DonateAction;
@@ -82,6 +84,23 @@ public class DonateService {
 		}
 		return null;
 	}
-	
+
+	// 기부 게시글에 있는 회차번호로 top 3의 번호를 가져옴
+	public List<Member> findTop3(Long drno) {
+		try(SqlSession session = MybatisUtil.getSqlSession()) {
+			DonateMapper mapper = session.getMapper(DonateMapper.class);
+			List<Member> top3 = new ArrayList<>();
+			List<Long> list = mapper.findTop3(drno);
+			MemberService memberService = new MemberService();
+			for(Long mno : list){
+				top3.add(memberService.findByMno(mno));
+			}
+			return top3;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 }

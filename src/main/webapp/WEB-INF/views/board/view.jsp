@@ -115,124 +115,61 @@
                         </div>
                     </div>
                 </div>
-                
+
+                <c:if test="${not empty board.round.top3}">
                 <div class="border rounded-3 mt-4">
                     <div class="p-4">
                         <div class="">
                             <p class="fs-6 fw-semibold" style="color: var(--col-6);">이 모금함의 우수 후원자</p>
                         </div>
                         <ul class="m-0 p-0 d-flex flex-column gap-2">
+                            <c:forEach items="${board.round.top3}" var="m">
                             <li class="d-flex align-items-center gap-3 rounded-2 p-2" style="background-color: var(--bg-1);">
-                                <img src="img/img1.png" class="rounded-5" alt="프로필 사진" style="width: 40px; height: 40px; object-fit: cover;">
-                                <p class="m-0 flex-grow-1 fw-medium"><span>키다리아저씨</span>님</p>
+                                <img src="${m.profile != null ? m.profile : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQm38aJRuNJH9z0qvbVUWR9rDQ2N7DoUWDXSA&s'}" class="rounded-5" alt="프로필 사진" style="width: 40px; height: 40px; object-fit: cover;">
+                                <p class="m-0 flex-grow-1 fw-medium"><span>${m.name}</span>님</p>
                                 <p class="m-0 small" style="color: var(--col-3);">상위 24%</p>
                             </li>
-                            <li class="d-flex align-items-center gap-3 rounded-2 p-2" style="background-color: var(--bg-2);">
-                                <img src="img/img1.png" class="rounded-5" alt="프로필 사진" style="width: 40px; height: 40px; object-fit: cover;">
-                                <p class="m-0 flex-grow-1 fw-medium"><span>키다리아저씨</span>님</p>
-                                <p class="m-0 small" style="color: var(--col-3);">상위 56%</p>
-                            </li>
-                            <li class="d-flex align-items-center gap-3 rounded-2 p-2" style="background-color: var(--bg-3);">
-                                <img src="img/img1.png" class="rounded-5" alt="프로필 사진" style="width: 40px; height: 40px; object-fit: cover;">
-                                <p class="m-0 flex-grow-1 fw-medium"><span>키다리아저씨</span>님</p>
-                                <p class="m-0 small" style="color: var(--col-3);">상위 78%</p>
-                            </li>
+                            </c:forEach>
                         </ul>
                     </div>
-                    <div class="p-2" style="background-color: var(--col-1);">
-                        <div class="d-flex justify-content-center">
-                            <a href="#" class="fs-6 m-0 py-1 text-decoration-none" style="color: var(--col-4);">후원자 전체 목록 보기 <i class="fa-solid fa-chevron-right small" style="color: var(--col-4);"></i></a>
-                        </div>
-                    </div>
                 </div>
-
+                </c:if>
                 <div class="border rounded-3 mt-4">
                     <div class="p-4">
                         <div class="d-flex">
                             <div class="rounded-5 overflow-hidden" style="border:2px solid var(--col-main);">
-                                <img src="img/img1.png" alt="" style="width: 40px; height: 40px; object-fit: cover;">
+                                <img src="${owner.profile != null ? owner.profile : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQm38aJRuNJH9z0qvbVUWR9rDQ2N7DoUWDXSA&s'}" alt="" style="width: 40px; height: 40px; object-fit: cover;">
                             </div>
                             <div class="ms-3">
-                                <p class="fs-6 fw-semibold m-0" style="color: var(--col-6);">사회복지법인 아산성애원 좋은이웃</p>
+                                <p class="fs-6 fw-semibold m-0" style="color: var(--col-6);">${board.name}</p>
                                 <p class="small m-0" style="color: var(--col-3);">후원기관</p>
                             </div>
                         </div>
-                        <p class="small mt-3 mb-0">"함께 성장하며 희망을 나누는 곳" 정신건강의 어려움을
-겪는 분들이 지역사회의 구성원으로 희망을 가지고 존중
-받으며 살아가도록 지원하는 정신재활시설 좋은이웃…</p>
+                        <p class="small mt-3 mb-0">${member.content}</p>
                         
-                    </div>
-                    <div class="p-2" style="background-color: var(--col-1);">
-                        <div class="d-flex justify-content-center">
-                            <a href="#" class="fs-6 m-0 py-1 text-decoration-none" style="color: var(--col-4);">자세히보기 <i class="fa-solid fa-chevron-right small" style="color: var(--col-4);"></i></a>
-                        </div>
                     </div>
                 </div>
 
 
 
-                <!-- 해당 후원기관의 다른 모금함 -->
+                <!-- 해당 후원기관의 모금함들 -->
                 <div class="border rounded-3 mt-4 p-4">
                     <div class="">
-                        <p class="fs-6 fw-semibold m-0" style="color: var(--col-6);">이 후원기관의 다른 모금함</p>
+                        <p class="fs-6 fw-semibold m-0" style="color: var(--col-6);">이 후원기관의 모금함들</p>
                     </div>
                     <hr>
-                    <ul class="p-0 d-flex flex-column gap-3 m-0
-                    ">
+                    <ul class="p-0 d-flex flex-column gap-3 m-0">
+                        <c:forEach items="${orgDonates}" var="d">
                         <li>
                             <a href="#" class="d-flex text-decoration-none">
-                                <img src="img/img4.png" class="rounded-2" alt="이미지4" style="height: 68px; width: 100px; object-fit: cover;">
+                                <img src="${d.thumbnail != null ? d.thumbnail : 'https://placehold.co/200x150?text=No+img'}" class="rounded-2" alt="이미지4" style="height: 68px; width: 100px; object-fit: cover;">
                                 <div class="ms-3 small">
-                                    <p>혼자가 아닌 함께, 복날 삼계탕 나눔잔치</p>
-                                    <p class="m-0 small" style="color: var(--col-4);">임실군노인복지관</p>
+                                    <p>${d.title}</p>
+                                    <p class="m-0 small" style="color: var(--col-4);">${d.name}</p>
                                 </div>
                             </a>
                         </li>
-                        <li>
-                            <a href="#" class="d-flex text-decoration-none">
-                                <img src="img/img4.png" class="rounded-2" alt="이미지4" style="height: 68px; width: 100px; object-fit: cover;">
-                                <div class="ms-3 small">
-                                    <p>혼자가 아닌 함께, 복날 삼계탕 나눔잔치</p>
-                                    <p class="m-0 small" style="color: var(--col-4);">임실군노인복지관</p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="d-flex text-decoration-none">
-                                <img src="img/img4.png" class="rounded-2" alt="이미지4" style="height: 68px; width: 100px; object-fit: cover;">
-                                <div class="ms-3 small">
-                                    <p>혼자가 아닌 함께, 복날 삼계탕 나눔잔치</p>
-                                    <p class="m-0 small" style="color: var(--col-4);">임실군노인복지관</p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="d-flex text-decoration-none">
-                                <img src="img/img4.png" class="rounded-2" alt="이미지4" style="height: 68px; width: 100px; object-fit: cover;">
-                                <div class="ms-3 small">
-                                    <p>혼자가 아닌 함께, 복날 삼계탕 나눔잔치</p>
-                                    <p class="m-0 small" style="color: var(--col-4);">임실군노인복지관</p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="d-flex text-decoration-none">
-                                <img src="img/img4.png" class="rounded-2" alt="이미지4" style="height: 68px; width: 100px; object-fit: cover;">
-                                <div class="ms-3 small">
-                                    <p>혼자가 아닌 함께, 복날 삼계탕 나눔잔치</p>
-                                    <p class="m-0 small" style="color: var(--col-4);">임실군노인복지관</p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="d-flex text-decoration-none">
-                                <img src="img/img4.png" class="rounded-2" alt="이미지4" style="height: 68px; width: 100px; object-fit: cover;">
-                                <div class="ms-3 small">
-                                    <p>혼자가 아닌 함께, 복날 삼계탕 나눔잔치</p>
-                                    <p class="m-0 small" style="color: var(--col-4);">임실군노인복지관</p>
-                                </div>
-                            </a>
-                        </li>
+                        </c:forEach>
                     </ul>
                 </div>
                 
@@ -258,7 +195,7 @@
                    </div>
                    <div class="mb-3">
                        <label for="writer" class="form-label"><i class="fa-solid fa-user text-secondary me-2"></i> 작성자</label>
-                       <input type="text" class="form-control" placeholder="작성자" value="${member.nickname }" disabled="disabled">
+                       <input type="text" class="form-control" placeholder="작성자" value="${member.nickname != null ? member.nickname : member.name }" disabled="disabled">
                    </div>
                        <input type="hidden" id="writer" name="writer" value="${member.mno }">
                </form>

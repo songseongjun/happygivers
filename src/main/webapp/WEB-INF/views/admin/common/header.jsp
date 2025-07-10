@@ -6,7 +6,7 @@
   
             <div class="dropdown ">
 			  <a class="overflow-hidden rounded-5 d-block dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" style="width: 40px; height: 40px; border: 2px solid var(--col-main);">
-			    <img src="img/img1.png" class="object-fit-cover" alt="프로필사진" style="width: 40px; height: 40px;">
+			    <img src="${member.profile}" class="object-fit-cover" alt="프로필사진" style="width: 40px; height: 40px;">
 			  </a>
 			
 			  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">

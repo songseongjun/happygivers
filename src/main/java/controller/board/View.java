@@ -1,6 +1,7 @@
 package controller.board;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import service.BoardService;
 import service.DonateService;
+import service.MemberService;
 import util.AlertUtil;
 import util.ParamUtil;
 
@@ -46,7 +48,11 @@ public class View extends HttpServlet{
 			DonateService donateService = new DonateService();
 			myamount = donateService.findMyAmount(board.getDrno(), member.getMno());
 		}
-		
+		List<Board> orgDonates = service.findMnoDonateList(board.getMno());
+		Member owner = new MemberService().findByMno(board.getMno());
+
+		req.setAttribute("owner", owner);
+		req.setAttribute("orgDonates", orgDonates);
 		req.setAttribute("myamount", myamount);
 		req.setAttribute("cri", cri);
 		req.setAttribute("board", board);

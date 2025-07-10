@@ -261,7 +261,7 @@ public class BoardService {
 			board.setNickname(findNickname(board.getMno()));
 			board.setName(findName(board.getMno()));
 			if(board.getDrno() != null) {
-				board.setRound(findRound(bno));
+				board.setRound(findRound(board.getDrno()));
 			}
 			
 			return board;
@@ -317,6 +317,9 @@ public class BoardService {
 			    
 				DonateMapper mapper = session.getMapper(DonateMapper.class);
 			    DonateRound round = mapper.selectOneRound(drno);
+				DonateService donateService = new DonateService();
+				round.setTop3(donateService.findTop3(drno));
+
 				return round;
 			}
 			catch (Exception e){

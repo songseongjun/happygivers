@@ -52,5 +52,7 @@
  	SELECT count(*) from tbl_reply where bno = #{bno}
  	</select>
  	
- 	
+ 	<select id="listAll" resultType="reply">
+		select * from tbl_reply
+	</select>
  </mapper>

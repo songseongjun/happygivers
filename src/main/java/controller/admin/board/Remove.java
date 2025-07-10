@@ -13,6 +13,7 @@ import service.BoardService;
 @WebServlet("/admin/board/delete")
 public class Remove extends HttpServlet{
 
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		BoardService boardService = new BoardService();
