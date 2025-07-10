@@ -29,4 +29,7 @@ public interface BoardMapper {
 
 	// 메인 - Q&A
 	List<Board> listQna();
+
+	// mno로 작성한 기부 게시글 리스트 가져오기
+	List<Board> listByMnoDonate(Long mno);
 }

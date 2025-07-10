@@ -207,35 +207,29 @@
                 </c:if> 
                <!-- 후원처 -->
                 <c:if test="${member.mtype == 'ORG' && member.emailcheck == true && member.status == 'ACTIVE' }">
-                <div class="border rounded-3 mt-4 p-4">
-                    <div class="d-flex justify-content-between">
-                        <p class="fs-6 fw-semibold m-0" style="color: var(--col-6);">현재 등록된 내 모금함</p>
-                        <a class="small text-decoration-none" style="color: var(--col-4);">더보기 <i class="fa-solid fa-chevron-right" style="color: var(--col-4);"></i></a>
+                    <div class="border rounded-3 mt-4 p-4">
+                        <div class="d-flex justify-content-between">
+                            <p class="fs-6 fw-semibold m-0" style="color: var(--col-6);">현재 등록된 내 모금함</p>
+                            <a href="${cp}/board/list?type=N&keyword=${member.name}" class="small text-decoration-none" style="color: var(--col-4);">더보기 <i class="fa-solid fa-chevron-right" style="color: var(--col-4);"></i></a>
+                        </div>
+                        <hr>
+                        <c:if test="${not empty myDonates}">
+                        <ul class="p-0 d-flex flex-column gap-3 m-0">
+                            <c:forEach items="${myDonates}" var="d">
+                                <li>
+                                    <a href="#" class="d-flex text-decoration-none">
+                                        <img src="${d.thumbnail != null ? d.thumbnail : 'https://placehold.co/200x150?text=No+img'}" class="rounded-3" alt="이미지4" style="width: 100px; height: 85px; object-fit: cover;">
+                                        <div class="ms-3">
+                                            <p>${d.title}</p>
+                                            <p class="m-0 small" style="color: var(--col-4);">${d.name}</p>
+                                        </div>
+                                    </a>
+                                </li>
+                            </c:forEach>
+                        </ul>
+                        </c:if>
+                        <a href="${cp }/board/write" class="btn btn-primary form-control fs-6 mt-4 py-2">모금 글 작성하기</a>
                     </div>
-                    <hr>
-                    <ul class="p-0 d-flex flex-column gap-3 m-0
-                    ">
-                        <li>
-                            <a href="#" class="d-flex text-decoration-none">
-                                <img src="${cp }/img/img4.png" class="rounded-3" alt="이미지4">
-                                <div class="ms-3">
-                                    <p>혼자가 아닌 함께, 복날 삼계탕 나눔잔치</p>
-                                    <p class="m-0 small" style="color: var(--col-4);">임실군노인복지관</p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="d-flex text-decoration-none">
-                                <img src="${cp }/img/img4.png" class="rounded-3" alt="이미지4">
-                                <div class="ms-3">
-                                    <p>혼자가 아닌 함께, 복날 삼계탕 나눔잔치</p>
-                                    <p class="m-0 small" style="color: var(--col-4);">임실군노인복지관</p>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                    <a href="${cp }/board/write" class="btn btn-primary form-control fs-6 mt-4 py-2">모금 글 작성하기</a>
-                </div>
                 </c:if>
 				                
 				                
@@ -260,36 +254,40 @@
                             <p class="text-center fw-semibold fs-5 m-0"><fmt:formatNumber value="${myTotalAmount}" /><span>원</span></p>
                         </div>
                     </div>
-                    
-                    
+
+
                 </div>
-                
+
                 <!-- 공지사항 -->
+                <c:if test="${notices != null}">
                 <div class="border rounded-3 mt-4 p-4">
                     <div class="d-flex justify-content-between">
                         <p class="fs-6 fw-semibold m-0" style="color: var(--col-6);">공지사항</p>
-                        <a class="small text-decoration-none" style="color: var(--col-4);">더보기 <i class="fa-solid fa-chevron-right" style="color: var(--col-4);"></i></a>
+                        <a href="${cp}/notice/list" class="small text-decoration-none" style="color: var(--col-4);">더보기 <i class="fa-solid fa-chevron-right" style="color: var(--col-4);"></i></a>
                     </div>
                     <hr>
                     <ul class="p-0 d-flex flex-column m-0">
-                        <li><a href="#" class="text-decoration-none text-truncate py-3 border-bottom d-block" style="color: var(--col-6);">공지사항 입니다 공지사항 입니다. 공지사항 입니다 공지사항 입니다</a></li>
-                        <li><a href="#" class="text-decoration-none text-truncate py-3 border-bottom d-block" style="color: var(--col-6);">공지사항 입니다 공지사항 입니다. 공지사항 입니다 공지사항 입니다</a></li>
-                        <li><a href="#" class="text-decoration-none text-truncate py-3 d-block" style="color: var(--col-6);">공지사항 입니다 공지사항 입니다. 공지사항 입니다 공지사항 입니다</a></li>
+                        <c:forEach items="${notices}" var="n">
+                        <li><a href="${cp}/notice/view?bno=${n.bno}" class="text-decoration-none text-truncate py-3 border-bottom d-block" style="color: var(--col-6);">${n.title}</a></li>
+                        </c:forEach>
                     </ul>
                 </div>
+                </c:if>
                 <!-- Q&A -->
+                <c:if test="${qnas != null}">
                 <div class="border rounded-3 mt-4 p-4">
                     <div class="d-flex justify-content-between">
                         <p class="fs-6 fw-semibold m-0" style="color: var(--col-6);">Q&A</p>
-                        <a class="small text-decoration-none" style="color: var(--col-4);">더보기 <i class="fa-solid fa-chevron-right" style="color: var(--col-4);"></i></a>
+                        <a href="${cp}/qna/list" class="small text-decoration-none" style="color: var(--col-4);">더보기 <i class="fa-solid fa-chevron-right" style="color: var(--col-4);"></i></a>
                     </div>
                     <hr>
                     <ul class="p-0 d-flex flex-column m-0">
-                        <li><a href="#" class="text-decoration-none text-truncate py-3 border-bottom d-block" style="color: var(--col-6);">QNAafaskdjhfkljahdsghfsadsdafsdfasdfQNAafaskdjhfkljahdsghfsadsdafsdfasdf</a></li>
-                        <li><a href="#" class="text-decoration-none text-truncate py-3 border-bottom d-block" style="color: var(--col-6);">QNAafaskdjhfkljahdsghfsadsdafsdfasdfQNAafaskdjhfkljahdsghfsadsdafsdfasdf</a></li>
-                        <li><a href="#" class="text-decoration-none text-truncate py-3 d-block" style="color: var(--col-6);">QNAafaskdjhfkljahdsghfsadsdafsdfasdfQNAafaskdjhfkljahdsghfsadsdafsdfasdf</a></li>
+                        <c:forEach items="${qnas}" var="q">
+                        <li><a href="${cp}/qna/view?bno=${q.bno}" class="text-decoration-none text-truncate py-3 border-bottom d-block" style="color: var(--col-6);">${q.title}</a></li>
+                        </c:forEach>
                     </ul>
                 </div>
+                </c:if>
             </div>
         </main>
     </div>

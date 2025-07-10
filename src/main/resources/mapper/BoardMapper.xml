@@ -160,5 +160,14 @@
  		order by regdate desc
  		limit 3
  	</select>
+
+	<!-- mno로 작성된 기부게시글 세개 -->
+	<select id="listByMnoDonate" resultMap="b">
+ 		select *
+ 		from tbl_board b
+ 		where mno= #{mno} and status = 'ACTIVE' and cno in (select cno from tbl_category where ctype = 'DONATE')
+ 		order by regdate desc
+ 		limit 3
+ 	</select>
  	
  </mapper>
