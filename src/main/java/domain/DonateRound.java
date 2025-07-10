@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -25,4 +27,5 @@ public class DonateRound {
 	
 	private int nowamount; // 현재 모금액
 	private int donatecount; // 참여인원수
+	private List<Member> top3; // 상위 멤버 세명
 }

@@ -37,7 +37,26 @@ public class ReplyService {
 		}
 		return null;
 	}
-	
+
+	// 어드민 - 전체 댓글목록 가져오기
+	public List<Reply> allList() {
+		try(SqlSession session = MybatisUtil.getSqlSession()) {
+			ReplyMapper mapper = session.getMapper(ReplyMapper.class);
+			MemberMapper memberMapper = session.getMapper(MemberMapper.class);
+			List<Reply> list = mapper.listAll();
+			for(Reply r : list) {
+				r.setName(memberMapper.findByMno(r.getMno()).getName());
+				r.setNickname(memberMapper.findByMno(r.getMno()).getNickname());
+			}
+			return list;
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+
 	
 	
 	

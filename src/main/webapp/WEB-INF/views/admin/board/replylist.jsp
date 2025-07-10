@@ -21,57 +21,29 @@
 	<main class="d-flex justify-content-between mx-0">
             <div class="px-0" style="max-width: 860px; width:100%;">
               <div>
-				<select class="form-select mb-4" id="categorySelect">
-					<option value="all" ${cno == null ? 'selected' : '' }>전체</option>
-					<option value="1" ${cno == '1' ? 'selected' : '' }>공지사항</option>
-					<option value="2" ${cno == '2' ? 'selected' : '' }>Q&A</option>
-					<option value="3" ${cno == '3' ? 'selected' : '' }>청소년</option>
-					<option value="4" ${cno == '4' ? 'selected' : '' }>어르신</option>
-					<option value="5" ${cno == '5' ? 'selected' : '' }>동물</option>
-					<option value="6" ${cno == '6' ? 'selected' : '' }>지구</option>
-					<option value="7" ${cno == '7' ? 'selected' : '' }>환경</option>
-					<option value="8" ${cno == '8' ? 'selected' : '' }>장애인</option>
-					<option value="9" ${cno == '9' ? 'selected' : '' }>사회</option>
-					<option value="10" ${cno == '10' ? 'selected' : '' }>피드</option>
-				</select>
 				<ul class="list-group small">
 				<li class="list-group-item ">
 					<div class="row my-0 align-items-center">
 					<input class="form-check-input col-1 mx-2 my-0 p-0" type="checkbox" id="checkAll" style="width: 20px; height: 20px;">
 					<span class="col-1 text-center fw-bold">글 번호</span>
-					<span class="col-2 text-center fw-bold">제목</span>
-					<span class="col text-center fw-bold">내용</span>
 					<span class="col-1 text-center fw-bold">작성자</span>
-					<span class="col-2 text-center fw-bold">목표금액</span>
+					<span class="col-1 text-center fw-bold">닉네임</span>
+					<span class="col text-center fw-bold">내용</span>
 					<span class="col-1 text-center fw-bold">등록일</span>
-					<span class="col-1 text-center fw-bold">마감일</span>
 					<span class="col-1 text-center fw-bold">관리</span>
 					</div>
 				</li>
-				<c:forEach items="${boards }" var="b">
+				<c:forEach items="${replys }" var="r">
 				<li class="list-group-item">
 					<div class="row my-0 align-items-center">
-						<input class="form-check-input col-1 mx-2 my-0 p-0 checkItem" type="checkbox" value="${b.bno }" style="width: 20px; height: 20px;">
-						<span class="col-1 text-center">${b.bno }</span>
-						<span class="col-2 text-center text-truncate">${b.title }</span>
-						<c:if test="${b.cno != 10}">
-							<span class="col text-center text-truncate"><a href="${cp }/board/view?bno=${b.bno}" class="text-black" target="_black">${b.content }</a></span>
-						</c:if>
-						<c:if test="${b.cno == 10}">
-							<span class="col text-center text-truncate">${b.content }</span>
-						</c:if>
-
-						<span class="col-1 text-center">${b.name }</span>
-						<span class="col-2 text-center"><fmt:formatNumber value="${b.round.goalamount}" />원</span>
-						<span class="col-1 text-center">${b.regdate }</span>
-						<span class="col-1 text-center">${b.round.voiddate }</span>
+						<input class="form-check-input col-1 mx-2 my-0 p-0 checkItem" type="checkbox" value="${r.rno }" style="width: 20px; height: 20px;">
+						<span class="col-1 text-center">${r.bno }</span>
+						<span class="col-1 text-center text-truncate">${r.name }</span>
+						<span class="col-1 text-center text-truncate">${r.nickname }</span>
+						<span class="col text-center text-truncate">${r.content }</span>
+						<span class="col-1 text-center">${r.regdate }</span>
 						<div class="btn-group btn-group-sm col-1">
-							<c:if test="${b.status == 'ACTIVE' }">
-							<a href="${cp }/admin/board/orgboardstatuschange?bno=${b.bno}&status=DISABLED&name=${b.name}" class="btn btn-outline-secondary">숨김</a>
-							</c:if>
-							<c:if test="${b.status == 'DISABLED' }">
-							<a href="${cp }/admin/board/orgboardstatuschange?bno=${b.bno}&status=ACTIVE&name=${b.name}" class="btn btn-secondary">노출</a>
-							</c:if>
+						<a href="${cp}/admin/reply/delete?rno=${r.rno}" class="btn btn-outline-secondary">삭제</a>
 						</div>
 					</div>
 				</li>
@@ -95,14 +67,7 @@
                
         <%@ include file="../../common/footer.jsp" %>
         
-<script>
-	$("#categorySelect").change(function(){
-		const cno = $(this).val();
-		console.log(cno);
-		const targetUrl = cno === 'all' ? `${cp}/admin/board/list`  : `${cp}/admin/board/list?cno=` + cno;
-		location.href = targetUrl;
-	})
-</script>
+
 <script>
 $('#deleteBtn').on('click', function () {
 	  const checkedValues = $('.checkItem:checked').map(function () {
@@ -118,10 +83,10 @@ $('#deleteBtn').on('click', function () {
 
 	  // 삭제 요청 전송
 	  $.ajax({
-	    url: `${cp}/admin/board/delete`,
+	    url: `${cp}/admin/reply/delete`,
 	    method: 'POST',
-	    traditional: true, // 배열을 bno=1&bno=2 형태로 전송
-	    data: { bno: checkedValues },
+	    traditional: true, // 배열을 rno=1&rno=2 형태로 전송
+	    data: { rno: checkedValues },
 	    success: function (res) {
 	      alert('삭제되었습니다.');
 	      location.reload();

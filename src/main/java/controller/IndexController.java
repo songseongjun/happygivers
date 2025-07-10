@@ -23,24 +23,29 @@ public class IndexController extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		Member member = null;
 		DonateService donateService = new DonateService();
+		BoardService boardService = new BoardService();
 		long totalAmount = donateService.findTotalAmount();
 		long myTotalAmount = 0;
-			
+
 		HttpSession session = req.getSession(false);
-		
+
+		List<Board> myDonates = null;
 		if(session != null && session.getAttribute("member") != null) {
 			member = (Member) session.getAttribute("member");
 			myTotalAmount = donateService.findMyTotalAmount(member.getMno());
+			myDonates = boardService.findMnoDonateList(member.getMno());
 		}
-		BoardService boardService = new BoardService();
 		Board deadlineBoard = boardService.findByDeadline();
 
-		
+
 		List<Board> newBoards = boardService.findNewList();
-		
-		
-		
-		
+		List<Board> notices = boardService.findNoticeList();
+		List<Board> qnas = boardService.findQnaList();
+
+
+		req.setAttribute("myDonates", myDonates);
+		req.setAttribute("notices", notices);
+		req.setAttribute("qnas", qnas);
 		req.setAttribute("newBoards", newBoards);
 		req.setAttribute("deadlineBoard", deadlineBoard);
 		req.setAttribute("totalAmount", totalAmount);

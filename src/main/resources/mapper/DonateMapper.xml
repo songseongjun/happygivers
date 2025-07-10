@@ -131,4 +131,16 @@
 	WHERE a.dano IN (SELECT dano FROM tbl_pay WHERE paystatus = 'PAID')
 	order by regdate desc
  	</select>
+
+	<!-- 기부게시글에 상위 세명 뽑아오기 -->
+	<select id="findTop3" resultType="long">
+		SELECT da.mno
+		FROM tbl_donate_action da
+		JOIN tbl_pay p ON da.dano = p.dano
+		WHERE da.drno = #{drno}
+		AND p.paystatus = 'PAID'
+		GROUP BY da.mno
+		ORDER BY SUM(da.amount) DESC
+		LIMIT 3;
+	</select>
 </mapper>

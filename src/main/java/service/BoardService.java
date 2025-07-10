@@ -261,7 +261,7 @@ public class BoardService {
 			board.setNickname(findNickname(board.getMno()));
 			board.setName(findName(board.getMno()));
 			if(board.getDrno() != null) {
-				board.setRound(findRound(bno));
+				board.setRound(findRound(board.getDrno()));
 			}
 			
 			return board;
@@ -317,6 +317,9 @@ public class BoardService {
 			    
 				DonateMapper mapper = session.getMapper(DonateMapper.class);
 			    DonateRound round = mapper.selectOneRound(drno);
+				DonateService donateService = new DonateService();
+				round.setTop3(donateService.findTop3(drno));
+
 				return round;
 			}
 			catch (Exception e){
@@ -466,9 +469,49 @@ public class BoardService {
 			return null;
 		}
 	
-		
-		
-		
-		
-		
+	// 메인 - 공지사항 세개 불러오기
+	public List<Board> findNoticeList() {
+		try(SqlSession session = MybatisUtil.getSqlSession()) {
+			BoardMapper mapper = session.getMapper(BoardMapper.class);
+			List<Board> notices = mapper.listNotice();
+
+			return notices;
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	// 메인 - Q&A 세개 불러오기
+	public List<Board> findQnaList() {
+		try(SqlSession session = MybatisUtil.getSqlSession()) {
+			BoardMapper mapper = session.getMapper(BoardMapper.class);
+			List<Board> qnas = mapper.listQna();
+
+			return qnas;
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	// mno로 게시글 세개 가져오기
+	public List<Board> findMnoDonateList(Long mno) {
+		try(SqlSession session = MybatisUtil.getSqlSession()) {
+			BoardMapper mapper = session.getMapper(BoardMapper.class);
+			List<Board> myDonates = mapper.listByMnoDonate(mno);
+			for(Board b : myDonates) {
+				b.setThumbnail(findThumbnail(b.getBno()));
+				b.setName(findName(b.getMno()));
+			}
+
+			return myDonates;
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
