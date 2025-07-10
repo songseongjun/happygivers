@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,10 +55,10 @@
 	            </thead>
 	            <tbody>
 	              <tr>
-	                <td class="py-3 fw-semibold">0</td>
-	                <td class="py-3 fw-semibold">0</td>
-	                <td class="py-3 fw-semibold">0</td>
-	                <td class="py-3 fw-semibold">0</td>
+	                <td class="py-3 fw-semibold"><fmt:formatNumber value="${todayBoardCount}" />개</td>
+	                <td class="py-3 fw-semibold"><fmt:formatNumber value="${readyCount}" />개</td>
+	                <td class="py-3 fw-semibold"><fmt:formatNumber value="${totalVoidCount}" />개</td>
+	                <td class="py-3 fw-semibold"><fmt:formatNumber value="${totalBoardCount}" />개</td>
 	              </tr>
 	            </tbody>
 	          </table>
@@ -68,17 +70,17 @@
 	            <thead>
 	              <tr>
 	                <th class="bg-light py-3">신규 결제</th>
-	                <th class="bg-light py-3">환불 요청</th>
+	                <th class="bg-light py-3">환불 수</th>
 	                <th class="bg-light py-3">전체 결제횟수</th>
 	                <th class="bg-light py-3">전체 결제금액</th>
 	              </tr>
 	            </thead>
 	            <tbody>
 	              <tr>
-	                <td class="py-3 fw-semibold">0</td>
-	                <td class="py-3 fw-semibold">0</td>
-	                <td class="py-3 fw-semibold">0</td>
-	                <td class="py-3 fw-semibold">0</td>
+	                <td class="py-3 fw-semibold"><fmt:formatNumber value="${todayPayCount}" />건</td>
+	                <td class="py-3 fw-semibold"><fmt:formatNumber value="${totalRefundCount}" />건</td>
+	                <td class="py-3 fw-semibold"><fmt:formatNumber value="${totalPayCount}" />건</td>
+	                <td class="py-3 fw-semibold"><fmt:formatNumber value="${totalAmount}" />원</td>
 	              </tr>
 	            </tbody>
 	          </table>

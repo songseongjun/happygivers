@@ -32,4 +32,13 @@ public interface BoardMapper {
 
 	// mno로 작성한 기부 게시글 리스트 가져오기
 	List<Board> listByMnoDonate(Long mno);
+
+	// 전체 게시글 수 (ACTIVE)
+	int totalBoardCount();
+
+	// 마감된 게시글 수
+	int totalVoidCount();
+
+	// 오늘 작성된 게시글 수
+	int todayBoardCount();
 }
