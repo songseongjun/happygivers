@@ -169,5 +169,27 @@
  		order by regdate desc
  		limit 3
  	</select>
- 	
+
+	<!-- 총 게시글 수 -->
+	<select id="totalBoardCount" resultType="int">
+ 		select count(*)
+ 		from tbl_board b
+ 		where status = 'ACTIVE'
+ 	</select>
+
+	<select id="totalVoidCount" resultType="int">
+		<![CDATA[
+	SELECT COUNT(*)
+	FROM tbl_board
+	WHERE drno is not null and drno in (select drno from tbl_donate_round where voiddate < NOW())
+	]]>
+	</select>
+
+	<select id="todayBoardCount" resultType="int">
+		<![CDATA[
+	SELECT COUNT(*)
+	FROM tbl_board
+	WHERE regdate >= NOW() - INTERVAL 1 DAY
+	]]>
+	</select>
  </mapper>

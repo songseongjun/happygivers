@@ -76,5 +76,21 @@
 	<select id="selectOneLog" resultType="paylog">
 		
 	</select>
- 
+
+	<select id="totalPaidCount" resultType="int">
+		select count(*) from tbl_pay where paystatus = 'PAID'
+
+	</select>
+	<select id="totalRefundCount" resultType="int">
+		select count(*) from tbl_pay where paystatus = 'REFUND'
+
+	</select>
+
+	<select id="todayPaidCount" resultType="int">
+		<![CDATA[
+	SELECT count(*)
+	FROM tbl_pay
+	WHERE regdate >= NOW() - INTERVAL 1 DAY and paystatus = 'PAID'
+	]]>
+	</select>
 </mapper>

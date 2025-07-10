@@ -29,4 +29,13 @@ public interface PayMapper {
 	List<PayLog> listLog();
 	
 	PayLog selectOneLog(Long plno);
+
+	// 전체 결제 횟수 - PAID 인것만
+	int totalPaidCount();
+
+	// 전체 환불 횟수
+	int totalRefundCount();
+
+	// 오늘 결제 횟수
+	int todayPaidCount();
 }

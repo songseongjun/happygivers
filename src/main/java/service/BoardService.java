@@ -514,4 +514,46 @@ public class BoardService {
 		}
 		return null;
 	}
+
+
+	// 총 게시글 수(활성화 상태)
+	public int totalBoardCount() {
+		try(SqlSession session = MybatisUtil.getSqlSession()) {
+			BoardMapper mapper = session.getMapper(BoardMapper.class);
+
+
+			return mapper.totalBoardCount();
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	// 마감된 게시글 수
+	public int totalVoidCount() {
+		try(SqlSession session = MybatisUtil.getSqlSession()) {
+			BoardMapper mapper = session.getMapper(BoardMapper.class);
+
+
+			return mapper.totalVoidCount();
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	// 오늘 생성된 게시글 수
+	public int todayBoardCount() {
+		try(SqlSession session = MybatisUtil.getSqlSession()) {
+			BoardMapper mapper = session.getMapper(BoardMapper.class);
+
+
+			return mapper.todayBoardCount();
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
+		return 0;
+	}
 }

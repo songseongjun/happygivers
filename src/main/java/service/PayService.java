@@ -132,5 +132,40 @@ public class PayService {
 		}
 		return null;
 	}
-	
+
+	// 전체 결제 횟수 (paid인것만)
+	public int allPayCount() {
+		try(SqlSession session = MybatisUtil.getSqlSession()) {
+			PayMapper mapper = session.getMapper(PayMapper.class);
+			return mapper.totalPaidCount();
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	// 전체 환불 횟수 (paid인것만)
+	public int allRefundCount() {
+		try(SqlSession session = MybatisUtil.getSqlSession()) {
+			PayMapper mapper = session.getMapper(PayMapper.class);
+			return mapper.totalRefundCount();
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	// 오늘 결제 횟수 (paid인것만)
+	public int todayPaidCount() {
+		try(SqlSession session = MybatisUtil.getSqlSession()) {
+			PayMapper mapper = session.getMapper(PayMapper.class);
+			return mapper.todayPaidCount();
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
 }
