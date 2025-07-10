@@ -188,8 +188,8 @@
         }
 
         // 음수 방지
-        if (value < 1000000) {
-          e.target.value = 1000000;
+        if (value < 0) {
+          e.target.value = 0;
         }
       })
     })

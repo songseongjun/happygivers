@@ -14,7 +14,7 @@
 	margin: 1.5rem 0 !important;
 }
 
-.toastui-editor-contents [data-nodeid='1'] *not(:first-child) {
+.toastui-editor-contents [data-nodeid='1'] *:not(:first-child) {
 	margin: 1.5rem 0 !important;
 }
 
