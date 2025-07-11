@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
@@ -32,6 +33,9 @@ public class ReplyServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String uri = getURI(req);
+		HttpSession session = req.getSession(false);
+		Member member = (Member) session.getAttribute("member");
+
 		ReplyService service = new ReplyService();
 		Gson gson = new Gson(); 
 		Object o = null;
@@ -46,7 +50,7 @@ public class ReplyServlet extends HttpServlet{
 					if(tmps.length > 2) {
 						lastRno = Long.valueOf(tmps[2]);
 					}
-					o = service.list(bno, lastRno);
+					o = service.list(bno, member.getMno(),lastRno);
 				}
 			}
 		}

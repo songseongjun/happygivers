@@ -39,7 +39,9 @@
             <a href="${cp}/mypage"class="text-decoration-none fw-medium small"style="color: var(--col-5);">마이페이지</a>
           </div>
         </div>
-
+      <c:if test="${member.mtype == 'ORG'}">
+      <a href="${cp }/board/write" class="btn btn-primary form-control py-2 fs-6 mb-4">모금 글 작성하기</a>
+      </c:if>
     </c:if>
     <!-- 기부 메뉴 (아코디언 형식) -->
     <div class="accordion mb-3" id="donationMenu">

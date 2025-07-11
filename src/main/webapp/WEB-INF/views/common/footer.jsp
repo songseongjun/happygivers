@@ -9,8 +9,8 @@
             <ul class="list-unstyled d-flex gap-3 small mt-5 mb-3">
                 <li><a href="${cp}/notice/list" class="text-decoration-none" style="color: var(--col-5);">공지사항</a></li>
                 <li><a href="${cp}/qna/list" class="text-decoration-none" style="color: var(--col-5);">Q&A</a></li>
-                <li><a href="#" class="text-decoration-none fw-bold" style="color: var(--col-5);">개인정보처리방침</a></li>
-                <li><a href="#" class="text-decoration-none" style="color: var(--col-5);">이용약관</a></li>
+                <li><a href="${cp}/privacy" class="text-decoration-none fw-bold" style="color: var(--col-5);">개인정보처리방침</a></li>
+                <li><a href="${cp}/terms" class="text-decoration-none" style="color: var(--col-5);">이용약관</a></li>
             </ul>
             <p class="small" style="color: var(--col-5);">&copy;Copyright Happy Givers All rights reserved.</p>
         </div>

@@ -238,9 +238,11 @@
         const url = "${cp}" + "/reply/";
         const modal = new bootstrap.Modal($("#reviewModal").get(0), {})
         const loginUserMno = ${member.mno != null ? member.mno : 'null'};
+
         // makeReplyLi(reply) > str
         
         function makeReplyLi(r) {
+            const liked = r.liked === true;
         	const isOwner = loginUserMno === r.mno; 
         	return `<li class="d-flex gap-3" data-rno="\${r.rno}">
             <div class="rounded-5 overflow-hidden border-2" style="border: 2px solid var(--border-1); width: 40px; height: 40px; box-sizing: border-box;"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQm38aJRuNJH9z0qvbVUWR9rDQ2N7DoUWDXSA&s" alt="프로필 사진" style="width: 100%; height: 100%; object-fit: cover;" ></div>
@@ -252,7 +254,9 @@
                     <p class="m-0 small">\${r.content}</p>
                 </div>
                 <div class="small d-flex justify-content-end gap-3 mt-2">
-                    <label><i class="fa-regular fa-heart me-1"></i> 좋아요<button class="d-none"></button></label>
+                    <button class="btn-like border-0 bg-transparent" data-rno="\${r.rno}" data-liked="\${liked}">
+                    <i class="\${liked ? 'fa-solid' : 'fa-regular'} fa-heart me-1 text-primary"></i> 좋아요 <span class="like-count" data-rno="\${r.rno}">\${r.likeCnt}</span>
+                    </button>
                     <span>\${dayjs(r.regdate, dayForm).fromNow()}</span>
                     \${isOwner ? `
                     <label class="text-decoration-underline " style="color: var(--col-3); cursor: pointer;">수정<button class="d-none btn-modify-form"></button></label>
@@ -412,6 +416,44 @@
         })
         
     })
+</script>
+<script>
+    $(document).on('click', '.btn-like', function() {
+        const $btn = $(this);
+        const rno = $btn.data('rno');
+        const bno = $btn.data('bno');
+        const mno =  ${member.mno};
+        const param = {};
+        if (rno) param.rno = rno;
+        if (bno) param.bno = bno;
+        if (mno) param.mno = mno;
+
+        $.post('${cp}/api/like', param, function(res) {
+            const liked = res.liked;
+            const $icon = $btn.find('i');
+
+            // 아이콘 변경
+            if (liked) {
+                $icon.removeClass('fa-regular').addClass('fa-solid');
+            } else {
+                $icon.removeClass('fa-solid').addClass('fa-regular');
+            }
+
+            // data-liked 상태도 갱신해줌
+            $btn.data('liked', liked);
+
+
+            // 좋아요 수 동기화
+            const countUrl = rno ? `${cp}/api/like?rno=\${rno}` : `${cp}/api/like?bno=\${bno}`;
+            $.get(countUrl, function (cnt) {
+                if (rno)
+                    $(`.like-count[data-rno='\${rno}']`).text(cnt);
+                else
+                    $(`.like-count[data-bno='\${bno}']`).text(cnt);
+            });
+        });
+    });
+
 </script>
 </body>
 </html>

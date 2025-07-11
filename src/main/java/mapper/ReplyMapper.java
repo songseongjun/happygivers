@@ -13,7 +13,7 @@ public interface ReplyMapper {
 	void deleteByBno(Long bno);
 	
 	Reply selectOne(Long rno);
-	List<Reply> list(@Param("bno") Long bno, @Param("lastRno") Long lastRno);
+	List<Reply> list(@Param("bno") Long bno, @Param("mno") Long mno, @Param("lastRno") Long lastRno);
 	List<Reply> listAll();
 	int getReplyCount(Long bno);
 	List<Reply> selectByMno(Long mno);
