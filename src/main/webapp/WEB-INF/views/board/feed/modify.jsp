@@ -17,10 +17,10 @@
 	          <div id="editor"></div>
 		          <div class="d-flex border rounded-1 list-group p-3 gap-3 flex-row mt-2">
 		            <div class="form-floating rounded-2 overflow-hidden">
-		              <img src="https://placehold.co/250x250?text=No+img" alt="썸네일" id="thumbnailImg" style="height: 58px; object-fit: cover;">
+		              <img src="${feed.thumbnail != null ? feed.thumbnail : 'https://placehold.co/250x250?text=No+img'}" alt="썸네일" id="thumbnailImg" style="height: 58px; object-fit: cover;">
 		            </div>
 		            <div class="form-floating d-flex flex-grow-1 position-relative">
-					  <input type="text" class="form-control pe-5" id="thumbnailName" placeholder="이미지" readonly>
+					  <input type="text" class="form-control pe-5" id="thumbnailName" placeholder="이미지" value="${feed.attach.origin}" readonly>
 					  <label for="thumbnailName" style="z-index: 10;">이미지</label>
 					  <input type="file" id="thumbnailFile" class="d-none" accept=".jpg, .jpeg, .png, .bmp, .gif, .webp">
 					  <button type="button" class="btn btn-outline-primary position-absolute top-50 end-0 translate-middle-y me-2" id="uploadThumbnailBtn">이미지 등록</button>
@@ -33,9 +33,9 @@
 		          <input type="hidden" name="status" value="${feed.status}">
 		          <input type="hidden" name="ctype" value="${feed.ctype}">
 		          <input type="hidden" name="mno" value="${feed.mno }">
-		          <input type="hidden" name="uuid" id="uuid" value="#{feed.attach.uuid}">
-				  <input type="hidden" name="path" id="path" value="#{feed.attach.path}">
-				  <input type="hidden" name="origin" id="origin" value="#{feed.attach.origin}">
+		          <input type="hidden" name="uuid" id="uuid" value="${feed.attach.uuid}">
+				  <input type="hidden" name="path" id="path" value="${feed.attach.path}">
+				  <input type="hidden" name="origin" id="origin" value="${feed.attach.origin}">
 				  <input type="hidden" name="image" value="true">
 	          <div class="float-end mt-4">
 	            <a href="${cp }/feed/list" class="btn btn-outline-primary me-2">취소</a>

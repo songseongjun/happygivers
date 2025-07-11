@@ -127,7 +127,6 @@
                             <li class="d-flex align-items-center gap-3 rounded-2 p-2" style="background-color: var(--bg-1);">
                                 <img src="${m.profile != null ? m.profile : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQm38aJRuNJH9z0qvbVUWR9rDQ2N7DoUWDXSA&s'}" class="rounded-5" alt="프로필 사진" style="width: 40px; height: 40px; object-fit: cover;">
                                 <p class="m-0 flex-grow-1 fw-medium"><span>${m.name}</span>님</p>
-                                <p class="m-0 small" style="color: var(--col-3);">상위 24%</p>
                             </li>
                             </c:forEach>
                         </ul>
@@ -246,9 +245,8 @@
         	return `<li class="d-flex gap-3" data-rno="\${r.rno}">
             <div class="rounded-5 overflow-hidden border-2" style="border: 2px solid var(--border-1); width: 40px; height: 40px; box-sizing: border-box;"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQm38aJRuNJH9z0qvbVUWR9rDQ2N7DoUWDXSA&s" alt="프로필 사진" style="width: 100%; height: 100%; object-fit: cover;" ></div>
             <div class="flex-grow-1">
-                <div class="d-flex justify-content-between my-2">
+                <div class="d-flex my-2">
                     <p class="fw-medium m-0" style="color: var(--col-6);">\${r.nickname == null ? r.name : r.nickname}</p>
-                    <p class="small text-muted m-0">상위 5%</p>
                 </div>
                 <div class="p-3 rounded-3 mt-3" style="background-color: var(--col-1);">
                     <p class="m-0 small">\${r.content}</p>
