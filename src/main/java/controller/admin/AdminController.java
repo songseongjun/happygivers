@@ -55,6 +55,12 @@ public class AdminController extends HttpServlet{
 		req.setAttribute("totalRefundCount", totalRefundCount);
 		req.setAttribute("totalPayCount", totalPayCount);
 		req.setAttribute("totalAmount", totalAmount);
+
+
+		String page = req.getParameter("page");
+		req.setAttribute("page", page); 
+
+
 		req.getRequestDispatcher("/WEB-INF/views/admin/adminIndex.jsp").forward(req, resp);
 	}
 	

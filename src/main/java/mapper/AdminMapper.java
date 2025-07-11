@@ -16,5 +16,8 @@ public interface AdminMapper {
 
     // 승인/거절 로그 기록
     int insertApprLog(ApprLog log);
+
+    //기관회원 정보 승인조회기능
+    List<ApprLog> selectApprovalLogs();
 }
 

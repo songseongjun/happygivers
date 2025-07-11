@@ -34,4 +34,13 @@ public class AdminService {
             return result1 > 0 && result2 > 0;
         }
     }
+
+            // 기관회원 정보 조회
+            public List<ApprLog> getApprovalLogs() {
+                SqlSession session = MybatisUtil.getSqlSession();
+                AdminMapper mapper = session.getMapper(AdminMapper.class);
+                return mapper.selectApprovalLogs();
+            }
+
+
 }

@@ -54,17 +54,14 @@ public class Register extends HttpServlet {
          
         //mtype에 따른 닉네임 처리 추가
         String mtype = req.getParameter("mtype");
-        
-        
-
         if ("USER".equalsIgnoreCase(mtype)) {
             // 일반회원 > 닉네임 자동 생성
             if(member.getNickname() == null || member.getNickname().trim().isEmpty()) {
-            	String rand = String.valueOf((int)(Math.random() * 900000) + 100000);
+            	String rand = String.valueOf((int)(Math.random() * 9000) + 1000);
             	member.setNickname("기부천사" + rand);
             }
             
-            member.setStatus(Status.ACTIVE);//일반회원은 그대로 이상태
+            member.setStatus(Status.ACTIVE);//일반회원은 바로 이상태.ACTIVE(사용가능)상태
             
         } else if ("ORG".equalsIgnoreCase(mtype)) {
             // 기관회원 >기관명 필수

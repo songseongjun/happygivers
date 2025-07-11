@@ -22,4 +22,20 @@
     VALUES (#{mno}, #{appr}, #{reason}, #{admno})
   </insert>
 
+
+  <!--기관회원 승인정보조화 -->
+  <select id="selectApprovalLogs" resultType="domain.ApprLog">
+    SELECT
+    a.apprlogno,
+    a.mno,
+    m.id,
+    m.email,
+    a.appr,
+    a.reason,
+    a.admno,
+    a.regdate
+    FROM tbl_appr_log a
+    JOIN tbl_member m ON a.mno = m.mno
+    ORDER BY a.regdate DESC
+  </select>
 </mapper>
