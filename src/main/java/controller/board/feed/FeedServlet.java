@@ -10,10 +10,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
 import domain.Board;
+import domain.Member;
 import domain.Reply;
 import lombok.extern.slf4j.Slf4j;
 import service.BoardService;
@@ -29,13 +31,14 @@ public class FeedServlet extends HttpServlet{
 		Long bno = Long.parseLong(req.getParameter("bno"));
 		BoardService service = new BoardService();
 		Board board = service.findByBno(bno);
-		
+		HttpSession session = req.getSession(false);
+		Member member = (Member) session.getAttribute("member");
 		if (board == null) {
 	      resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
 	      return;
 	    }
 		ReplyService replyService = new ReplyService();
-		List<Reply> replys = replyService.list(bno, null);
+		List<Reply> replys = replyService.list(bno, member.getMno(), null);
 		log.info("{}", replys);
 		
 		Map<String, Object> data = Map.of(

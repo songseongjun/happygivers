@@ -13,6 +13,7 @@
  		<result column="cno" property="cno"/>
  		<result column="cnt" property="cnt"/>
  		<result column="status" property="status"/>
+		<result column="likeCnt" property="likeCnt"/>
  	</resultMap>
 
 
@@ -99,7 +100,7 @@
  	
  	<!-- 게시글 리스트 -->
  	<select id="list" resultMap="b">
- 		select b.*
+ 		select b.*, (SELECT COUNT(*) FROM tbl_like l WHERE l.bno = b.bno) AS likeCnt
  		from tbl_board b
  		<include refid="criteria"/>
  		order by bno DESC
@@ -111,7 +112,9 @@
  	
  	<!-- 게시글 하나 선택 -->
  	<select id="selectOne" resultMap="b">
- 		select * from tbl_board where bno = #{bno}
+ 		select b.*, (SELECT COUNT(*) FROM tbl_like l WHERE l.bno = b.bno) AS likeCnt
+		from tbl_board b
+		where bno = #{bno}
  	</select>
  	
  	<!-- 게시글 갯수 -->
@@ -123,7 +126,7 @@
  	
  	<!-- 마감일이 제일 가까운 하나의 게시글선택 -->
  	<select id="selectOneDeadline" resultMap="b">
- 		select b.*
+ 		select b.*, (SELECT COUNT(*) FROM tbl_like l WHERE l.bno = b.bno) AS likeCnt
 		from tbl_board b
 		join tbl_donate_round dr on b.drno = dr.drno
 		left join tbl_donate_action da on dr.drno = da.drno
@@ -136,7 +139,7 @@
  	
  	<!-- 상태가 active인 기부 게시글 가져오기 -->
  	<select id="listNew" resultMap="b">
- 		select *
+ 		select b.*, (SELECT COUNT(*) FROM tbl_like l WHERE l.bno = b.bno) AS likeCnt
  		from tbl_board b
  		where drno is not null and status = 'ACTIVE' and drno in (select drno from tbl_donate_round where status = 'ACTIVE')
  		order by regdate desc
@@ -152,7 +155,7 @@
  		limit 3
  	</select>
 
-	<!-- 공지사항 최신 세개 -->
+	<!-- Q&A 최신 세개 -->
 	<select id="listQna" resultMap="b">
  		select *
  		from tbl_board b

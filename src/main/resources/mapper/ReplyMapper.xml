@@ -31,14 +31,17 @@
  	<select id="selectOne" resultType="reply">
  		SELECT r.*,
  		(SELECT m.nickname FROM tbl_member m WHERE m.mno = r.mno) AS nickname,
-    	(SELECT m.name FROM tbl_member m WHERE m.mno = r.mno) AS name 
+    	(SELECT m.name FROM tbl_member m WHERE m.mno = r.mno) AS name,
+		(SELECT COUNT(*) FROM tbl_like l WHERE l.rno = r.rno AND l.mno = #{mno}) > 0 AS liked,
+		(SELECT COUNT(*) FROM tbl_like l WHERE l.rno = r.rno) AS likeCnt
  		from tbl_reply r 
  		where rno = #{rno}
  	</select>
  	
  	<!-- 댓글 목록 조회 -->
  	<select id="list" resultType="reply">
- 		SELECT * from tbl_reply where bno = #{bno}
+ 		SELECT r.*, (SELECT COUNT(*) FROM tbl_like l WHERE l.rno = r.rno AND l.mno = #{mno}) > 0 AS liked, (SELECT COUNT(*) FROM tbl_like l WHERE l.rno = r.rno) AS likeCnt
+		from tbl_reply r where bno = #{bno}
 		<if test="lastRno != null"> 	
  		<![CDATA[
  		and rno < #{lastRno}

@@ -21,4 +21,6 @@ public class Reply {
 	
 	private String nickname; // 닉네임
 	private String name; // 이름
+	private int likeCnt; // 좋아요 수
+	private Boolean liked; // 접속자 좋아요 여부
 }

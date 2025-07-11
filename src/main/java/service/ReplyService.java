@@ -21,11 +21,11 @@ public class ReplyService {
 		return null;
 	}
 	
-	public List<Reply> list(Long bno, Long lastRno) {
+	public List<Reply> list(Long bno, Long mno, Long lastRno) {
 		try(SqlSession session = MybatisUtil.getSqlSession()) {
 			ReplyMapper mapper = session.getMapper(ReplyMapper.class);
 			MemberMapper memberMapper = session.getMapper(MemberMapper.class);
-			List<Reply> list = mapper.list(bno, lastRno);
+			List<Reply> list = mapper.list(bno, mno,lastRno);
 			for(Reply r : list) {
 				r.setName(memberMapper.findByMno(r.getMno()).getName());
 				r.setNickname(memberMapper.findByMno(r.getMno()).getNickname());

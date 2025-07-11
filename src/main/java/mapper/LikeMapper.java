@@ -1,0 +1,27 @@
+package mapper;
+
+import domain.ApprLog;
+import domain.Like;
+import domain.Member;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+public interface LikeMapper {
+   // 좋아요
+    void insert(Like like);
+
+    // 좋아요 해제
+    void delete(Like like);
+
+    // 게시글 좋아요 수
+    int countBoard(Long bno);
+
+    // 댓글 좋아요 수
+    int countReply(Long rno);
+
+    List<Like> findByMno(Long mno);
+
+    int isLiked(Like like);
+}
+
