@@ -167,5 +167,16 @@ public class PayService {
 		}
 		return 0;
 	}
+	// mno로 결제 리스트 찾기
+	public List<Pay> findByMno(Long mno) {
+		try(SqlSession session = MybatisUtil.getSqlSession()) {
+			PayMapper mapper = session.getMapper(PayMapper.class);
+			return mapper.findByMno(mno);
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 }

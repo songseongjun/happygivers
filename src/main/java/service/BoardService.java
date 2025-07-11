@@ -556,4 +556,27 @@ public class BoardService {
 		}
 		return 0;
 	}
+
+	// 자신이 쓴 게시글 보기(삭제된 게시글 제외)
+	public List<Board> myBoardList(Long mno) {
+		try(SqlSession session = MybatisUtil.getSqlSession()) {
+			BoardMapper mapper = session.getMapper(BoardMapper.class);
+			CategoryMapper categoryMapper = session.getMapper(CategoryMapper.class);
+			List<Board> boards = mapper.myBoardList(mno);
+
+			for(Board b : boards) {
+				b.setCtype(categoryMapper.selectOne(b.getCno()).getCtype());
+				if(b.getDrno() != null) {
+					b.setRound(findRound(b.getDrno()));
+				}
+			}
+
+
+			return boards;
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

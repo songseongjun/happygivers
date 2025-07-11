@@ -41,4 +41,8 @@ public interface BoardMapper {
 
 	// 오늘 작성된 게시글 수
 	int todayBoardCount();
+
+
+	// 마이페이지 - 작성한 게시글 전부 가져오기
+	List<Board> myBoardList(Long mno);
 }

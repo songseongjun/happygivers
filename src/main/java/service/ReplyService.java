@@ -56,6 +56,21 @@ public class ReplyService {
 		return null;
 	}
 
+	// 마이페이지 - 작성한 댓글목록 가져오기
+	public List<Reply> myReplys(Long mno) {
+		try(SqlSession session = MybatisUtil.getSqlSession()) {
+			ReplyMapper mapper = session.getMapper(ReplyMapper.class);
+
+			List<Reply> list = mapper.selectByMno(mno);
+
+			return list;
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 
 	
 	

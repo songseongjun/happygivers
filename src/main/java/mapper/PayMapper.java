@@ -38,4 +38,7 @@ public interface PayMapper {
 
 	// 오늘 결제 횟수
 	int todayPaidCount();
+
+	// 유저 한명의 결제내역
+	List<Pay> findByMno(Long mno);
 }

@@ -55,4 +55,9 @@
  	<select id="listAll" resultType="reply">
 		select * from tbl_reply
 	</select>
+
+
+	<select id="selectByMno" resultType="reply">
+		select * from tbl_reply where mno = #{mno}
+	</select>
  </mapper>

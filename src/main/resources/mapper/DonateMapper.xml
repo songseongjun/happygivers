@@ -132,6 +132,22 @@
 	order by regdate desc
  	</select>
 
+	<!-- 마이페이지 actionlist -->
+ 	<select id="myActionList" resultType="donateAction">
+ 	SELECT
+	  a.*,
+	  m1.name AS name,
+	  m2.name AS orgname,
+	  b.title AS title,
+	  b.bno as bno
+	FROM tbl_donate_action a
+	LEFT JOIN tbl_member m1 ON a.mno = m1.mno
+	LEFT JOIN tbl_board b ON a.drno = b.drno
+	LEFT JOIN tbl_member m2 ON b.mno = m2.mno
+	WHERE a.dano IN (SELECT dano FROM tbl_pay WHERE paystatus = 'PAID') and a.mno = #{mno}
+	order by regdate desc
+ 	</select>
+
 	<!-- 기부게시글에 상위 세명 뽑아오기 -->
 	<select id="findTop3" resultType="long">
 		SELECT da.mno

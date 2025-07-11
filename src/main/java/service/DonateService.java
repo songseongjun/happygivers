@@ -102,5 +102,17 @@ public class DonateService {
 		}
 		return null;
 	}
-	
+
+
+	// 기부 상태가 paid인 유저한명의 기부내역 가져오기
+	public List<DonateAction> myActionList(Long mno) {
+		try(SqlSession session = MybatisUtil.getSqlSession()) {
+			DonateMapper mapper = session.getMapper(DonateMapper.class);
+			return mapper.myActionList(mno);
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

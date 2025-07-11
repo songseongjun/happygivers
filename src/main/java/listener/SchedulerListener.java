@@ -26,7 +26,7 @@ public class SchedulerListener implements ServletContextListener{
 	            System.out.println("서버 실행됨 > GhostFileCleanupJob 실행");
 
 	            // 1. 서버 시작 시 GhostFileCleanupJob 즉시 1회 실행
-	            new GhostFileCleanupJob().execute(null);
+//	            new GhostFileCleanupJob().execute(null);
 
 	            // 2. Quartz 스케줄러 생성
 	            scheduler = StdSchedulerFactory.getDefaultScheduler();

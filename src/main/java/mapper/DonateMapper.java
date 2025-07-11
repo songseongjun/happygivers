@@ -30,7 +30,7 @@ public interface DonateMapper {
 	long findMyAmount(@Param("drno") Long drno,@Param("mno") Long mno);
 	long findMyTotalAmount(Long mno);
 	long findTotalAmount();
-
+	List<DonateAction> myActionList(Long mno);
 
 
 	List<Long> findTop3(Long drno);
