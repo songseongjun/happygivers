@@ -28,8 +28,7 @@ public class ReplyList extends HttpServlet {
             member = (Member) session.getAttribute("member");
             replys = service.myReplys(member.getMno());
         }
-        log.info("{}", replys);
         req.setAttribute("replys", replys);
-        req.getRequestDispatcher("/WEB-INF/views/member/mypage/boardlist.jsp").forward(req,resp);
+        req.getRequestDispatcher("/WEB-INF/views/member/mypage/replylist.jsp").forward(req,resp);
     }
 }

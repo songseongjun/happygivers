@@ -92,7 +92,7 @@
 			data: { bno: bno },
 			success: function (res) {
 				alert('삭제되었습니다.');
-				location.reload();
+				$(`*[data-bno='\${bno}']`).closest("li").remove();
 			},
 			error: function () {
 				alert('삭제 실패');

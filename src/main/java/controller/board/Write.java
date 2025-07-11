@@ -135,9 +135,13 @@ public class Write extends HttpServlet{
 		boardService.write(board, donate, round);
 		AlertUtil.alert("글이 등록되었습니다.", "/board/list?cno=" + board.getCno(), req, resp);
 		}
-		else {
+		else if("/notice/write".equals(path)){
 			boardService.write(board);
-			AlertUtil.alert("글이 등록되었습니다.", "/index", req, resp);
+			AlertUtil.alert("글이 등록되었습니다.", "/notice/list", req, resp);
+		}
+		else if("/qna/write".equals(path)){
+			boardService.write(board);
+			AlertUtil.alert("글이 등록되었습니다.", "/qna/list", req, resp);
 		}
 	}
 }
