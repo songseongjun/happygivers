@@ -30,7 +30,7 @@
 					<span class="col-1 text-center fw-bold">닉네임</span>
 					<span class="col text-center fw-bold">내용</span>
 					<span class="col-1 text-center fw-bold">등록일</span>
-					<span class="col-1 text-center fw-bold">관리</span>
+					<span class="col-2 text-center fw-bold">관리</span>
 					</div>
 				</li>
 				<c:forEach items="${replys }" var="r">
@@ -42,7 +42,7 @@
 						<span class="col-1 text-center text-truncate">${r.nickname }</span>
 						<span class="col text-center text-truncate">${r.content }</span>
 						<span class="col-1 text-center">${r.regdate }</span>
-						<div class="btn-group btn-group-sm col-1">
+						<div class="btn-group btn-group-sm col-2">
 						<a href="${cp}/admin/reply/delete?rno=${r.rno}" class="btn btn-outline-secondary">삭제</a>
 						</div>
 					</div>

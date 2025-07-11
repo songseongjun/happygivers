@@ -93,4 +93,8 @@
 	WHERE regdate >= NOW() - INTERVAL 1 DAY and paystatus = 'PAID'
 	]]>
 	</select>
+
+	<select id="findByMno" resultType="pay">
+		select * from tbl_pay where mno = #{mno}
+	</select>
 </mapper>
