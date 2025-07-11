@@ -1,7 +1,13 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>  <%-- 날짜 포맷용 --%>
-<%@ include file="../common/head.jsp" %>
+<!DOCTYPE html>
+<html>
+<head>
+  <%@ include file="../../common/head.jsp" %>
+</head>
+
+<body>
 <%@ include file="../common/header.jsp" %>
 
 <div class="container px-0">
@@ -28,7 +34,7 @@
 
               <!-- 승인 -->
               <td>
-                <form method="post" action="${cp}/admin/orgapprove">
+                <form method="post" action="${cp}/admin/member/orgapprove">
                   <input type="hidden" name="mno" value="${member.mno}" />
                   <input type="hidden" name="appr" value="1" />
                   <button type="submit" class="btn btn-success btn-sm">승인</button>
@@ -37,7 +43,7 @@
 
               <!-- 거절 -->
               <td>
-                <form method="post" action="${cp}/admin/orgapprove" class="d-flex align-items-center">
+                <form method="post" action="${cp}/admin/member/orgapprove" class="d-flex align-items-center">
                   <input type="hidden" name="mno" value="${member.mno}" />
                   <input type="hidden" name="appr" value="0" />
                   <input type="text" name="reason" class="form-control form-control-sm me-2" placeholder="거절 사유" required style="width: 120px;" />
@@ -55,3 +61,5 @@
 </div>
 
 <%@ include file="../common/footer.jsp" %>
+</body>
+</html>

@@ -14,18 +14,34 @@
             <svg class="nav-icon">
               <use xlink:href="${cp }/admin/img/free.svg#cil-speedometer"></use>
             </svg>홈</a></li>
-        
-        <li class="nav-title">회원관리</li>
-        <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
-            <svg class="nav-icon">
-              <use xlink:href="${cp }/admin/img/free.svg#cil-description"></use>
-            </svg> 회원</a>
-          <ul class="nav-group-items compact">
-            <li class="nav-item"><a class="nav-link" href="#"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 회원목록 조회</a></li>
-            <li class="nav-item"><a class="nav-link" href="#"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 기관회원 승인<span class="badge badge-sm bg-info ms-auto">NEW</span></a></li>
-            <li class="nav-item"><a class="nav-link" href="#"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> 서브관리자 생성</a></li>
-          </ul>
-        </li>
+
+          <li class="nav-title">회원 승인 관리</li>
+          <li class="nav-group">
+              <a class="nav-link nav-group-toggle" href="#">
+                  <svg class="nav-icon">
+                      <use xlink:href="${cp }/admin/img/free.svg#cil-people"></use>
+                  </svg> 승인관리
+              </a>
+              <ul class="nav-group-items compact">
+                  <li class="nav-item">
+                      <a class="nav-link" href="${cp}/admin/orgapprove">
+                          <span class="nav-icon"><span class="nav-icon-bullet"></span></span> 기관회원 승인
+                      </a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="${cp}/admin/orgstatus">
+                          <span class="nav-icon"><span class="nav-icon-bullet"></span></span> 기관회원 승인 이력
+                      </a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="#">
+                          <span class="nav-icon"><span class="nav-icon-bullet"></span></span> 서브관리자 생성
+                      </a>
+                  </li>
+              </ul>
+          </li>
+
+          </li>
         <li class="nav-title">결제/기부관리</li>
         <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
             <svg class="nav-icon">

@@ -22,5 +22,6 @@ public class ApprLog {
     private String reason;     // 거절 사유 (nullable)
     private long admno;        // 처리한 관리자 번호
     private Timestamp regdate; // 처리 일시
-
+    private String id;
+    private String email;
 }

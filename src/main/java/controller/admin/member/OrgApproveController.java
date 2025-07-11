@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import domain.Member;
 import service.AdminService;
 
-@WebServlet("/admin/orgapprove")
+@WebServlet("/admin/member/orgapprove")
 public class OrgApproveController extends HttpServlet {
     AdminService adminService = new AdminService();
 
@@ -46,7 +46,7 @@ public class OrgApproveController extends HttpServlet {
         
         // 결과 처리
         if (result) {
-            resp.sendRedirect(req.getContextPath() + "/admin/orgapprove");
+            resp.sendRedirect(req.getContextPath() + "/admin/member/orgapprove");
         } else {
             resp.sendError(500, "기관 회원 승인 처리 실패");
         }

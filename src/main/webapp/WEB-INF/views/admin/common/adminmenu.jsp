@@ -13,8 +13,8 @@
                         </div>
                         <ul class="p-0 d-flex flex-column mt-2 mb-0">
                             <li><a href="#" class="text-decoration-none text-truncate py-2  d-block " style="color: var(--col-3);">회원목록 조회</a></li>
-                            <li><a href="${cp}/admin/orgapprove" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">기관회원 승인</a></li>
-                            <li><a href="#" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">기관회원 승인여부 조회</a></li>
+                            <li><a href="${cp}/admin/member/orgapprove?ctype=MEMBER" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">기관회원 승인</a></li>
+                            <li><a href="${cp}/admin/member/orgstatus?ctype=MEMBER" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">기관회원 승인여부 조회</a></li>
                             <li><a href="#" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">서브관리자 생성</a></li>
                         </ul>
                     </div>

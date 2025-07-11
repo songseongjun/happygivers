@@ -21,7 +21,8 @@
 	<main class="d-flex justify-content-between mx-0">
             <div class="col-lg-8 px-0" style="max-width: 860px; width:100%;">
                 <!-- 슬라이더 -->
-              <div class="mb-4 table-responsive rounded-4 overflow-hidden border">
+
+				<div class="mb-4 table-responsive rounded-4 overflow-hidden border">
 	            <table class="table m-0 text-center table-borderless">
 	              <thead>
 	                <tr>
@@ -32,6 +33,8 @@
 	                </tr>
 	              </thead>
 	              <tbody>
+
+
 	                <tr>
 	                  <td class="py-3"><span class="fw-semibold">0</span> 명</td>
 	                  <td class="py-3"><span class="fw-semibold">0</span> 명</td>
@@ -41,8 +44,10 @@
 	              </tbody>
 	            </table>
 	          </div>
-	          
-	
+
+
+
+
 	          <div class="mb-4 table-responsive rounded-4 overflow-hidden border" >
 	            <table class="table table-borderless m-0 text-center">
 	            <thead>
