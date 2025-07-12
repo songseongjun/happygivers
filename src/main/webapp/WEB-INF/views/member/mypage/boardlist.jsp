@@ -19,7 +19,7 @@
 							<span class="col-1 text-center fw-bold">글 번호</span>
 							<span class="col-2 text-center fw-bold">제목</span>
 							<span class="col text-center fw-bold">내용</span>
-							<span class="col-1 text-center fw-bold">등록일</span>
+							<span class="col-2 text-center fw-bold">등록일</span>
 							<c:if test="${member.mtype == 'ORG'}">
 							<span class="col-1 text-center fw-bold">마감일</span>
 							<span class="col-2 text-center fw-bold">목표금액</span>
@@ -44,7 +44,7 @@
 								<c:if test="${b.ctype == 'FEED'}">
 									<span class="col text-center text-truncate">${b.content }</span>
 								</c:if>
-								<span class="col-1 text-center">${b.regdate }</span>
+								<span class="col-2 text-center">${b.regdate }</span>
 								<c:if test="${member.mtype == 'ORG'}">
 								<span class="col-1 text-center">${b.round.voiddate }</span>
 								<span class="col-2 text-center"><fmt:formatNumber value="${b.round.goalamount}" />원</span>
