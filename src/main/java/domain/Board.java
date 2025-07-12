@@ -41,4 +41,5 @@ public class Board {
 	private Attach attach; // 첨부파일 - 썸네일 제작시 사용
 	private List<Attach> images; // 게시글 내부 이미지
 	private int likeCnt; // 좋아요 수
+	private boolean liked;
 }

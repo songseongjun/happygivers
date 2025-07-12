@@ -2,6 +2,7 @@ package service;
 
 import java.util.List;
 
+import mapper.LikeMapper;
 import org.apache.ibatis.session.SqlSession;
 
 import domain.Reply;
@@ -97,12 +98,20 @@ public class ReplyService {
 	}
 	
 	public void remove(Long rno) {
-		try(SqlSession session = MybatisUtil.getSqlSession()) {
+		SqlSession session = MybatisUtil.getSqlSession(false);
+		try{
 			ReplyMapper mapper = session.getMapper(ReplyMapper.class);
+			LikeMapper likeMapper = session.getMapper(LikeMapper.class);
 			mapper.delete(rno);
+			likeMapper.deleteByRno(rno);
+			session.commit();
 		}
 		catch (Exception e){
+			session.rollback();
 			e.printStackTrace();
+		}
+		finally{
+			session.close();
 		}
 	}
 }

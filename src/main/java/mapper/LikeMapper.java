@@ -20,8 +20,13 @@ public interface LikeMapper {
     // 댓글 좋아요 수
     int countReply(Long rno);
 
-    List<Like> findByMno(Long mno);
+    List<Like> findByBno(Long bno);
 
     int isLiked(Like like);
+
+    void deleteByBno(Long bno);
+    void deleteByRno(Long rno);
+
+    boolean checkBoardLiked(@Param("bno") Long bno, @Param("mno") long mno);
 }
 
