@@ -25,13 +25,13 @@
                 <div class="swiper rounded-4">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
-                            <a href="#"><img src="${cp }/img/mainbanner.png" alt="메인배너1"></a>
+                            <a href="#"><img src="https://happygivers-bucket.s3.ap-northeast-2.amazonaws.com/static/banner/mainbanner.png" alt="메인배너1"></a>
                         </div>
                         <div class="swiper-slide">
-                            <a href="#"><img src="${cp }/img/mainbanner.png" alt="메인배너2"></a>
+                            <a href="#"><img src="https://happygivers-bucket.s3.ap-northeast-2.amazonaws.com/static/banner/mainbanner2.jpg" alt="메인배너2"></a>
                         </div>
                         <div class="swiper-slide">
-                            <a href="#"><img src="${cp }/img/mainbanner.png" alt="메인배너3"></a>
+                            <a href="#"><img src="https://happygivers-bucket.s3.ap-northeast-2.amazonaws.com/static/banner/mainbanner3.png" alt="메인배너3"></a>
                         </div>
                     </div>
                     <div class="swiper-pagination"></div>
@@ -42,49 +42,49 @@
                     <ul class="d-flex px-0 m-0">
                         <li style="width: 12.5%;" class="catemenu">
                             <a href="${cp }/board/list" class="text-decoration-none d-flex flex-column align-items-center ">
-                                <img src="${cp }/img/menuicon/all.png" style="width: 32px;" alt="전체">
+                                <img src="https://happygivers-bucket.s3.ap-northeast-2.amazonaws.com/static/icon/all.png" style="width: 32px;" alt="전체">
                                 <p class="d-block py-1 m-0 rounded-5 text-center mt-2" style="background-color: var(--col-1); color: var(--col-6); min-width: 60px;">전체</p>
                             </a>
                         </li>
                         <li style="width: 12.5%;" class="catemenu">
                             <a href="${cp }/board/list?cno=3" class="text-decoration-none d-flex flex-column align-items-center">
-                                <img src="${cp }/img/menuicon/kid.png" style="width: 32px;" alt="전체">
+                                <img src="https://happygivers-bucket.s3.ap-northeast-2.amazonaws.com/static/icon/kid.png" style="width: 32px;" alt="전체">
                                 <p class="d-block py-1 m-0 rounded-5 text-center mt-2" style="background-color: var(--col-1); color: var(--col-6); min-width: 60px;">청소년</p>
                             </a>
                         </li>
                         <li style="width: 12.5%;" class="catemenu">
                             <a href="${cp }/board/list?cno=4" class="text-decoration-none d-flex flex-column align-items-center">
-                                <img src="${cp }/img/menuicon/old.png" style="width: 32px;" alt="전체">
+                                <img src="https://happygivers-bucket.s3.ap-northeast-2.amazonaws.com/static/icon/old.png" style="width: 32px;" alt="전체">
                                 <p class="d-block py-1 m-0 rounded-5 text-center mt-2" style="background-color: var(--col-1); color: var(--col-6); min-width: 60px;">어르신</p>
                             </a>
                         </li>
                         <li style="width: 12.5%;" class="catemenu">
                             <a href="${cp }/board/list?cno=5" class="text-decoration-none d-flex flex-column align-items-center">
-                                <img src="${cp }/img/menuicon/animal.png" style="width: 32px;" alt="전체">
+                                <img src="https://happygivers-bucket.s3.ap-northeast-2.amazonaws.com/static/icon/animal.png" style="width: 32px;" alt="전체">
                                 <p class="d-block py-1 m-0 rounded-5 text-center mt-2" style="background-color: var(--col-1); color: var(--col-6); min-width: 60px;">동물</p>
                             </a>
                         </li>
                         <li style="width: 12.5%;" class="catemenu">
                             <a href="${cp }/board/list?cno=6" class="text-decoration-none d-flex flex-column align-items-center">
-                                <img src="${cp }/img/menuicon/earth.png" style="width: 32px;" alt="전체">
+                                <img src="https://happygivers-bucket.s3.ap-northeast-2.amazonaws.com/static/icon/earth.png" style="width: 32px;" alt="전체">
                                 <p class="d-block py-1 m-0 rounded-5 text-center mt-2" style="background-color: var(--col-1); color: var(--col-6); min-width: 60px;">지구</p>
                             </a>
                         </li>
                         <li style="width: 12.5%;" class="catemenu">
                             <a href="${cp }/board/list?cno=7" class="text-decoration-none d-flex flex-column align-items-center">
-                                <img src="${cp }/img/menuicon/area.png" style="width: 32px;" alt="전체">
+                                <img src="https://happygivers-bucket.s3.ap-northeast-2.amazonaws.com/static/icon/area.png" style="width: 32px;" alt="전체">
                                 <p class="d-block py-1 m-0 rounded-5 text-center mt-2" style="background-color: var(--col-1); color: var(--col-6); min-width: 60px;">환경</p>
                             </a>
                         </li>
                         <li style="width: 12.5%;" class="catemenu">
                             <a href="${cp }/board/list?cno=8" class="text-decoration-none d-flex flex-column align-items-center">
-                                <img src="${cp }/img/menuicon/needy.png" style="width: 32px;" alt="전체">
+                                <img src="https://happygivers-bucket.s3.ap-northeast-2.amazonaws.com/static/icon/needy.png" style="width: 32px;" alt="전체">
                                 <p class="d-block py-1 m-0 rounded-5 text-center mt-2" style="background-color: var(--col-1); color: var(--col-6); min-width: 60px;">장애인</p>
                             </a>
                         </li>
                         <li style="width: 12.5%;" class="catemenu">
                             <a href="${cp }/board/list?cno=9" class="text-decoration-none d-flex flex-column align-items-center">
-                                <img src="${cp }/img/menuicon/social.png" style="width: 32px;" alt="전체">
+                                <img src="https://happygivers-bucket.s3.ap-northeast-2.amazonaws.com/static/icon/social.png" style="width: 32px;" alt="전체">
                                 <p class="d-block py-1 m-0 rounded-5 text-center mt-2" style="background-color: var(--col-1); color: var(--col-6); min-width: 60px;">사회</p>
                             </a>
                         </li>

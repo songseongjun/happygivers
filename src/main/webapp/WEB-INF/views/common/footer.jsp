@@ -3,7 +3,7 @@
 	<footer style="background-color: var(--col-1);" class="py-4">
         <div class="container px-0">
             <div class="d-flex justify-content-between align-items-center">
-                <a href="${cp}/index"><img src="${cp }/img/logo_f.svg" alt="Happy Givers"></a>
+                <a href="${cp}/index"><img src="https://happygivers-bucket.s3.ap-northeast-2.amazonaws.com/static/logo/logo_f.svg" alt="Happy Givers"></a>
                 <a href="https://github.com/manlubo/happygivers"><i class="fa-brands fa-github fs-4" style="color: var(--col-5);"></i></a>
             </div>
             <ul class="list-unstyled d-flex gap-3 small mt-5 mb-3">

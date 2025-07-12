@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>      
-    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<c:set var="uri" value="${fn:replace(reqUri, pageContext.request.contextPath, '')}" />
 <div class="col-lg-4 px-0" style="max-width: 360px; width:100%;">
 
                 <div class="border rounded-3">
@@ -37,14 +38,14 @@
                             <p class="fs-5 fw-semibold m-0" style="color: var(--col-6);">회원</p>
                         </div>
                         <ul class="p-0 d-flex flex-column mt-2 mb-0">
-                            <li><a href="${cp}/mypage/editprofile"class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">프로필 수정</a></li>
+                            <li><a href="${cp}/mypage/editprofile"class="text-decoration-none text-truncate py-2 ${fn:contains(uri, '/mypage/editprofile') ? 'text-primary' : ''} d-block" style="color: var(--col-3);">프로필 수정</a></li>
                          <li>
 							 <a href="${cp}/mypage/updateinfo"
-								 class="text-decoration-none text-truncate py-2 d-block"
+								 class="text-decoration-none text-truncate py-2 d-block ${fn:contains(uri, '/mypage/updateinfo') ? 'text-primary' : ''}"
 								  style="color: var(--col-3);">회원정보 수정</a>
 							</li>
 							
-							 <li><a href="${cp}/mypage?page=update-password" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">비밀번호 변경</a></li>
+							 <li><a href="${cp}/mypage?page=update-password" class="text-decoration-none ${fn:contains(uri, 'password') ? 'text-primary' : ''} text-truncate py-2  d-block" style="color: var(--col-3);">비밀번호 변경</a></li>
 
                         </ul>
                     </div>
@@ -53,8 +54,8 @@
                             <p class="fs-5 fw-semibold m-0" style="color: var(--col-6);">기부/결제</p>
                         </div>
                         <ul class="p-0 d-flex flex-column mt-2 mb-0">
-                            <li><a href="${cp}/mypage/action/list" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">기부내역 조회</a></li>
-                            <li><a href="${cp}/mypage/pay/list" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">결제내역 조회</a></li>
+                            <li><a href="${cp}/mypage/action/list" class="text-decoration-none text-truncate py-2 ${fn:contains(uri, '/mypage/action/list') ? 'text-primary' : ''} d-block" style="color: var(--col-3);">기부내역 조회</a></li>
+                            <li><a href="${cp}/mypage/pay/list" class="text-decoration-none text-truncate py-2 ${fn:contains(uri, '/mypage/pay/list') ? 'text-primary' : ''} d-block" style="color: var(--col-3);">결제내역 조회</a></li>
                         </ul>
                     </div>
                     <div>
@@ -62,8 +63,8 @@
                             <p class="fs-5 fw-semibold m-0" style="color: var(--col-6);">게시판</p>
                         </div>
                         <ul class="p-0 d-flex flex-column mt-2 mb-0">
-                            <li><a href="${cp}/mypage/board/list" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">내가 쓴 게시글 조회</a></li>
-                            <li><a href="${cp}/mypage/reply/list" class="text-decoration-none text-truncate py-2  d-block" style="color: var(--col-3);">내가 쓴 댓글 조회</a></li>
+                            <li><a href="${cp}/mypage/board/list" class="text-decoration-none text-truncate py-2 ${fn:contains(uri, '/mypage/board/list') ? 'text-primary' : ''} d-block" style="color: var(--col-3);">내가 쓴 게시글 조회</a></li>
+                            <li><a href="${cp}/mypage/reply/list" class="text-decoration-none text-truncate py-2 ${fn:contains(uri, '/mypage/reply/list') ? 'text-primary' : ''} d-block" style="color: var(--col-3);">내가 쓴 댓글 조회</a></li>
                         </ul>
                     </div>
 

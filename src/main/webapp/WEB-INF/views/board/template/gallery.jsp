@@ -5,28 +5,28 @@
 <c:if test="${empty pageDto.cri.type}">
     <div class="d-flex justify-content-around mx-5">
         <div >
-            <a href="${cp }/board/list"><img src="${cp }/img/menuicon/all.png" alt="all"><button class="btn btn-sm rounded-4 ms-2 ${pageDto.cri.cno == null ? 'active-tab' : 'tab'}">전체</button></a>
+            <a href="${cp }/board/list"><img src="https://happygivers-bucket.s3.ap-northeast-2.amazonaws.com/static/icon/all.png" alt="all"><button class="btn btn-sm rounded-4 ms-2 ${pageDto.cri.cno == null ? 'active-tab' : 'tab'}">전체</button></a>
         </div>
         <div >
-            <a href="${cp }/board/list?cno=3"><img src="${cp }/img/menuicon/kid.png" alt="all"><button class="btn btn-sm rounded-4 ms-2 ${pageDto.cri.cno == '3' ? 'active-tab' : 'tab'}">청소년</button></a>
+            <a href="${cp }/board/list?cno=3"><img src="https://happygivers-bucket.s3.ap-northeast-2.amazonaws.com/static/icon/kid.png" alt="all"><button class="btn btn-sm rounded-4 ms-2 ${pageDto.cri.cno == '3' ? 'active-tab' : 'tab'}">청소년</button></a>
         </div>
         <div >
-            <a href="${cp }/board/list?cno=4"><img src="${cp }/img/menuicon/old.png" alt="all"><button class="btn btn-sm rounded-4 ms-2 ${pageDto.cri.cno == '4' ? 'active-tab' : 'tab'}" >어르신</button></a>
+            <a href="${cp }/board/list?cno=4"><img src="https://happygivers-bucket.s3.ap-northeast-2.amazonaws.com/static/icon/old.png" alt="all"><button class="btn btn-sm rounded-4 ms-2 ${pageDto.cri.cno == '4' ? 'active-tab' : 'tab'}" >어르신</button></a>
         </div>
         <div>
-            <a href="${cp }/board/list?cno=5"><img src="${cp }/img/menuicon/animal.png" alt="all"><button class="btn btn-sm rounded-4 ms-2 ${pageDto.cri.cno == '5' ? 'active-tab' : 'tab'}" >동물</button></a>
+            <a href="${cp }/board/list?cno=5"><img src="https://happygivers-bucket.s3.ap-northeast-2.amazonaws.com/static/icon/animal.png" alt="all"><button class="btn btn-sm rounded-4 ms-2 ${pageDto.cri.cno == '5' ? 'active-tab' : 'tab'}" >동물</button></a>
         </div>
         <div>
-            <a href="${cp }/board/list?cno=6"><img src="${cp }/img/menuicon/earth.png" alt="all"><button class="btn btn-sm rounded-4 ms-2 ${pageDto.cri.cno == '6' ? 'active-tab' : 'tab'}" >지구</button></a>
+            <a href="${cp }/board/list?cno=6"><img src="https://happygivers-bucket.s3.ap-northeast-2.amazonaws.com/static/icon/earth.png" alt="all"><button class="btn btn-sm rounded-4 ms-2 ${pageDto.cri.cno == '6' ? 'active-tab' : 'tab'}" >지구</button></a>
         </div>
         <div>
-            <a href="${cp }/board/list?cno=7"><img src="${cp }/img/menuicon/area.png" alt="all"><button class="btn btn-sm rounded-4 ms-2 ${pageDto.cri.cno == '7' ? 'active-tab' : 'tab'}" >환경</button></a>
+            <a href="${cp }/board/list?cno=7"><img src="https://happygivers-bucket.s3.ap-northeast-2.amazonaws.com/static/icon/area.png" alt="all"><button class="btn btn-sm rounded-4 ms-2 ${pageDto.cri.cno == '7' ? 'active-tab' : 'tab'}" >환경</button></a>
         </div>
         <div>
-            <a href="${cp }/board/list?cno=8"><img src="${cp }/img/menuicon/needy.png" alt="all"><button class="btn btn-sm rounded-4 ms-2 ${pageDto.cri.cno == '8' ? 'active-tab' : 'tab'}" >장애인</button></a>
+            <a href="${cp }/board/list?cno=8"><img src="https://happygivers-bucket.s3.ap-northeast-2.amazonaws.com/static/icon/needy.png" alt="all"><button class="btn btn-sm rounded-4 ms-2 ${pageDto.cri.cno == '8' ? 'active-tab' : 'tab'}" >장애인</button></a>
         </div>
         <div>
-            <a href="${cp }/board/list?cno=9"><img src="${cp }/img/menuicon/social.png" alt="all"><button class="btn btn-sm rounded-4 ms-2 ${pageDto.cri.cno == '9' ? 'active-tab' : 'tab'}">사회</button></a>
+            <a href="${cp }/board/list?cno=9"><img src="https://happygivers-bucket.s3.ap-northeast-2.amazonaws.com/static/icon/social.png" alt="all"><button class="btn btn-sm rounded-4 ms-2 ${pageDto.cri.cno == '9' ? 'active-tab' : 'tab'}">사회</button></a>
         </div>
     </div>
 </c:if>
