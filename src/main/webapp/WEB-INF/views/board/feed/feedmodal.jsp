@@ -80,7 +80,8 @@
       dataType: "json",
       success: function(data) {
         $("#feedModal #feedImg").attr("src", data.board.thumbnail);
-        $("#memberNickname").text(data.board.nickname);
+        const name = data.board.nickname != null ? data.board.nickname : data.board.name
+        $("#memberNickname").text(name);
         $("#viewer").text(data.board.content);
         $("#bno").val(data.board.bno);
         $("#profileImg").attr("src", data.profile);

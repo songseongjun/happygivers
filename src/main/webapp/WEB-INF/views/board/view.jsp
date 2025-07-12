@@ -151,7 +151,7 @@
                                 <p class="small m-0" style="color: var(--col-3);">후원기관</p>
                             </div>
                         </div>
-                        <p class="small mt-3 mb-0">${member.content}</p>
+                        <p class="small mt-3 mb-0">${owner.content}</p>
                         
                     </div>
                 </div>
