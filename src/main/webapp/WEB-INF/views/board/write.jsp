@@ -161,8 +161,8 @@
       });
       
       
-      $('#writeForm').on('submit', function () {
-    	  event.preventDefault();
+      $('#writeForm').on('submit', function (e) {
+    	  e.preventDefault();
           <c:if test="${cri.ctype == 'DONATE'}">
     	  if($("#voiddate").val().trim() === ""){
     		  alert("마감일을 선택해주세요.");

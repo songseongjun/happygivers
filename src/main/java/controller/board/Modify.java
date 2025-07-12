@@ -86,7 +86,6 @@ public class Modify extends HttpServlet{
 
 
 
-
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// 권한 확인		
