@@ -117,7 +117,7 @@ public class Write extends HttpServlet{
 			attach.setMno(null);
 			board.setAttach(attach);
 		}
-		log.info("{}", board);
+		log.info("{}", attach);
 		List<Attach> images = null;
 		String imgListJson = req.getParameter("imgList"); 
 		if(imgListJson != null && !imgListJson.trim().isEmpty()) {

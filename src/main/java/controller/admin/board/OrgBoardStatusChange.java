@@ -28,11 +28,9 @@ public class OrgBoardStatusChange extends HttpServlet{
 		//파라미터 받아오기
 		Board tmp = ParamUtil.get(req, Board.class);
 		Board board = service.findByBno(tmp.getBno());
-		board.setStatus(tmp.getStatus());
-		
 		
 		log.info("{}", board);
-		service.modify(board);
+		service.changeStatusActive(board.getBno());
 		
 		
 		

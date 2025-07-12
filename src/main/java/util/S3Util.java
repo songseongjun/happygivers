@@ -99,7 +99,7 @@ public class S3Util {
 					.build();
 
 			getS3().deleteObject(deleteReq);
-			
+			log.info(key);
 		} catch (Exception e) {
 			
 			throw new RuntimeException("S3 삭제 중 오류", e);

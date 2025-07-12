@@ -599,4 +599,29 @@ public class BoardService {
 		return false;
 	}
 
+
+	// status값만 Active로 변경
+	public void changeStatusActive(Long bno){
+		SqlSession session = MybatisUtil.getSqlSession(false);
+		try {
+			BoardMapper mapper = session.getMapper(BoardMapper.class);
+			DonateMapper donateMapper = session.getMapper(DonateMapper.class);
+			Board board = findByBno(bno);
+			DonateRound round = findRound(board.getDrno());
+			round.setStatus(Status.ACTIVE);
+			donateMapper.updateRound(round);
+
+			board.setStatus(Status.ACTIVE);
+			mapper.update(board);
+
+			session.commit();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		}
+		finally {
+			session.close();
+		}
+	}
 }
