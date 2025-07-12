@@ -11,8 +11,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <link rel="stylesheet" href="${cp }/css/style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.7/js/bootstrap.bundle.min.js" integrity="sha512-Tc0i+vRogmX4NN7tuLbQfBxa8JkfUSAxSFVzmU31nVdHyiHElPPy2cWfFacmCJKw0VqovrzKhdd2TSTMdAxp2g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<%@ include file="../common/head.jsp" %>
 </head>
 <body>
 <%@ include file="../common/header.jsp" %>
@@ -24,7 +24,6 @@
 	            <ul class="list-group small">
 	              <li class="list-group-item ">
 	                <div class="row my-0 align-items-center">
-	                  <input class="form-check-input col-1 mx-2 my-0 p-0" type="checkbox" id="checkAll" name="checkAll" value="something" style="width: 20px; height: 20px;">
 	                  <span class="col-1 text-center fw-bold">글 번호</span>
 	                  <span class="col-1 text-center fw-bold">분류</span>
 	                  <span class="col text-center fw-bold">제목</span>
@@ -38,7 +37,6 @@
 	              <c:forEach items="${boards }" var="b">
 	              <li class="list-group-item">
 	                <div class="row my-0 align-items-center">
-	                  <input class="form-check-input col-1 mx-2 my-0 p-0" type="checkbox" name="check1" value="something" style="width: 20px; height: 20px;">
 	                  <span class="col-1 text-center">${b.bno}</span>
 	                  <span class="col-1 text-center">${b.cname }</span>
 	                  <span class="col text-center text-truncate"><a href="${cp}/board/view?bno=${b.bno}" class="text-black ">${b.title}</a></span>
@@ -48,16 +46,11 @@
 	                  <span class="col-1 text-center">${b.round.voiddate}</span>
 	                  <div class="btn-group btn-group-sm col-2">
 	                    <a href="${cp }/admin/board/orgboardstatuschange?bno=${b.bno}&status=ACTIVE&name=${b.name}" class="btn btn-outline-secondary">승인</a>
-	                    <button type="button" class="btn btn-outline-secondary">반려</button>
 	                  </div>
 	                </div>
 	              </li>
 	              </c:forEach>
 	            </ul>
-	            <div class="mt-4">
-	              <button class="btn btn-primary me-2">선택 승인</button>
-	              <button class="btn btn-outline-secondary">선택 반려</button>
-	            </div>
 	
 	          </div>
           </div>
