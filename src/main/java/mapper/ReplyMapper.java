@@ -17,4 +17,7 @@ public interface ReplyMapper {
 	List<Reply> listAll();
 	int getReplyCount(Long bno);
 	List<Reply> selectByMno(Long mno);
+
+
+	List<Reply> selectByBno(Long bno);
 }

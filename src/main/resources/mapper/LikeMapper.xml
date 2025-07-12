@@ -19,8 +19,8 @@
     select * from tbl_like where lno = #{lno}
   </select>
 
-  <select id="findByMno" resultType="like">
-    select * from tbl_like where mno = #{mno}
+  <select id="findByBno" resultType="like">
+    select * from tbl_like where bno = #{bno}
   </select>
 
   <select id="countBoard" resultType="int">
@@ -40,5 +40,18 @@
     )
   </select>
 
+  <delete id="deleteByBno">
+    delete from tbl_like where bno = #{bno}
+  </delete>
+
+  <delete id="deleteByRno">
+    delete from tbl_like where rno = #{rno}
+  </delete>
+
+  <select id="checkBoardLiked" resultType="boolean">
+    SELECT COUNT(*) > 0
+    FROM tbl_like
+    WHERE bno = #{bno} AND mno = #{mno}
+  </select>
 
 </mapper>

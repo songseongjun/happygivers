@@ -32,7 +32,14 @@
  		SELECT r.*,
  		(SELECT m.nickname FROM tbl_member m WHERE m.mno = r.mno) AS nickname,
     	(SELECT m.name FROM tbl_member m WHERE m.mno = r.mno) AS name,
-		(SELECT COUNT(*) FROM tbl_like l WHERE l.rno = r.rno AND l.mno = #{mno}) > 0 AS liked,
+		<choose>
+			<when test="mno != null">
+				(SELECT COUNT(*) FROM tbl_like l WHERE l.rno = r.rno AND l.mno = #{mno}) > 0 AS liked
+			</when>
+			<otherwise>
+				false AS liked
+			</otherwise>
+		</choose>,
 		(SELECT COUNT(*) FROM tbl_like l WHERE l.rno = r.rno) AS likeCnt
  		from tbl_reply r 
  		where rno = #{rno}
@@ -40,7 +47,16 @@
  	
  	<!-- 댓글 목록 조회 -->
  	<select id="list" resultType="reply">
- 		SELECT r.*, (SELECT COUNT(*) FROM tbl_like l WHERE l.rno = r.rno AND l.mno = #{mno}) > 0 AS liked, (SELECT COUNT(*) FROM tbl_like l WHERE l.rno = r.rno) AS likeCnt
+ 		SELECT r.*,
+		<choose>
+			<when test="mno != null">
+		(SELECT COUNT(*) FROM tbl_like l WHERE l.rno = r.rno AND l.mno = #{mno}) > 0 AS liked
+			</when>
+			<otherwise>
+				false as liked
+			</otherwise>
+		</choose>,
+		(SELECT COUNT(*) FROM tbl_like l WHERE l.rno = r.rno) AS likeCnt
 		from tbl_reply r where bno = #{bno}
 		<if test="lastRno != null"> 	
  		<![CDATA[
@@ -63,4 +79,11 @@
 	<select id="selectByMno" resultType="reply">
 		select * from tbl_reply where mno = #{mno}
 	</select>
+
+	<select id="selectByBno" resultType="reply">
+		select * from tbl_reply where bno = #{bno}
+	</select>
+
+
+
  </mapper>

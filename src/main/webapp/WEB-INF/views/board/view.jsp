@@ -86,13 +86,20 @@
                             </div>
                         </div>
                         <div class="d-flex flex-column gap-2">
-	                        <button type="button" class="btn btn-primary form-control py-2" data-bs-toggle="modal" data-bs-target="#donatePay">기부하기</button>
+                            <div class="d-flex gap-2">
+	                            <button type="button" class="btn btn-primary form-control py-2" data-bs-toggle="modal" data-bs-target="#donatePay">기부하기</button>
+                                <button class="btn-like form-control btn-outline-primary py-2" data-bno="${board.bno}" data-liked="${liked}">
+                                    <i class="${board.liked ? 'fa-solid' : 'fa-regular'} fa-heart me-1 text-primary"></i> 좋아요 <span class="like-count" data-bno="${board.bno}">${board.likeCnt}</span>
+                                </button>
+                            </div>
 	                        <c:if test="${not empty member and (member.mno == board.mno or member.mtype == 'ADMIN')}">
 	                        <a href="${cp }/board/modify?bno=${board.bno}" class="btn btn-outline-primary form-control py-2" >수정하기</a>
 	                        </c:if>
                         </div>
-                    </div> 
+                    </div>
                 </div>
+
+
 
 
                 <!-- 모금함 기부정보 -->

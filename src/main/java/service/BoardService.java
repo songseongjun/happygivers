@@ -5,24 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+import domain.*;
 import domain.en.Ctype;
+import mapper.*;
 import org.apache.ibatis.session.SqlSession;
 
-import domain.Attach;
-import domain.Board;
-import domain.Category;
-import domain.Donate;
-import domain.DonateRound;
-import domain.Member;
 import domain.dto.Criteria;
 import domain.en.Status;
 import lombok.extern.slf4j.Slf4j;
-import mapper.AttachMapper;
-import mapper.BoardMapper;
-import mapper.CategoryMapper;
-import mapper.DonateMapper;
-import mapper.MemberMapper;
-import mapper.ReplyMapper;
 import util.MybatisUtil;
 import util.S3Util;
 
@@ -167,6 +157,8 @@ public class BoardService {
 			BoardMapper mapper = session.getMapper(BoardMapper.class);
 			DonateMapper donateMapper = session.getMapper(DonateMapper.class);
 			AttachMapper attachMapper = session.getMapper(AttachMapper.class);
+			ReplyMapper replyMapper = session.getMapper(ReplyMapper.class);
+			LikeMapper likeMapper = session.getMapper(LikeMapper.class);
 			Board board = findByBno(bno);
 			if(board.getDrno() != null) {
 				DonateRound round = donateMapper.selectOneRound(board.getDrno());
@@ -191,7 +183,19 @@ public class BoardService {
 				attachMapper.deleteByBno(bno);
 			}
 
+			// 댓글 삭제
+			if(replyMapper.selectByBno(bno) != null) {
+				List<Reply> replys = replyMapper.selectByBno(bno);
+				ReplyService replyService = new ReplyService();
+				for(Reply r : replys) {
+					replyService.remove(r.getRno());
+				}
+			}
 
+			// 좋아요 삭제
+			if(likeMapper.findByBno(bno) != null) {
+				likeMapper.deleteByRno(bno);
+			}
 
 			board.setStatus(Status.DELETE);
 			mapper.update(board);
@@ -579,4 +583,20 @@ public class BoardService {
 		}
 		return null;
 	}
+
+	// 사용자 좋아요 여부
+	public  boolean checkBoardLiked(Long bno, Long mno){
+		try(SqlSession session = MybatisUtil.getSqlSession()) {
+			LikeMapper likeMapper = session.getMapper(LikeMapper.class);
+			if(mno == null) {
+				return false;
+			}
+			return likeMapper.checkBoardLiked(bno, mno);
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 }

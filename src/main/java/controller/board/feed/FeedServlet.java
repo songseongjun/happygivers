@@ -19,6 +19,7 @@ import domain.Member;
 import domain.Reply;
 import lombok.extern.slf4j.Slf4j;
 import service.BoardService;
+import service.MemberService;
 import service.ReplyService;
 
 
@@ -32,23 +33,29 @@ public class FeedServlet extends HttpServlet{
 		BoardService service = new BoardService();
 		Board board = service.findByBno(bno);
 		HttpSession session = req.getSession(false);
-		Member member = (Member) session.getAttribute("member");
+		Member member = (session != null && session.getAttribute("member") != null) ? (Member) session.getAttribute("member") : null;
+		Long mno = (member != null) ? member.getMno() : null;
 		if (board == null) {
 	      resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
 	      return;
 	    }
 		ReplyService replyService = new ReplyService();
-		List<Reply> replys = replyService.list(bno, member.getMno(), null);
+		List<Reply> replys = replyService.list(bno, mno, null);
 		log.info("{}", replys);
-		
+		MemberService memberService = new MemberService();
+		String profile = memberService.findByMno(board.getMno()).getProfile();
+
+		board.setLiked(service.checkBoardLiked(board.getBno(), mno));
+
 		Map<String, Object> data = Map.of(
 				  "board", board,
-				  "replys", replys
+				  "replys", replys,
+				"profile", profile
 				);
 		
 		
 		
-		resp.setContentType("appliction/json; charset=UTF-8");
+		resp.setContentType("application/json; charset=UTF-8");
 		new Gson().toJson(data, resp.getWriter());
 	}
 	

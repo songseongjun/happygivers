@@ -34,7 +34,8 @@ public class ReplyServlet extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String uri = getURI(req);
 		HttpSession session = req.getSession(false);
-		Member member = (Member) session.getAttribute("member");
+
+		Member member = (session != null && session.getAttribute("member") != null) ? (Member) session.getAttribute("member") : null;
 
 		ReplyService service = new ReplyService();
 		Gson gson = new Gson(); 
@@ -50,7 +51,8 @@ public class ReplyServlet extends HttpServlet{
 					if(tmps.length > 2) {
 						lastRno = Long.valueOf(tmps[2]);
 					}
-					o = service.list(bno, member.getMno(),lastRno);
+					Long mno = (member != null) ? member.getMno() : null;
+					o = service.list(bno, mno,lastRno);
 				}
 			}
 		}

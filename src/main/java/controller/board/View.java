@@ -47,6 +47,7 @@ public class View extends HttpServlet{
 		if(member != null) {
 			DonateService donateService = new DonateService();
 			myamount = donateService.findMyAmount(board.getDrno(), member.getMno());
+			board.setLiked(service.checkBoardLiked(board.getBno(), member.getMno()));
 		}
 		List<Board> orgDonates = service.findMnoDonateList(board.getMno());
 		Member owner = new MemberService().findByMno(board.getMno());

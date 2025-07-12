@@ -19,14 +19,20 @@
 
             <!-- 작성자 -->
             <div class="d-flex align-items-center mb-4">
-              <img src="https://placehold.co/40x40" id="profileImg" class="rounded-circle me-2" alt="프로필">
+              <img src="https://placehold.co/40x40" id="profileImg" class="rounded-circle me-2" alt="프로필" style="width: 40px; height: 40px; object-fit: cover;">
               <strong id="memberNickname">사용자닉네임</strong>
               <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <!-- 게시글 내용 -->
             <div id="viewer" class="flex-grow-1 mb-3"></div>
-            
+              <div class="d-flex gap-2">
+              <button class="btn-like form-control btn-outline-primary py-2" data-bno="${board.bno}" data-liked="${liked}">
+                  <i class="${board.liked ? 'fa-solid' : 'fa-regular'} fa-heart me-1 text-primary"></i> 좋아요 <span class="like-count" data-bno="${board.bno}"></span>
+              </button>
+              <a href="#" class="btn btn-primary form-control" id="feedModify">수정</a>
+              <a href="#" class="btn btn-outline-primary form-control" id="feedDelete">삭제</a>
+              </div>
             <!-- 댓글 -->
             <div class="mb-3">
               <ul class="d-flex flex-column gap-1 m-0 p-0 pb-2" id="replys" style="max-height: 300px; overflow-y: auto;">
@@ -43,7 +49,7 @@
 				    </li>
               </ul>
             </div>
-                
+
             <!-- 입력 -->
              <c:if test="${not empty member}">
             <form class="d-flex border-top pt-2">
@@ -67,7 +73,7 @@
     event.preventDefault();
     const bno = $(this).data("bno");
     const cp = '${pageContext.request.contextPath}';
-    const loginUserMno = ${member.mno != null ? member.mno : 'null'};
+      const loginUserMno = ${empty member ? 'null' : member.mno};
     $.ajax({
       url: cp + '/api/feed/view?bno=' + bno,
       method: "GET",
@@ -77,6 +83,38 @@
         $("#memberNickname").text(data.board.nickname);
         $("#viewer").text(data.board.content);
         $("#bno").val(data.board.bno);
+        $("#profileImg").attr("src", data.profile);
+        if(loginUserMno === null || data.board.mno != loginUserMno){
+            $("#feedDelete").hide();
+            $("#feedModify").hide();
+        } else {
+            $("#feedDelete").show();
+            $("#feedModify").show();
+        }
+
+
+        $("#feedModify").attr("href", cp + '/feed/modify?bno=' + data.board.bno);
+
+        $("#feedModal").on("click", "#feedDelete", function (e){
+            e.preventDefault();
+            const result = confirm("삭제하시겠습니까?");
+            if(!result) return
+
+            location.href = cp + '/board/remove?bno=' + data.board.bno;
+        })
+
+          $("#feedModal .btn-like").attr("data-bno", data.board.bno);
+          $("#feedModal .btn-like").attr("data-liked", data.board.liked);
+          const $icon = $("#feedModal .btn-like i"); // 아이콘 대상
+          if (data.board.liked) {
+              $icon.removeClass("fa-regular").addClass("fa-solid");
+          } else {
+              $icon.removeClass("fa-solid").addClass("fa-regular");
+          }
+
+          $("#feedModal .like-count")
+              .attr("data-bno", data.board.bno)
+              .text(data.board.likeCnt);
         let replyStr = "";
         
         for(let r of data.replys){
@@ -305,4 +343,42 @@
       target.html(original);
     })
      
+</script>
+<script>
+    $(document).on('click', '.btn-like', function() {
+        const $btn = $(this);
+        const rno = $btn.data('rno');
+        const bno = $btn.data('bno');
+        const mno =  ${member.mno};
+        const param = {};
+        if (rno) param.rno = rno;
+        if (bno) param.bno = bno;
+        if (mno) param.mno = mno;
+
+        $.post('${cp}/api/like', param, function(res) {
+            const liked = res.liked;
+            const $icon = $btn.find('i');
+
+            // 아이콘 변경
+            if (liked) {
+                $icon.removeClass('fa-regular').addClass('fa-solid');
+            } else {
+                $icon.removeClass('fa-solid').addClass('fa-regular');
+            }
+
+            // data-liked 상태도 갱신해줌
+            $btn.data('liked', liked);
+
+
+            // 좋아요 수 동기화
+            const countUrl = rno ? `${cp}/api/like?rno=\${rno}` : `${cp}/api/like?bno=\${bno}`;
+            $.get(countUrl, function (cnt) {
+                if (rno)
+                    $(`.like-count[data-rno='\${rno}']`).text(cnt);
+                else
+                    $(`.like-count[data-bno='\${bno}']`).text(cnt);
+            });
+        });
+    });
+
 </script>
