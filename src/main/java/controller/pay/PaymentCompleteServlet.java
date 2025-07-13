@@ -57,11 +57,8 @@ public class PaymentCompleteServlet extends HttpServlet{
     	String paymentId = data.paymentId;
     	
     	try {
-            // 2. 토큰 발급
             String token = getAccessToken();
-            
 
-            // 3. PortOne 결제 조회 API 호출
             URL url = new URL("https://api.portone.io/payments/" + paymentId);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");

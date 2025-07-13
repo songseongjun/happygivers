@@ -133,7 +133,7 @@
                             <c:forEach items="${board.round.top3}" var="m">
                             <li class="d-flex align-items-center gap-3 rounded-2 p-2" style="background-color: var(--bg-1);">
                                 <img src="${m.profile != null ? m.profile : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQm38aJRuNJH9z0qvbVUWR9rDQ2N7DoUWDXSA&s'}" class="rounded-5" alt="프로필 사진" style="width: 40px; height: 40px; object-fit: cover;">
-                                <p class="m-0 flex-grow-1 fw-medium"><span>${m.name}</span>님</p>
+                                <p class="m-0 flex-grow-1 fw-medium"><span>${m.nickname}</span>님</p>
                             </li>
                             </c:forEach>
                         </ul>
