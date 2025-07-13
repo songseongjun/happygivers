@@ -112,7 +112,7 @@
 	      if (complete.ok) {
 	        const json = await complete.json();
 	        if (json.status === "PAID") {
-	       	  alert("결제가 완료되었습니다."  + result.message);
+	       	  alert("결제가 완료되었습니다.");
 	       	} else if (json.status === "CANCELED") {
 	       	  alert("결제가 취소되었습니다."  + result.message);
 	       	} else if (json.status === "FAILED" ) {

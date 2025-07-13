@@ -73,10 +73,9 @@ public class PaymentRefundServlet extends HttpServlet{
     	log.info("환불 요청 ID: {}, 금액: {}", paymentId, amount);
     	
     	try {
-            // 2. 토큰 발급
             String token = getAccessToken();
             
-            // 3. PortOne 환불API 요청
+            // PortOne 환불API 요청
             URL url = new URL("https://api.portone.io/payments/" + paymentId + "/cancel");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
