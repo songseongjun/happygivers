@@ -1,0 +1,85 @@
+19:29:22.687 [main] INFO  sqltiming - select b.*, (SELECT COUNT(*) FROM tbl_like l WHERE l.bno = b.bno) AS likeCnt
+		from tbl_board b
+		where bno = 41
+ {executed in 9 msec}
+19:29:22.707 [main] INFO  BoardMapperTest - null
+19:31:31.874 [main] INFO  sqltiming - select b.*, (SELECT COUNT(*) FROM tbl_like l WHERE l.bno = b.bno) AS likeCnt
+		from tbl_board b
+		where bno = 65
+ {executed in 8 msec}
+19:31:31.896 [main] INFO  BoardMapperTest - Board(bno=65, title=[이벤트] 해피기버스 여름 기부 캠페인 안내 ☀️, content=안녕하세요, 해피기버스입니다.
+
+여름을 맞이하여 소외된 이웃을 위한 ✨여름 기부 캠페인✨을 진행합니다.
+
+📅 기간: 2025년 7월 10일 ~ 7월 31일  
+🎁 혜택: 기간 내 5회 이상 기부 시, 감사 선물 증정  
+💌 대상: 모든 일반 회원 (후원기관 제외)  
+🔗 참여 방법: 기부 게시글을 통해 자유롭게 기부 참여
+
+여러분의 따뜻한 마음이 큰 힘이 됩니다.  
+함께 해주셔서 감사합니다.
+, regdate=2025-07-12 19:17:52, moddate=null, mno=1, cno=1, cnt=0, status=ACTIVE, drno=null, ctype=null, thumbnail=null, round=null, cname=null, name=null, nickname=null, attach=null, images=null, likeCnt=0, liked=false)
+19:47:15.624 [main] INFO  sqltiming - select b.*, (SELECT COUNT(*) FROM tbl_like l WHERE l.bno = b.bno) AS likeCnt
+		from tbl_board b
+		where bno = 65
+ {executed in 9 msec}
+19:47:15.651 [main] INFO  BoardMapperTest - Board(bno=65, title=[이벤트] 해피기버스 여름 기부 캠페인 안내 ☀️, content=안녕하세요, 해피기버스입니다.
+
+여름을 맞이하여 소외된 이웃을 위한 ✨여름 기부 캠페인✨을 진행합니다.
+
+📅 기간: 2025년 7월 10일 ~ 7월 31일  
+🎁 혜택: 기간 내 5회 이상 기부 시, 감사 선물 증정  
+💌 대상: 모든 일반 회원 (후원기관 제외)  
+🔗 참여 방법: 기부 게시글을 통해 자유롭게 기부 참여
+
+여러분의 따뜻한 마음이 큰 힘이 됩니다.  
+함께 해주셔서 감사합니다.
+, regdate=2025-07-12 19:17:52, moddate=null, mno=1, cno=1, cnt=0, status=ACTIVE, drno=null, ctype=null, thumbnail=null, round=null, cname=null, name=null, nickname=null, attach=null, images=null, likeCnt=0, liked=false)
+19:47:46.335 [main] INFO  sqltiming - select b.*, (SELECT COUNT(*) FROM tbl_like l WHERE l.bno = b.bno) AS likeCnt
+		from tbl_board b
+		where bno = 65
+ {executed in 10 msec}
+19:47:46.357 [main] INFO  BoardMapperTest - Board(bno=65, title=[이벤트] 해피기버스 여름 기부 캠페인 안내 ☀️, content=안녕하세요, 해피기버스입니다.
+
+여름을 맞이하여 소외된 이웃을 위한 ✨여름 기부 캠페인✨을 진행합니다.
+
+📅 기간: 2025년 7월 10일 ~ 7월 31일  
+🎁 혜택: 기간 내 5회 이상 기부 시, 감사 선물 증정  
+💌 대상: 모든 일반 회원 (후원기관 제외)  
+🔗 참여 방법: 기부 게시글을 통해 자유롭게 기부 참여
+
+여러분의 따뜻한 마음이 큰 힘이 됩니다.  
+함께 해주셔서 감사합니다.
+, regdate=2025-07-12 19:17:52, moddate=null, mno=1, cno=1, cnt=0, status=ACTIVE, drno=null, ctype=null, thumbnail=null, round=null, cname=null, name=null, nickname=null, attach=null, images=null, likeCnt=0, liked=false)
+19:48:28.823 [main] INFO  sqltiming - select b.*, (SELECT COUNT(*) FROM tbl_like l WHERE l.bno = b.bno) AS likeCnt
+		from tbl_board b
+		where bno = 65
+ {executed in 8 msec}
+19:48:28.848 [main] INFO  BoardMapperTest - Board(bno=65, title=[이벤트] 해피기버스 여름 기부 캠페인 안내 ☀️, content=안녕하세요, 해피기버스입니다.
+
+여름을 맞이하여 소외된 이웃을 위한 ✨여름 기부 캠페인✨을 진행합니다.
+
+📅 기간: 2025년 7월 10일 ~ 7월 31일  
+🎁 혜택: 기간 내 5회 이상 기부 시, 감사 선물 증정  
+💌 대상: 모든 일반 회원 (후원기관 제외)  
+🔗 참여 방법: 기부 게시글을 통해 자유롭게 기부 참여
+
+여러분의 따뜻한 마음이 큰 힘이 됩니다.  
+함께 해주셔서 감사합니다.
+, regdate=2025-07-12 19:17:52, moddate=null, mno=1, cno=1, cnt=0, status=ACTIVE, drno=null, ctype=null, thumbnail=null, round=null, cname=null, name=null, nickname=null, attach=null, images=null, likeCnt=0, liked=false)
+19:50:24.585 [main] INFO  sqltiming - select b.*, (SELECT COUNT(*) FROM tbl_like l WHERE l.bno = b.bno) AS likeCnt
+		from tbl_board b
+		where bno = 65
+ {executed in 10 msec}
+19:50:24.610 [main] INFO  BoardMapperTest - Board(bno=65, title=[이벤트] 해피기버스 여름 기부 캠페인 안내 ☀️, content=안녕하세요, 해피기버스입니다.
+
+여름을 맞이하여 소외된 이웃을 위한 ✨여름 기부 캠페인✨을 진행합니다.
+
+📅 기간: 2025년 7월 10일 ~ 7월 31일  
+🎁 혜택: 기간 내 5회 이상 기부 시, 감사 선물 증정  
+💌 대상: 모든 일반 회원 (후원기관 제외)  
+🔗 참여 방법: 기부 게시글을 통해 자유롭게 기부 참여
+
+여러분의 따뜻한 마음이 큰 힘이 됩니다.  
+함께 해주셔서 감사합니다.
+, regdate=2025-07-12 19:17:52, moddate=null, mno=1, cno=1, cnt=0, status=ACTIVE, drno=null, ctype=null, thumbnail=null, round=null, cname=null, name=null, nickname=null, attach=null, images=null, likeCnt=0, liked=false)

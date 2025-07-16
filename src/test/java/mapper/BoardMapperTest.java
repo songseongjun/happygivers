@@ -41,7 +41,7 @@ public class BoardMapperTest {
 	@DisplayName("bno로 선택 테스트")
 	public void testSelectOne() {
 		// given
-		Long bno = 41L;
+		Long bno = 65L;
 		
 		// when
 		Board board = boardMapper.selectOne(bno);
